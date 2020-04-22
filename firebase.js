@@ -1,18 +1,14 @@
-/**
- * Dependencies
- * Importing "firebase" does not bring in Firestore (DBMS)
- * So we have to do both
- */
-
+// Dependencies
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/auth';
 
 /**
  * Fine to not gitignore
  * Lets the app know which Google Firebase server the app should talk to
  */
 
-const firebaseConfig = {
+const config = {
   apiKey: 'AIzaSyCHIn-4BWduDME5PSI07pykoOedhtoDmq8',
   authDomain: 'hrla35-mvp.firebaseapp.com',
   databaseURL: 'https://hrla35-mvp.firebaseio.com',
@@ -26,11 +22,18 @@ const firebaseConfig = {
 firebase.initializeApp(config);
 
 /**
- * Remove this later, for debugging purposes
+ * Remove this later
+ * For debugging purposes
  */
 
 window.firebase = firebase;
 
+// Firestore for the application
 export const firestore = firebase.firestore();
+
+// Auth for the application
+export const auth = firebase.auth();
+export const provider = new firebase.auth.GoogleAuthProvider();
+export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export default firebase;
