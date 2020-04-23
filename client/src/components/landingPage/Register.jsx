@@ -13,8 +13,6 @@ import ValidatedTextField from './ValidatedField.jsx';
 // Yup Validation
 import { registerValidation } from '../../validators.js';
 
-console.log(registerValidation);
-
 const Register = () => {
   const history = useHistory();
 
