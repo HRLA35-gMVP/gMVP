@@ -1,6 +1,6 @@
 // Dependencies
 import React, { useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { signOut } from '../../firebase.js';
 import { Button } from '@material-ui/core';
 
@@ -12,12 +12,6 @@ import { UserContext } from '../../providers/UsersProvider.jsx';
 
 export const UserPage = () => {
   const user = useContext(UserContext);
-  const history = useHistory();
-
-  const handleSignOut = async () => {
-    history.push('/');
-    await signOut();
-  };
 
   return (
     <div>
@@ -32,9 +26,11 @@ export const UserPage = () => {
       ) : null}
       <AddFriend />
 
-      <Button variant="contained" onClick={handleSignOut}>
-        Sign Out
-      </Button>
+      <Link to="/">
+        <Button variant="contained" onClick={signOut}>
+          Sign Out
+        </Button>
+      </Link>
     </div>
   );
 };
