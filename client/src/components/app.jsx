@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
+// Dependencies
+import React, { useContext } from 'react';
 
-export default class App extends Component {
-  render() {
-    return (
-      <div>
-        <p>Homies 💪😊</p>
-      </div>
-    );
-  }
-}
+// Componenets
+import { UserPage } from './userPage/userPage.jsx';
+import Login from './landingPage/Login.jsx';
+
+// Contexts
+import { UserContext } from '../providers/UsersProvider.jsx';
+
+const App = () => {
+  const user = useContext(UserContext);
+  return user ? <UserPage /> : <Login />;
+};
+
+export default App;
