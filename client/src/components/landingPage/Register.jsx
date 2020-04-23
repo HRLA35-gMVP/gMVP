@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
+import { TextField, Button } from '@material-ui/core';
 
 // Firebase Auth
 import { auth, createUserProfileDocument } from '../../firebase.js';
@@ -35,31 +36,40 @@ const Register = () => {
     >
       {({ values, isSubmitting }) => (
         <Form>
-          <Field
-            placeholder="Email Address"
-            name="email"
-            value={values.email}
-            type="email"
-          />
-          <Field
-            placeholder="Password"
-            name="password"
-            value={values.password}
-            type="password"
-          />
-          <Field
-            placeholder="Display Name"
-            name="displayName"
-            value={values.displayName}
-            type="text"
-          />
+          <div>
+            <Field
+              placeholder="Email Address"
+              name="email"
+              value={values.email}
+              type="email"
+              as={TextField}
+            />
+          </div>
+          <div>
+            <Field
+              placeholder="Password"
+              name="password"
+              value={values.password}
+              type="password"
+              as={TextField}
+            />
+          </div>
+          <div>
+            <Field
+              placeholder="Display Name"
+              name="displayName"
+              value={values.displayName}
+              type="text"
+              as={TextField}
+            />
+          </div>
 
-          <button disabled={isSubmitting} type="submit">
-            Register
-          </button>
           <Link to="/">
-            <button>Cancel</button>
+            <Button>Cancel</Button>
           </Link>
+          <Button disabled={isSubmitting} type="submit">
+            Register
+          </Button>
         </Form>
       )}
     </Formik>

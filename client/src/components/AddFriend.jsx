@@ -1,6 +1,7 @@
 // Dependencies
 import React, { Component, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
+import { Button, TextField } from '@material-ui/core';
 
 // Context
 import { UserContext } from '../providers/UsersProvider.jsx';
@@ -27,10 +28,11 @@ const AddFriend = () => {
             name="friendCode"
             value={values.friendCode}
             type="input"
+            as={TextField}
           />
-          <button disabled={isSubmitting} type="submit">
+          <Button disabled={isSubmitting} type="submit">
             Add
-          </button>
+          </Button>
         </Form>
       )}
     </Formik>
