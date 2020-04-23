@@ -1,13 +1,22 @@
 // Dependencies
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Formik, Form, Field } from 'formik';
+import React, { Component } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { Formik, Form } from 'formik';
 import { TextField, Button } from '@material-ui/core';
 
 // Firebase Auth
 import { signInWithGoogle, signInWithEmail } from '../../firebase.js';
 
+// Components
+import ValidatedTextField from './ValidatedField.jsx';
 const Login = () => {
+  const history = useHistory();
+
+  const handleOAuth = async () => {
+    await signInWithGoogle();
+    history.push('/profile');
+  };
+
   return (
     <div>
       <Formik
@@ -27,37 +36,37 @@ const Login = () => {
       >
         {({ values, isSubmitting }) => (
           <Form>
-            <div>
-              <Field
-                placeholder="Email Address"
-                name="email"
-                value={values.email}
-                type="email"
-                as={TextField}
-              />
-            </div>
-            <div>
-              <Field
-                placeholder="Password"
-                name="password"
-                value={values.password}
-                type="password"
-                as={TextField}
-              />
-            </div>
-            <div>
-              <Button disabled={isSubmitting} type="submit">
-                Email Login
-              </Button>
-            </div>
+            <ValidatedTextField
+              placeholder="Email Address"
+              name="email"
+              value={values.email}
+              type="email"
+              as={TextField}
+            />
+
+            <ValidatedTextField
+              placeholder="Password"
+              name="password"
+              value={values.password}
+              type="password"
+              as={TextField}
+            />
+
+            <Button variant="contained" disabled={isSubmitting} type="submit">
+              Email Login
+            </Button>
           </Form>
         )}
       </Formik>
+
       <div>
-        <Button onClick={signInWithGoogle}>Google OAuth</Button>
+        <Button variant="contained" onClick={handleOAuth}>
+          Google OAuth
+        </Button>
       </div>
-      <Link to="/register">
-        <Button>Register</Button>
+
+      <Link to="/" style={{ textDecoration: 'none' }}>
+        <Button variant="contained">Return</Button>
       </Link>
     </div>
   );

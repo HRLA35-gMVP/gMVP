@@ -24,7 +24,9 @@ export const UserPage = () => {
         </div>
       ) : null}
       <AddFriend />
-      <Button onClick={signOut}>Sign Out</Button>
+      <Button variant="contained" onClick={signOut}>
+        Sign Out
+      </Button>
     </div>
   );
 };
