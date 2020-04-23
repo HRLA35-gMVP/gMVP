@@ -1,10 +1,13 @@
 // Dependencies
 import React, { Component, useContext } from 'react';
-import { Formik, Form, Field } from 'formik';
-import { Button, TextField } from '@material-ui/core';
+import { Formik, Form } from 'formik';
+import { TextField, Button } from '@material-ui/core';
 
 // Context
 import { UserContext } from '../providers/UsersProvider.jsx';
+
+// Components
+import ValidatedTextField from './landingPage/ValidatedField.jsx';
 
 const AddFriend = () => {
   const user = useContext(UserContext);
@@ -23,14 +26,14 @@ const AddFriend = () => {
     >
       {({ values, isSubmitting }) => (
         <Form>
-          <Field
+          <ValidatedTextField
             placeholder="Friend Code"
             name="friendCode"
             value={values.friendCode}
             type="input"
             as={TextField}
           />
-          <Button disabled={isSubmitting} type="submit">
+          <Button variant="contained" disabled={isSubmitting} type="submit">
             Add
           </Button>
         </Form>

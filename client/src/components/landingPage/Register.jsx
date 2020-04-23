@@ -1,18 +1,25 @@
 // Dependencies
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import { TextField, Button } from '@material-ui/core';
 
 // Firebase Auth
 import { auth, createUserProfileDocument } from '../../firebase.js';
+
+// Components
+import ValidatedTextField from './ValidatedField.jsx';
+
+// Yup Validation
+import { registerValidation } from '../../validators.js';
 
 const Register = () => {
   const history = useHistory();
 
   return (
     <Formik
-      initialValues={{ email: '', password: '', displayName: '' }}
+      initialValues={{ displayName: '', email: '', password: '' }}
+      validationSchema={registerValidation}
       onSubmit={async (data, { setSubmitting, resetForm }) => {
         setSubmitting(true);
 
@@ -36,38 +43,33 @@ const Register = () => {
     >
       {({ values, isSubmitting }) => (
         <Form>
-          <div>
-            <Field
-              placeholder="Email Address"
-              name="email"
-              value={values.email}
-              type="email"
-              as={TextField}
-            />
-          </div>
-          <div>
-            <Field
-              placeholder="Password"
-              name="password"
-              value={values.password}
-              type="password"
-              as={TextField}
-            />
-          </div>
-          <div>
-            <Field
-              placeholder="Display Name"
-              name="displayName"
-              value={values.displayName}
-              type="text"
-              as={TextField}
-            />
-          </div>
+          <ValidatedTextField
+            placeholder="Email Address"
+            name="email"
+            value={values.email}
+            type="input"
+            as={TextField}
+          />
+          <ValidatedTextField
+            placeholder="Password"
+            name="password"
+            value={values.password}
+            type="password"
+            as={TextField}
+          />
+          <ValidatedTextField
+            placeholder="Display Name"
+            name="displayName"
+            value={values.displayName}
+            type="input"
+            as={TextField}
+          />
 
-          <Link to="/">
-            <Button>Cancel</Button>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Button variant="contained">Cancel</Button>
           </Link>
-          <Button disabled={isSubmitting} type="submit">
+
+          <Button variant="contained" disabled={isSubmitting} type="submit">
             Register
           </Button>
         </Form>
