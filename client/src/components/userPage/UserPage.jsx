@@ -1,6 +1,9 @@
 // Dependencies
 import React, { useContext } from 'react';
-import { signOut } from '../../../../firebase.js';
+import { signOut } from '../../firebase.js';
+
+// Components
+import AddFriend from '../AddFriend.jsx';
 
 // Context
 import { UserContext } from '../../providers/UsersProvider.jsx';
@@ -19,7 +22,7 @@ export const UserPage = () => {
           <p>Groups: {user.groups.length}</p>
         </div>
       ) : null}
-      <input placeholder="Friend Code" />
+      <AddFriend />
       <button onClick={signOut}>Sign Out</button>
     </div>
   );
