@@ -1,6 +1,7 @@
 // Dependencies
 import React, { useContext } from 'react';
 import { signOut } from '../../firebase.js';
+import { Button } from '@material-ui/core';
 
 // Components
 import AddFriend from '../AddFriend.jsx';
@@ -23,7 +24,7 @@ export const UserPage = () => {
         </div>
       ) : null}
       <AddFriend />
-      <button onClick={signOut}>Sign Out</button>
+      <Button onClick={signOut}>Sign Out</Button>
     </div>
   );
 };

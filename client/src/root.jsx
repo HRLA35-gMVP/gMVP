@@ -7,10 +7,13 @@ import App from './components/app.jsx';
 
 // Contexts
 import UsersProvider from './providers/UsersProvider.jsx';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 ReactDOM.render(
-  <UsersProvider>
-    <App />
-  </UsersProvider>,
+  <Router>
+    <UsersProvider>
+      <App />
+    </UsersProvider>
+  </Router>,
   document.getElementById('root')
 );
