@@ -7,7 +7,7 @@ import { TextField, Button } from '@material-ui/core';
 import { UserContext } from '../providers/UsersProvider.jsx';
 
 // Components
-import ValidatedTextField from './landingPage/ValidatedField.jsx';
+import ValidatedTextField from './formHelpers/ValidatedField.jsx';
 
 const AddFriend = () => {
   const user = useContext(UserContext);

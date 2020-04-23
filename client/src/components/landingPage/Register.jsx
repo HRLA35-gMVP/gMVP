@@ -8,10 +8,10 @@ import { TextField, Button } from '@material-ui/core';
 import { auth, createUserProfileDocument } from '../../firebase.js';
 
 // Components
-import ValidatedTextField from './ValidatedField.jsx';
+import ValidatedTextField from '../formHelpers/ValidatedField.jsx';
 
 // Yup Validation
-import { registerValidation } from '../../validators.js';
+import { registerValidation } from '../formHelpers/validators.js';
 
 const Register = () => {
   const history = useHistory();
