@@ -1,5 +1,6 @@
 // Dependencies
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 
 // Firebase Auth
@@ -44,6 +45,9 @@ const Login = () => {
         )}
       </Formik>
       <button onClick={signInWithGoogle}>Google OAuth</button>
+      <Link to="/register">
+        <button>Register</button>
+      </Link>
     </div>
   );
 };

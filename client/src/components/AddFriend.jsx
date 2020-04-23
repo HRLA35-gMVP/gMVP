@@ -22,7 +22,12 @@ const AddFriend = () => {
     >
       {({ values, isSubmitting }) => (
         <Form>
-          <Field name="friendCode" value={values.friendCode} type="input" />
+          <Field
+            placeholder="Friend Code"
+            name="friendCode"
+            value={values.friendCode}
+            type="input"
+          />
           <button disabled={isSubmitting} type="submit">
             Add
           </button>

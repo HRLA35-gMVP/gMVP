@@ -1,16 +1,21 @@
 // Dependencies
 import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 
 // Firebase Auth
 import { auth, createUserProfileDocument } from '../../firebase.js';
 
 const Register = () => {
+  const history = useHistory();
+
   return (
     <Formik
       initialValues={{ email: '', password: '', displayName: '' }}
       onSubmit={async (data, { setSubmitting, resetForm }) => {
         setSubmitting(true);
+
+        console.log('Formik:', data);
 
         try {
           const { user } = await auth.createUserWithEmailAndPassword(
@@ -24,6 +29,7 @@ const Register = () => {
         } finally {
           setSubmitting(false);
           resetForm();
+          history.push('/');
         }
       }}
     >
@@ -47,9 +53,13 @@ const Register = () => {
             value={values.displayName}
             type="text"
           />
+
           <button disabled={isSubmitting} type="submit">
             Register
           </button>
+          <Link to="/">
+            <button>Cancel</button>
+          </Link>
         </Form>
       )}
     </Formik>
