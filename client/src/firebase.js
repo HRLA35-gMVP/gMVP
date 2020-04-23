@@ -92,12 +92,8 @@ export const getUserDocument = async (uid) => {
         groups: [],
         ...userDocument.data()
       });
-
-      // userDocument = await userReference.get();
-      // return { uid, ...userDocument.data() };
     }
 
-    // return { uid, ...userDocument.data() };
     return userReference;
   } catch (error) {
     console.error('getUserDocument Error:', error);
