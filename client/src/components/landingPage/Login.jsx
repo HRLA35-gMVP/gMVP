@@ -8,10 +8,10 @@ import { Formik, Form } from 'formik';
 import { signInWithGoogle, signInWithEmail } from '../../firebase.js';
 
 // Components
-import ValidatedTextField from './ValidatedField.jsx';
+import ValidatedTextField from '../formHelpers/ValidatedField.jsx';
 
 // Yup Validation
-import { loginValidation } from '../../validators.js';
+import { loginValidation } from '../formHelpers/validators.js';
 
 const Login = () => {
   const history = useHistory();
