@@ -26,7 +26,7 @@ export const UserPage = () => {
       ) : null}
       <AddFriend />
 
-      <Link to="/">
+      <Link to="/" style={{ textDecoration: 'none' }}>
         <Button variant="contained" onClick={signOut}>
           Sign Out
         </Button>
