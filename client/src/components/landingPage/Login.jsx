@@ -1,8 +1,10 @@
 // Dependencies
 import React, { Component } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { TextField, Button } from '@material-ui/core';
+
+// Forms
 import { Formik, Form } from 'formik';
+import { Input, Button } from '@chakra-ui/core';
 
 // Firebase Auth
 import { signInWithGoogle, signInWithEmail } from '../../firebase.js';
@@ -32,10 +34,11 @@ const Login = () => {
           try {
             await signInWithEmail(data.email, data.password);
             resetForm();
-          } catch (error) {
-            alert('Incorrect Email or Password.');
-          } finally {
             setSubmitting(false);
+            history.push('/profile');
+          } catch (error) {
+            setSubmitting(false);
+            alert('Incorrect Email or Password.');
           }
         }}
       >
@@ -46,7 +49,7 @@ const Login = () => {
               name="email"
               value={values.email}
               type="input"
-              as={TextField}
+              as={Input}
             />
 
             <ValidatedTextField
@@ -54,10 +57,10 @@ const Login = () => {
               name="password"
               value={values.password}
               type="password"
-              as={TextField}
+              as={Input}
             />
 
-            <Button variant="contained" disabled={isSubmitting} type="submit">
+            <Button variant="solid" disabled={isSubmitting} type="submit">
               Email Login
             </Button>
           </Form>
@@ -65,13 +68,13 @@ const Login = () => {
       </Formik>
 
       <div>
-        <Button variant="contained" onClick={handleOAuth}>
+        <Button variant="solid" onClick={handleOAuth}>
           Google OAuth
         </Button>
       </div>
 
       <Link to="/" style={{ textDecoration: 'none' }}>
-        <Button variant="contained">Return</Button>
+        <Button variant="solid">Return</Button>
       </Link>
     </div>
   );

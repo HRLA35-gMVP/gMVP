@@ -1,8 +1,10 @@
 // Dependencies
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+
+// Forms
 import { signOut } from '../../firebase.js';
-import { Button } from '@material-ui/core';
+import { Button } from '@chakra-ui/core';
 
 // Components
 import AddFriend from '../AddFriend.jsx';
@@ -27,7 +29,7 @@ export const UserPage = () => {
       <AddFriend />
 
       <Link to="/" style={{ textDecoration: 'none' }}>
-        <Button variant="contained" onClick={signOut}>
+        <Button variant="solid" onClick={signOut}>
           Sign Out
         </Button>
       </Link>

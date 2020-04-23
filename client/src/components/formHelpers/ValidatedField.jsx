@@ -1,23 +1,21 @@
 // Dependencies
 import React from 'react';
-import { TextField } from '@material-ui/core';
 import { useField } from 'formik';
+import { Input } from '@chakra-ui/core';
 
-const ValidatedTextField = ({ placeholder, type, ...props }) => {
+const ValidatedTextField = ({ type, placeholder, ...props }) => {
   const [field, meta] = useField(props);
 
   const errorText = meta.error && meta.touched ? meta.error : '';
 
   return (
-    <div>
-      <TextField
-        placeholder={placeholder}
-        type={type}
-        {...field}
-        helperText={errorText}
-        error={!!errorText}
-      />
-    </div>
+    <Input
+      variant="flushed"
+      placeholder={placeholder}
+      type={type}
+      {...field}
+      isInvalid={!!errorText}
+    />
   );
 };
 

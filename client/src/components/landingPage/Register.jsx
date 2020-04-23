@@ -1,8 +1,10 @@
 // Dependencies
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+
+// Forms
 import { Formik, Form } from 'formik';
-import { TextField, Button } from '@material-ui/core';
+import { Input, Button } from '@chakra-ui/core';
 
 // Firebase Auth
 import { auth, createUserProfileDocument } from '../../firebase.js';
@@ -37,7 +39,7 @@ const Register = () => {
         } finally {
           setSubmitting(false);
           resetForm();
-          history.push('/');
+          history.push('/profile');
         }
       }}
     >
@@ -48,28 +50,28 @@ const Register = () => {
             name="email"
             value={values.email}
             type="input"
-            as={TextField}
+            as={Input}
           />
           <ValidatedTextField
             placeholder="Password"
             name="password"
             value={values.password}
             type="password"
-            as={TextField}
+            as={Input}
           />
           <ValidatedTextField
             placeholder="Display Name"
             name="displayName"
             value={values.displayName}
             type="input"
-            as={TextField}
+            as={Input}
           />
 
           <Link to="/" style={{ textDecoration: 'none' }}>
-            <Button variant="contained">Cancel</Button>
+            <Button variant="solid">Cancel</Button>
           </Link>
 
-          <Button variant="contained" disabled={isSubmitting} type="submit">
+          <Button variant="solid" disabled={isSubmitting} type="submit">
             Register
           </Button>
         </Form>
