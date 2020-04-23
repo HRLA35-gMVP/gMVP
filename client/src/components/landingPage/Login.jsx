@@ -1,14 +1,18 @@
 // Dependencies
 import React, { Component } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Formik, Form } from 'formik';
 import { TextField, Button } from '@material-ui/core';
+import { Formik, Form } from 'formik';
 
 // Firebase Auth
 import { signInWithGoogle, signInWithEmail } from '../../firebase.js';
 
 // Components
 import ValidatedTextField from './ValidatedField.jsx';
+
+// Yup Validation
+import { loginValidation } from '../../validators.js';
+
 const Login = () => {
   const history = useHistory();
 
@@ -21,16 +25,17 @@ const Login = () => {
     <div>
       <Formik
         initialValues={{ email: '', password: '' }}
+        validationSchema={loginValidation}
         onSubmit={async (data, { setSubmitting, resetForm }) => {
           setSubmitting(true);
 
           try {
             await signInWithEmail(data.email, data.password);
+            resetForm();
           } catch (error) {
-            console.error('handleEmalSignIn Error:', error);
+            alert('Incorrect Email or Password.');
           } finally {
             setSubmitting(false);
-            resetForm();
           }
         }}
       >
@@ -40,7 +45,7 @@ const Login = () => {
               placeholder="Email Address"
               name="email"
               value={values.email}
-              type="email"
+              type="input"
               as={TextField}
             />
 

@@ -10,12 +10,18 @@ import { auth, createUserProfileDocument } from '../../firebase.js';
 // Components
 import ValidatedTextField from './ValidatedField.jsx';
 
+// Yup Validation
+import { registerValidation } from '../../validators.js';
+
+console.log(registerValidation);
+
 const Register = () => {
   const history = useHistory();
 
   return (
     <Formik
-      initialValues={{ email: '', password: '', displayName: '' }}
+      initialValues={{ displayName: '', email: '', password: '' }}
+      validationSchema={registerValidation}
       onSubmit={async (data, { setSubmitting, resetForm }) => {
         setSubmitting(true);
 
@@ -43,7 +49,7 @@ const Register = () => {
             placeholder="Email Address"
             name="email"
             value={values.email}
-            type="email"
+            type="input"
             as={TextField}
           />
           <ValidatedTextField
@@ -57,7 +63,7 @@ const Register = () => {
             placeholder="Display Name"
             name="displayName"
             value={values.displayName}
-            type="text"
+            type="input"
             as={TextField}
           />
 
