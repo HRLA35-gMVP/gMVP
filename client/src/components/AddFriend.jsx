@@ -1,7 +1,9 @@
 // Dependencies
 import React, { Component, useContext } from 'react';
+
+// Forms
 import { Formik, Form } from 'formik';
-import { TextField, Button } from '@material-ui/core';
+import { Input, Button } from '@chakra-ui/core';
 
 // Context
 import { UserContext } from '../providers/UsersProvider.jsx';
@@ -31,9 +33,9 @@ const AddFriend = () => {
             name="friendCode"
             value={values.friendCode}
             type="input"
-            as={TextField}
+            as={Input}
           />
-          <Button variant="contained" disabled={isSubmitting} type="submit">
+          <Button variant="solid" disabled={isSubmitting} type="submit">
             Add
           </Button>
         </Form>

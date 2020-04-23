@@ -1,7 +1,9 @@
 // Dependencies
 import React, { useContext } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+
+// Forms
+import { Button } from '@chakra-ui/core';
 
 // Componenets
 import { UserPage } from './userPage/userPage.jsx';
@@ -17,12 +19,16 @@ const App = () => {
   return !user ? (
     <Switch>
       <Route exact path="/">
-        <Link to="/login" style={{ textDecoration: 'none' }}>
-          <Button variant="contained">Login</Button>
-        </Link>
-        <Link to="/register" style={{ textDecoration: 'none' }}>
-          <Button variant="contained">Register</Button>
-        </Link>
+        <div>
+          <Link to="/login" style={{ textDecoration: 'none' }}>
+            <Button variant="solid">Login</Button>
+          </Link>
+        </div>
+        <div>
+          <Link to="/register" style={{ textDecoration: 'none' }}>
+            <Button variant="solid">Register</Button>
+          </Link>
+        </div>
       </Route>
       <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={Register} />
