@@ -1,42 +1,53 @@
+// Dependencies
 import * as yup from 'yup';
 
-const containsXSS = (string) => /(<(\w)+>|<\/(\w)+>|<\/>)/.test(string);
+// HTML tag regex
+const containsHTML = (string) => /(<(\w)+>|<\/(\w)+>|<\/>)/.test(string);
 
-const loginValidation = yup.object({
+// Declarations
+const errorHTML = 'No HTML. Thanks my dude.';
+const errorRequired = 'This is a required field.';
+const errorMin = (num) => `Minimum character length of ${num}.`;
+const errorMax = (num) => `Maximum character length of ${num}.`;
+
+const loginValid = yup.object().shape({
   email: yup
     .string()
-    .required()
-    .test(
-      'Should not contain a substring with the HTML tag structure.',
-      'Should not contain a substring with the HTML tag structure.',
-      (value) => !containsXSS(value)
-    )
-    .email()
-    .max(64),
-  password: yup.string().required().min(6).max(20)
+    .required(errorRequired)
+    .test(errorHTML, errorHTML, (value) => !containsHTML(value))
+    .email('Must be a valid email.')
+    .max(64, errorMax(64)),
+  password: yup
+    .string()
+    .required(errorRequired)
+    .min(6, errorMin(6))
+    .max(20, errorMax(20))
 });
 
-const registerValidation = yup.object({
+const registerValid = yup.object().shape({
+  email: yup
+    .string()
+    .required(errorRequired)
+    .test(errorHTML, errorHTML, (value) => !containsHTML(value))
+    .email('Must be a valid email.')
+    .max(64, errorMax(64)),
+  password: yup
+    .string()
+    .required(errorRequired)
+    .min(6, errorMin(6))
+    .max(20, errorMax(20)),
   displayName: yup
     .string()
-    .required()
-    .test(
-      'Should not contain a substring with the HTML tag structure.',
-      'Should not contain a substring with the HTML tag structure.',
-      (value) => !containsXSS(value)
-    )
-    .max(64),
-  email: yup
-    .string()
-    .required()
-    .test(
-      'Should not contain a substring with the HTML tag structure.',
-      'Should not contain a substring with the HTML tag structure.',
-      (value) => !containsXSS(value)
-    )
-    .email()
-    .max(64),
-  password: yup.string().required().min(6).max(20)
+    .required(errorRequired)
+    .test(errorHTML, errorHTML, (value) => !containsHTML(value))
+    .max(64, errorMax(64))
 });
 
-export { loginValidation, registerValidation };
+const friendCodeValid = yup.object().shape({
+  friendCode: yup
+    .string()
+    .test(errorHTML, errorHTML, (value) => !containsHTML(value))
+    .length(28, 'Friend codes are 28 characters long.')
+});
+
+export { loginValid, registerValid, friendCodeValid };

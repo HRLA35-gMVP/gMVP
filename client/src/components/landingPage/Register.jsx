@@ -1,27 +1,23 @@
 // Dependencies
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // Forms
 import { Formik, Form } from 'formik';
-import { Input, Button } from '@chakra-ui/core';
+import { Button } from '@chakra-ui/core';
+import { registerValid } from '../formHelpers/validators.js';
 
 // Firebase Auth
 import { auth, createUserProfileDocument } from '../../firebase.js';
 
 // Components
-import ValidatedTextField from '../formHelpers/ValidatedField.jsx';
-
-// Yup Validation
-import { registerValidation } from '../formHelpers/validators.js';
+import ValidatorField from '../formHelpers/ValidatorField.jsx';
 
 const Register = () => {
-  const history = useHistory();
-
   return (
     <Formik
-      initialValues={{ displayName: '', email: '', password: '' }}
-      validationSchema={registerValidation}
+      initialValues={{ email: '', password: '', displayName: '' }}
+      validationSchema={registerValid}
       onSubmit={async (data, { setSubmitting, resetForm }) => {
         setSubmitting(true);
 
@@ -34,44 +30,54 @@ const Register = () => {
           );
 
           createUserProfileDocument(user, { displayName: data.displayName });
+
+          resetForm();
         } catch (error) {
-          console.error('handleRegistration Error:', error);
+          alert('Incorrect Email or Password.');
         } finally {
           setSubmitting(false);
-          resetForm();
-          history.push('/profile');
         }
       }}
     >
       {({ values, isSubmitting }) => (
         <Form>
-          <ValidatedTextField
+          <ValidatorField
             placeholder="Email Address"
             name="email"
             value={values.email}
             type="input"
-            as={Input}
           />
-          <ValidatedTextField
+
+          <ValidatorField
             placeholder="Password"
             name="password"
             value={values.password}
             type="password"
-            as={Input}
           />
-          <ValidatedTextField
+
+          <ValidatorField
             placeholder="Display Name"
             name="displayName"
             value={values.displayName}
             type="input"
-            as={Input}
           />
 
           <Link to="/" style={{ textDecoration: 'none' }}>
-            <Button variant="solid">Cancel</Button>
+            <Button
+              variant="solid"
+              isDisabled={isSubmitting}
+              isLoading={isSubmitting}
+            >
+              Cancel
+            </Button>
           </Link>
 
-          <Button variant="solid" disabled={isSubmitting} type="submit">
+          <Button
+            variant="solid"
+            isDisabled={isSubmitting}
+            isLoading={isSubmitting}
+            type="submit"
+          >
             Register
           </Button>
         </Form>
