@@ -11,8 +11,7 @@ import Register from './landingPage/Register.jsx';
 import Login from './landingPage/Login.jsx';
 import BuildChallenge from './BuildChallenge/BuildAChallenge.jsx';
 
-// Test comment 1
-// Test comment 2
+// Test comment 3
 
 // Contexts
 import { UserContext } from '../providers/UsersProvider.jsx';
