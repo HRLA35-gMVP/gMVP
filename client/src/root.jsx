@@ -3,15 +3,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider, CSSReset } from '@chakra-ui/core';
 
+
 // Components
 import App from './components/app.jsx';
 
-// test
-import EditProfile from './components/userPage/EditProfile.jsx';
+// evelyn's tests
+//import EditProfile from './components/userPage/EditProfile.jsx';
+import ForgotPassword from './components/password/ForgotPw.jsx';
 
 // Contexts
 import UsersProvider from './providers/UsersProvider.jsx';
 import { BrowserRouter as Router } from 'react-router-dom';
+
 
 // ReactDOM.render(
 //   <ThemeProvider>
@@ -26,6 +29,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 // );
 
 
-// for testing
-
-ReactDOM.render(<EditProfile />, document.getElementById('evelyn'));
+// for evelyn's testing
+//ReactDOM.render(<EditProfile />, document.getElementById('evelyn'));
+ReactDOM.render(<ForgotPassword />, document.getElementById('evelyn'));
