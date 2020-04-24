@@ -1,17 +1,17 @@
 // Dependencies
-import React, { Component } from 'react';
+import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 // Forms
 import { Formik, Form } from 'formik';
-import { Input, Button } from '@chakra-ui/core';
-import { loginValidation } from '../formHelpers/validators.js';
+import { Button } from '@chakra-ui/core';
+import { loginValid } from '../formHelpers/validators.js';
 
 // Firebase Auth
 import { signInWithGoogle, signInWithEmail } from '../../firebase.js';
 
 // Components
-import ValidatedTextField from '../formHelpers/ValidatedField.jsx';
+import ValidatorField from '../formHelpers/ValidatorField.jsx';
 
 const Login = () => {
   const history = useHistory();
@@ -24,15 +24,17 @@ const Login = () => {
   return (
     <div>
       <Formik
-        initialValues={{ email: '', password: '' }}
-        validationSchema={loginValidation}
+        initialValues={{ email: '123@123.com', password: '123123' }}
+        validationSchema={loginValid}
         onSubmit={async (data, { setSubmitting, resetForm }) => {
           setSubmitting(true);
 
           try {
             await signInWithEmail(data.email, data.password);
-            resetForm();
+
             setSubmitting(false);
+            resetForm();
+
             history.push('/profile');
           } catch (error) {
             setSubmitting(false);
@@ -42,23 +44,24 @@ const Login = () => {
       >
         {({ values, isSubmitting }) => (
           <Form>
-            <ValidatedTextField
+            <ValidatorField
               placeholder="Email Address"
               name="email"
               value={values.email}
               type="input"
-              as={Input}
             />
-
-            <ValidatedTextField
+            <ValidatorField
               placeholder="Password"
               name="password"
               value={values.password}
               type="password"
-              as={Input}
             />
-
-            <Button variant="solid" disabled={isSubmitting} type="submit">
+            <Button
+              variant="solid"
+              isDisabled={isSubmitting}
+              isLoading={isSubmitting}
+              type="submit"
+            >
               Email Login
             </Button>
           </Form>

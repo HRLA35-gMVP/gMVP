@@ -1,19 +1,26 @@
 // Dependencies
-import React, { Component, useContext } from 'react';
+import React, { useContext } from 'react';
 
 // Forms
 import { Formik, Form } from 'formik';
-import { Input, Button } from '@chakra-ui/core';
+import { Button } from '@chakra-ui/core';
+import { friendCodeValid } from './formHelpers/validators.js';
 
 // Context
 import { UserContext } from '../providers/UsersProvider.jsx';
 
 // Components
-import ValidatedTextField from './formHelpers/ValidatedField.jsx';
+import ValidatorField from './formHelpers/ValidatorField.jsx';
 
 // Firestore
 import { addFriend } from '../firebase.js';
-import { friendCodeValidation } from './formHelpers/validators.js';
+
+// Check if the input is the same as the current user's ID
+const selfCheck = (input, user) => {
+  if (input === user.uid) return 'Why are you trying to adding yourself?';
+  if (user.friends[input] !== undefined) return 'Friend already exists.';
+  return '';
+};
 
 const AddFriend = () => {
   const user = useContext(UserContext);
@@ -21,36 +28,40 @@ const AddFriend = () => {
   return (
     <Formik
       initialValues={{ friendCode: '' }}
-      validationSchema={friendCodeValidation}
+      validationSchema={friendCodeValid}
       onSubmit={async (data, { setSubmitting, resetForm }) => {
         setSubmitting(true);
 
-        if (user.friends[data.friendCode] === undefined) {
+        if (
+          user.friends[data.friendCode] === undefined &&
+          data.friendCode !== ''
+        ) {
           try {
-            const response = await addFriend(user.uid, data.friendCode);
-            console.log('AddFriend Response: ', response);
+            const found = await addFriend(user.uid, data.friendCode);
+            if (!found) {
+              alert('User not found. Double check input');
+            } else {
+              resetForm();
+            }
           } catch (error) {
-            console.error('AddFriend: ', error);
+            resetForm();
+            alert('AddFriend: ', error);
           }
         }
 
-        if (data.friendCode === user.uid) {
-          alert('Why are you adding yourself?');
-        }
-
         setSubmitting(false);
-        resetForm();
       }}
     >
       {({ values, isSubmitting }) => (
         <Form>
-          <ValidatedTextField
+          <ValidatorField
             placeholder="Friend Code"
             name="friendCode"
             value={values.friendCode}
             type="input"
-            as={Input}
+            callback={(data) => selfCheck(data, user)}
           />
+
           <Button variant="solid" disabled={isSubmitting} type="submit">
             Add
           </Button>

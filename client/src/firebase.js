@@ -89,7 +89,7 @@ export const getUserDocument = async (uid) => {
     if (userDoc.friends === undefined) {
       await userRef.set({
         friends: {
-          [uid]: 1
+          [uid]: 2
         },
         groups: {},
         ...userDoc.data()
@@ -109,9 +109,9 @@ export const addFriend = async (uid, friendUID) => {
   const userRef = firestore.collection('users').doc(uid);
 
   const friendRef = firestore.collection('users').doc(friendUID);
-  const friendSnapshopt = await friendRef.get();
+  const friendSnapshop = await friendRef.get();
 
-  if (friendSnapshopt.exists) {
+  if (friendSnapshop.exists) {
     const userDoc = await userRef.get();
 
     await userRef.set({
@@ -122,7 +122,7 @@ export const addFriend = async (uid, friendUID) => {
       }
     });
 
-    return true;
+    return friendSnapshop.data().displayName;
   }
 
   return false;
