@@ -10,7 +10,8 @@ import App from './components/app.jsx';
 // evelyn's tests
 //import EditProfile from './components/userPage/EditProfile.jsx';
 //import ForgotPassword from './components/password/ForgotPw.jsx';
-import CheckEmail from './components/password/CheckEmail.jsx';
+//import CheckEmail from './components/password/CheckEmail.jsx';
+import ChallengeStatus from './components/userPage/ChallengeStatus.jsx';
 
 // Contexts
 import UsersProvider from './providers/UsersProvider.jsx';
@@ -33,4 +34,5 @@ import { BrowserRouter as Router } from 'react-router-dom';
 // for evelyn's testing
 //ReactDOM.render(<EditProfile />, document.getElementById('evelyn'));
 // ReactDOM.render(<ForgotPassword />, document.getElementById('evelyn'));
-ReactDOM.render(<CheckEmail />, document.getElementById('evelyn'));
+//ReactDOM.render(<CheckEmail />, document.getElementById('evelyn'));
+ReactDOM.render(<ChallengeStatus />, document.getElementById('evelyn'));

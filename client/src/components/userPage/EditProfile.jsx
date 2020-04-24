@@ -18,8 +18,6 @@ const EditProfile = () => {
                     <Button align="center" variant="link" color="#E8E8E8" pb="4%" pt="4%">Cancel</Button>
                     <Text variant="link" color="#fff" fontSize="18px" fontWeight="bold" pb="4%" pt="4%">Edit Profile</Text>
                     <Button variant="link" color="#E8E8E8" pb="4%" pt="4%" >Save</Button>
-                    
-               
             </Stack>
             <Box bg='#BEEBE9'  p={[2, 4, 6, 8]} height="full"  width={[
                 "100%", // base

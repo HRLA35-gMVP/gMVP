@@ -23,8 +23,6 @@ const CheckEmail = () => {
             </Flex>
 
                
-          
-
                <Flex direction="column" align="center" justify="center" pb="30%">
                     <PseudoBox
                     as="button"
