@@ -16,7 +16,7 @@ export const UserPage = () => {
   const user = useContext(UserContext);
 
   return (
-    <div>
+    <React.Fragment>
       <p>Homies 💪😊</p>
       <p>{user.displayName}</p>
       <p>{user.uid}</p>
@@ -34,6 +34,6 @@ export const UserPage = () => {
           Sign Out
         </Button>
       </Link>
-    </div>
+    </React.Fragment>
   );
 };

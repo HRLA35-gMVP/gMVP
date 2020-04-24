@@ -1,6 +1,6 @@
 // Dependencies
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // Forms
 import { Formik, Form } from 'formik';
@@ -14,8 +14,6 @@ import { auth, createUserProfileDocument } from '../../firebase.js';
 import ValidatorField from '../formHelpers/ValidatorField.jsx';
 
 const Register = () => {
-  const history = useHistory();
-
   return (
     <Formik
       initialValues={{ email: '', password: '', displayName: '' }}
@@ -33,12 +31,11 @@ const Register = () => {
 
           createUserProfileDocument(user, { displayName: data.displayName });
 
-          setSubmitting(false);
           resetForm();
-          history.push('/profile');
         } catch (error) {
-          setSubmitting(false);
           alert('Incorrect Email or Password.');
+        } finally {
+          setSubmitting(false);
         }
       }}
     >
@@ -50,12 +47,14 @@ const Register = () => {
             value={values.email}
             type="input"
           />
+
           <ValidatorField
             placeholder="Password"
             name="password"
             value={values.password}
             type="password"
           />
+
           <ValidatorField
             placeholder="Display Name"
             name="displayName"
@@ -64,7 +63,13 @@ const Register = () => {
           />
 
           <Link to="/" style={{ textDecoration: 'none' }}>
-            <Button variant="solid">Cancel</Button>
+            <Button
+              variant="solid"
+              isDisabled={isSubmitting}
+              isLoading={isSubmitting}
+            >
+              Cancel
+            </Button>
           </Link>
 
           <Button
