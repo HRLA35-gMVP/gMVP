@@ -1,67 +1,78 @@
 // Dependencies
 import React, { useContext } from 'react';
+import { UserContext } from '../../providers/UsersProvider.jsx';
 
 // Forms
 import { signOut } from '../../firebase.js';
 import {
   Button,
-  Stack,
   SimpleGrid,
   Box,
-  Text,
   Avatar,
-  AccordionItem,
-  AccordionHeader,
-  AccordionIcon,
-  AccordionPanel
+  AccordionPanel,
+  Heading
 } from '@chakra-ui/core';
 
-// Components
+// Components + Styles
 import AddFriend from '../AddFriend.jsx';
-
-// Context
-import { UserContext } from '../../providers/UsersProvider.jsx';
+import {
+  StyledStack,
+  StyledAccItem,
+  StyleAccHeader,
+  StyledBox,
+  StyledText
+} from '../../styledComponents/UserPage.js';
 
 export const UserPage = () => {
   const user = useContext(UserContext);
 
   return (
-    <Stack spacing={'1rem'} textAlign="center">
+    <StyledStack spacing={'1rem'}>
       <Box>
-        <Avatar name={user.displayName} src={user.photoURL}></Avatar>
+        <Avatar name={user.displayName} src={user.photoURL} size="xl"></Avatar>
 
-        <AccordionItem>
-          <AccordionHeader>
+        <StyledAccItem>
+          <StyleAccHeader>
             <Box flex="1">{user.displayName}</Box>
-            <AccordionIcon />
-          </AccordionHeader>
+          </StyleAccHeader>
           <AccordionPanel>{user.uid}</AccordionPanel>
-        </AccordionItem>
+        </StyledAccItem>
       </Box>
 
       <SimpleGrid columns={2} spacing={'3rem'}>
-        <Box>
+        <StyledBox>
           <Box>
-            <Text>Completed Challenges</Text>
-            <Text backgroundColor="#F7FAFC">0</Text>
+            <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
+              Completed Challenges
+            </Heading>
+            <StyledText>0</StyledText>
           </Box>
           <Box>
-            <Text>Wins</Text>
-            <Text backgroundColor="#F7FAFC">0</Text>
+            <Heading
+              as="h6"
+              size="sm"
+              paddingBottom={'0.35rem'}
+              paddingTop={'0.25rem'}
+            >
+              Wins
+            </Heading>
+            <StyledText>0</StyledText>
           </Box>
-        </Box>
-        <Box>
-          <Text>Friends</Text>
-          <Text backgroundColor="#F7FAFC">
-            {Object.keys(user.friends).length - 1}
-          </Text>
-        </Box>
+        </StyledBox>
+        <StyledBox>
+          <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
+            Friends
+          </Heading>
+          <StyledText>{Object.keys(user.friends).length - 1}</StyledText>
+        </StyledBox>
       </SimpleGrid>
 
-      <Box>
-        <Text>Groups</Text>
-        <Text backgroundColor="#F7FAFC">{Object.keys(user.groups).length}</Text>
-      </Box>
+      <StyledBox>
+        <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
+          Active Challenges
+        </Heading>
+        <StyledText>{Object.keys(user.groups).length}</StyledText>
+      </StyledBox>
 
       <Box>
         <AddFriend />
@@ -70,6 +81,6 @@ export const UserPage = () => {
       <Button variant="solid" onClick={signOut}>
         Sign Out
       </Button>
-    </Stack>
+    </StyledStack>
   );
 };
