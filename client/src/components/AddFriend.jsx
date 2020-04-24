@@ -1,19 +1,15 @@
 // Dependencies
 import React, { useContext } from 'react';
+import { UserContext } from '../providers/UsersProvider.jsx';
+import { addFriend } from '../firebase.js';
 
 // Forms
 import { Formik, Form } from 'formik';
-import { Button, Box } from '@chakra-ui/core';
+import { Button, Flex } from '@chakra-ui/core';
 import { friendCodeValid } from './formHelpers/validators.js';
 
-// Context
-import { UserContext } from '../providers/UsersProvider.jsx';
-
-// Components
+// Components + Styles
 import ValidatorField from './formHelpers/ValidatorField.jsx';
-
-// Firestore
-import { addFriend } from '../firebase.js';
 
 // Check if the input is the same as the current user's ID
 const selfCheck = (input, user) => {
@@ -26,50 +22,47 @@ const AddFriend = () => {
   const user = useContext(UserContext);
 
   return (
-    <Box>
-      <Formik
-        initialValues={{ friendCode: '' }}
-        validationSchema={friendCodeValid}
-        onSubmit={async (data, { setSubmitting, resetForm }) => {
-          setSubmitting(true);
+    <Formik
+      initialValues={{ friendCode: '' }}
+      validationSchema={friendCodeValid}
+      onSubmit={async (data, { setSubmitting, resetForm }) => {
+        setSubmitting(true);
 
-          if (
-            user.friends[data.friendCode] === undefined &&
-            data.friendCode !== ''
-          ) {
-            try {
-              const found = await addFriend(user.uid, data.friendCode);
-              if (!found) {
-                alert('User not found. Double check input');
-              } else {
-                resetForm();
-              }
-            } catch (error) {
+        if (
+          user.friends[data.friendCode] === undefined &&
+          data.friendCode !== ''
+        ) {
+          try {
+            const found = await addFriend(user.uid, data.friendCode);
+            if (!found) {
+              alert('User not found. Double check input');
+            } else {
               resetForm();
-              alert('AddFriend: ', error);
             }
+          } catch (error) {
+            resetForm();
+            alert('AddFriend: ', error);
           }
+        }
 
-          setSubmitting(false);
-        }}
-      >
-        {({ values, isSubmitting }) => (
-          <Form>
-            <ValidatorField
-              placeholder="Friend Code"
-              name="friendCode"
-              value={values.friendCode}
-              type="input"
-              callback={(data) => selfCheck(data, user)}
-            />
-
-            <Button variant="solid" disabled={isSubmitting} type="submit">
-              Add
-            </Button>
-          </Form>
-        )}
-      </Formik>
-    </Box>
+        setSubmitting(false);
+      }}
+    >
+      {({ values, isSubmitting }) => (
+        <Flex as={Form}>
+          <ValidatorField
+            placeholder="Friend Code"
+            name="friendCode"
+            value={values.friendCode}
+            type="input"
+            callback={(data) => selfCheck(data, user)}
+          />
+          <Button variant="solid" disabled={isSubmitting} type="submit">
+            Add
+          </Button>
+        </Flex>
+      )}
+    </Formik>
   );
 };
 

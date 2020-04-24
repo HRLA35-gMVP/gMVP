@@ -5,8 +5,7 @@ import {
   Text,
   Box,
   AccordionItem,
-  AccordionHeader,
-  Heading
+  AccordionHeader
 } from '@chakra-ui/core';
 
 const StyledStack = styled(Stack)`

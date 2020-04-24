@@ -21,7 +21,7 @@ import {
   StyleAccHeader,
   StyledBox,
   StyledText
-} from '../../styledComponents/UserPage.js';
+} from '../../styledComponents/ericStyles.js';
 
 export const UserPage = () => {
   const user = useContext(UserContext);
