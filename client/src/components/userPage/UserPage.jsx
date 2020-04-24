@@ -20,10 +20,11 @@ export const UserPage = () => {
       <p>Homies 💪😊</p>
       <p>{user.displayName}</p>
       <p>{user.uid}</p>
+      <p>{user.uid.length}</p>
       {user.friends !== undefined ? (
         <div>
-          <p>Friends: {user.friends.length}</p>
-          <p>Groups: {user.groups.length}</p>
+          <p>Friends: {Object.keys(user.friends).length - 1}</p>
+          <p>Groups: {Object.keys(user.groups).length}</p>
         </div>
       ) : null}
       <AddFriend />

@@ -39,4 +39,17 @@ const registerValidation = yup.object({
   password: yup.string().required().min(6).max(20)
 });
 
-export { loginValidation, registerValidation };
+const friendCodeValidation = yup.object({
+  friendCode: yup
+    .string()
+    .required()
+    .test(
+      'Should not contain a substring with the HTML tag structure.',
+      'Should not contain a substring with the HTML tag structure.',
+      (value) => !containsXSS(value)
+    )
+    .length(28)
+    .max(28)
+});
+
+export { loginValidation, registerValidation, friendCodeValidation };

@@ -49,17 +49,17 @@ export const createUserProfileDocument = async (user, additionalData) => {
   if (!user) return;
 
   // Get a reference to where this user's data is stored
-  const userReference = firestore.collection('users').doc(user.uid);
+  const userRef = firestore.collection('users').doc(user.uid);
 
   // From the location reference, retrieve the user's information
-  const snapshot = await userReference.get();
+  const snapshot = await userRef.get();
 
   if (!snapshot.exists) {
     const { email, displayName, photoURL } = user;
     const createdAt = new Date();
 
     try {
-      await userReference.set({
+      await userRef.set({
         displayName,
         email,
         photoURL,
@@ -78,26 +78,44 @@ export const getUserDocument = async (uid) => {
   if (!uid) return null;
 
   try {
-    const userReference = firestore.collection('users').doc(uid);
-    const userDocument = await userReference.get();
+    const userRef = firestore.collection('users').doc(uid);
+    const userDoc = await userRef.get();
 
     /**
      * Set friends to an empty array here
      * Because if we were to do it in createUserProfile
      * Then Google OAuth accounts wouldn't receive them
      */
-    if (userDocument.friends === undefined) {
-      await userReference.set({
-        friends: [],
-        groups: [],
-        ...userDocument.data()
+    if (userDoc.friends === undefined) {
+      await userRef.set({
+        friends: {
+          [uid]: 1
+        },
+        groups: {},
+        ...userDoc.data()
       });
     }
 
-    return userReference;
+    return userRef;
   } catch (error) {
     console.error('getUserDocument Error:', error);
   }
+};
+
+// Add Friend
+export const addFriend = async (uid, friendUID) => {
+  const friend = { [friendUID]: 1 };
+
+  const userRef = firestore.collection('users').doc(uid);
+  const userDoc = await userRef.get();
+
+  await userRef.set({
+    ...userDoc.data(),
+    friends: {
+      ...friend,
+      ...userDoc.data().friends
+    }
+  });
 };
 
 export default firebase;

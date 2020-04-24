@@ -5,15 +5,13 @@ import { Link, useHistory } from 'react-router-dom';
 // Forms
 import { Formik, Form } from 'formik';
 import { Input, Button } from '@chakra-ui/core';
+import { registerValidation } from '../formHelpers/validators.js';
 
 // Firebase Auth
 import { auth, createUserProfileDocument } from '../../firebase.js';
 
 // Components
 import ValidatedTextField from '../formHelpers/ValidatedField.jsx';
-
-// Yup Validation
-import { registerValidation } from '../formHelpers/validators.js';
 
 const Register = () => {
   const history = useHistory();
@@ -34,12 +32,13 @@ const Register = () => {
           );
 
           createUserProfileDocument(user, { displayName: data.displayName });
-        } catch (error) {
-          console.error('handleRegistration Error:', error);
-        } finally {
+
           setSubmitting(false);
           resetForm();
           history.push('/profile');
+        } catch (error) {
+          setSubmitting(false);
+          alert('Incorrect Email or Password.');
         }
       }}
     >
