@@ -107,15 +107,25 @@ export const addFriend = async (uid, friendUID) => {
   const friend = { [friendUID]: 1 };
 
   const userRef = firestore.collection('users').doc(uid);
-  const userDoc = await userRef.get();
 
-  await userRef.set({
-    ...userDoc.data(),
-    friends: {
-      ...friend,
-      ...userDoc.data().friends
-    }
-  });
+  const friendRef = firestore.collection('users').doc(friendUID);
+  const friendSnapshopt = await friendRef.get();
+
+  if (friendSnapshopt.exists) {
+    const userDoc = await userRef.get();
+
+    await userRef.set({
+      ...userDoc.data(),
+      friends: {
+        ...friend,
+        ...userDoc.data().friends
+      }
+    });
+
+    return true;
+  }
+
+  return false;
 };
 
 export default firebase;

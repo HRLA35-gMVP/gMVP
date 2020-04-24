@@ -27,8 +27,8 @@ const AddFriend = () => {
 
         if (user.friends[data.friendCode] === undefined) {
           try {
-            await addFriend(user.uid, data.friendCode);
-            console.log('Success');
+            const response = await addFriend(user.uid, data.friendCode);
+            console.log('AddFriend Response: ', response);
           } catch (error) {
             console.error('AddFriend: ', error);
           }
