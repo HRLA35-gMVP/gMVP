@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 
 // Forms
 import { Formik, Form } from 'formik';
-import { Button } from '@chakra-ui/core';
+import { Button, Box } from '@chakra-ui/core';
 import { friendCodeValid } from './formHelpers/validators.js';
 
 // Context
@@ -26,48 +26,50 @@ const AddFriend = () => {
   const user = useContext(UserContext);
 
   return (
-    <Formik
-      initialValues={{ friendCode: '' }}
-      validationSchema={friendCodeValid}
-      onSubmit={async (data, { setSubmitting, resetForm }) => {
-        setSubmitting(true);
+    <Box>
+      <Formik
+        initialValues={{ friendCode: '' }}
+        validationSchema={friendCodeValid}
+        onSubmit={async (data, { setSubmitting, resetForm }) => {
+          setSubmitting(true);
 
-        if (
-          user.friends[data.friendCode] === undefined &&
-          data.friendCode !== ''
-        ) {
-          try {
-            const found = await addFriend(user.uid, data.friendCode);
-            if (!found) {
-              alert('User not found. Double check input');
-            } else {
+          if (
+            user.friends[data.friendCode] === undefined &&
+            data.friendCode !== ''
+          ) {
+            try {
+              const found = await addFriend(user.uid, data.friendCode);
+              if (!found) {
+                alert('User not found. Double check input');
+              } else {
+                resetForm();
+              }
+            } catch (error) {
               resetForm();
+              alert('AddFriend: ', error);
             }
-          } catch (error) {
-            resetForm();
-            alert('AddFriend: ', error);
           }
-        }
 
-        setSubmitting(false);
-      }}
-    >
-      {({ values, isSubmitting }) => (
-        <Form>
-          <ValidatorField
-            placeholder="Friend Code"
-            name="friendCode"
-            value={values.friendCode}
-            type="input"
-            callback={(data) => selfCheck(data, user)}
-          />
+          setSubmitting(false);
+        }}
+      >
+        {({ values, isSubmitting }) => (
+          <Form>
+            <ValidatorField
+              placeholder="Friend Code"
+              name="friendCode"
+              value={values.friendCode}
+              type="input"
+              callback={(data) => selfCheck(data, user)}
+            />
 
-          <Button variant="solid" disabled={isSubmitting} type="submit">
-            Add
-          </Button>
-        </Form>
-      )}
-    </Formik>
+            <Button variant="solid" disabled={isSubmitting} type="submit">
+              Add
+            </Button>
+          </Form>
+        )}
+      </Formik>
+    </Box>
   );
 };
 

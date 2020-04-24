@@ -1,10 +1,20 @@
 // Dependencies
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 
 // Forms
 import { signOut } from '../../firebase.js';
-import { Button } from '@chakra-ui/core';
+import {
+  Button,
+  Stack,
+  SimpleGrid,
+  Box,
+  Text,
+  Avatar,
+  AccordionItem,
+  AccordionHeader,
+  AccordionIcon,
+  AccordionPanel
+} from '@chakra-ui/core';
 
 // Components
 import AddFriend from '../AddFriend.jsx';
@@ -16,24 +26,50 @@ export const UserPage = () => {
   const user = useContext(UserContext);
 
   return (
-    <React.Fragment>
-      <p>Homies 💪😊</p>
-      <p>{user.displayName}</p>
-      <p>{user.uid}</p>
-      <p>{user.uid.length}</p>
-      {user.friends !== undefined ? (
-        <div>
-          <p>Friends: {Object.keys(user.friends).length - 1}</p>
-          <p>Groups: {Object.keys(user.groups).length}</p>
-        </div>
-      ) : null}
-      <AddFriend />
+    <Stack spacing={'1rem'} textAlign="center">
+      <Box>
+        <Avatar name={user.displayName} src={user.photoURL}></Avatar>
 
-      <Link to="/" style={{ textDecoration: 'none' }}>
-        <Button variant="solid" onClick={signOut}>
-          Sign Out
-        </Button>
-      </Link>
-    </React.Fragment>
+        <AccordionItem>
+          <AccordionHeader>
+            <Box flex="1">{user.displayName}</Box>
+            <AccordionIcon />
+          </AccordionHeader>
+          <AccordionPanel>{user.uid}</AccordionPanel>
+        </AccordionItem>
+      </Box>
+
+      <SimpleGrid columns={2} spacing={'3rem'}>
+        <Box>
+          <Box>
+            <Text>Completed Challenges</Text>
+            <Text backgroundColor="#F7FAFC">0</Text>
+          </Box>
+          <Box>
+            <Text>Wins</Text>
+            <Text backgroundColor="#F7FAFC">0</Text>
+          </Box>
+        </Box>
+        <Box>
+          <Text>Friends</Text>
+          <Text backgroundColor="#F7FAFC">
+            {Object.keys(user.friends).length - 1}
+          </Text>
+        </Box>
+      </SimpleGrid>
+
+      <Box>
+        <Text>Groups</Text>
+        <Text backgroundColor="#F7FAFC">{Object.keys(user.groups).length}</Text>
+      </Box>
+
+      <Box>
+        <AddFriend />
+      </Box>
+
+      <Button variant="solid" onClick={signOut}>
+        Sign Out
+      </Button>
+    </Stack>
   );
 };
