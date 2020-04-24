@@ -5,7 +5,7 @@ import { addFriend } from '../firebase.js';
 
 // Forms
 import { Formik, Form } from 'formik';
-import { Button, Flex } from '@chakra-ui/core';
+import { Button, Flex, useToast } from '@chakra-ui/core';
 import { friendCodeValid } from './formHelpers/validators.js';
 
 // Components + Styles
@@ -20,6 +20,7 @@ const selfCheck = (input, user) => {
 
 const AddFriend = () => {
   const user = useContext(UserContext);
+  const toast = useToast();
 
   return (
     <Formik
@@ -35,13 +36,34 @@ const AddFriend = () => {
           try {
             const found = await addFriend(user.uid, data.friendCode);
             if (!found) {
-              alert('User not found. Double check input');
+              toast({
+                title: 'An error occurred.',
+                description: 'Invalid friend code.',
+                status: 'error',
+                duration: 9001,
+                isClosable: true
+              });
             } else {
               resetForm();
+
+              toast({
+                title: 'Friend added!',
+                description: `${found} has been added to your friends list.`,
+                status: 'success',
+                duration: 9001,
+                isClosable: true
+              });
             }
           } catch (error) {
             resetForm();
-            alert('AddFriend: ', error);
+
+            toast({
+              title: 'An error occurred.',
+              description: error,
+              status: 'error',
+              duration: 9001,
+              isClosable: true
+            });
           }
         }
 
@@ -57,7 +79,12 @@ const AddFriend = () => {
             type="input"
             callback={(data) => selfCheck(data, user)}
           />
-          <Button variant="solid" disabled={isSubmitting} type="submit">
+          <Button
+            variant="solid"
+            isDisabled={isSubmitting}
+            isLoading={isSubmitting}
+            type="submit"
+          >
             Add
           </Button>
         </Flex>

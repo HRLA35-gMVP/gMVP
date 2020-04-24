@@ -5,7 +5,9 @@ import {
   Text,
   Box,
   AccordionItem,
-  AccordionHeader
+  AccordionHeader,
+  PopoverContent,
+  Button
 } from '@chakra-ui/core';
 
 const StyledStack = styled(Stack)`
@@ -53,4 +55,30 @@ const StyledText = styled(Text)`
   border-radius: 0.5rem;
 `;
 
-export { StyledStack, StyledAccItem, StyleAccHeader, StyledBox, StyledText };
+const StyledPopoverContent = styled(PopoverContent)`
+  :focus {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  :focus {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+  }
+`;
+
+export {
+  StyledStack,
+  StyledAccItem,
+  StyleAccHeader,
+  StyledBox,
+  StyledText,
+  StyledPopoverContent,
+  StyledButton
+};
