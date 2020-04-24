@@ -1,39 +1,86 @@
 // Dependencies
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { UserContext } from '../../providers/UsersProvider.jsx';
 
 // Forms
 import { signOut } from '../../firebase.js';
-import { Button } from '@chakra-ui/core';
+import {
+  Button,
+  SimpleGrid,
+  Box,
+  Avatar,
+  AccordionPanel,
+  Heading
+} from '@chakra-ui/core';
 
-// Components
+// Components + Styles
 import AddFriend from '../AddFriend.jsx';
-
-// Context
-import { UserContext } from '../../providers/UsersProvider.jsx';
+import {
+  StyledStack,
+  StyledAccItem,
+  StyleAccHeader,
+  StyledBox,
+  StyledText
+} from '../../styledComponents/ericStyles.js';
 
 export const UserPage = () => {
   const user = useContext(UserContext);
 
   return (
-    <div>
-      <p>Homies 💪😊</p>
-      <p>{user.displayName}</p>
-      <p>{user.uid}</p>
-      <p>{user.uid.length}</p>
-      {user.friends !== undefined ? (
-        <div>
-          <p>Friends: {Object.keys(user.friends).length - 1}</p>
-          <p>Groups: {Object.keys(user.groups).length}</p>
-        </div>
-      ) : null}
-      <AddFriend />
+    <StyledStack spacing={'1rem'}>
+      <Box>
+        <Avatar name={user.displayName} src={user.photoURL} size="xl"></Avatar>
 
-      <Link to="/" style={{ textDecoration: 'none' }}>
-        <Button variant="solid" onClick={signOut}>
-          Sign Out
-        </Button>
-      </Link>
-    </div>
+        <StyledAccItem>
+          <StyleAccHeader>
+            <Box flex="1">{user.displayName}</Box>
+          </StyleAccHeader>
+          <AccordionPanel>{user.uid}</AccordionPanel>
+        </StyledAccItem>
+      </Box>
+
+      <SimpleGrid columns={2} spacing={'3rem'}>
+        <StyledBox>
+          <Box>
+            <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
+              Completed Challenges
+            </Heading>
+            <StyledText>0</StyledText>
+          </Box>
+          <Box>
+            <Heading
+              as="h6"
+              size="sm"
+              paddingBottom={'0.35rem'}
+              paddingTop={'0.25rem'}
+            >
+              Wins
+            </Heading>
+            <StyledText>0</StyledText>
+          </Box>
+        </StyledBox>
+        <StyledBox>
+          <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
+            Friends
+          </Heading>
+          <StyledText>{Object.keys(user.friends).length - 1}</StyledText>
+        </StyledBox>
+      </SimpleGrid>
+
+      <StyledBox>
+        <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
+          Active Challenges
+        </Heading>
+        <StyledText>{Object.keys(user.challenges).length}</StyledText>
+      </StyledBox>
+
+      <Box>
+        <AddFriend />
+      </Box>
+
+      <Button variant="solid" onClick={signOut}>
+        Sign Out
+      </Button>
+    </StyledStack>
   );
 };

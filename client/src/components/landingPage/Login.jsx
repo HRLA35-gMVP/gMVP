@@ -1,10 +1,10 @@
 // Dependencies
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // Forms
 import { Formik, Form } from 'formik';
-import { Button } from '@chakra-ui/core';
+import { Button, useToast } from '@chakra-ui/core';
 import { loginValid } from '../formHelpers/validators.js';
 
 // Firebase Auth
@@ -14,70 +14,80 @@ import { signInWithGoogle, signInWithEmail } from '../../firebase.js';
 import ValidatorField from '../formHelpers/ValidatorField.jsx';
 
 const Login = () => {
-  const history = useHistory();
-
-  const handleOAuth = async () => {
-    await signInWithGoogle();
-    history.push('/profile');
-  };
+  const toast = useToast();
 
   return (
-    <div>
-      <Formik
-        initialValues={{ email: '123@123.com', password: '123123' }}
-        validationSchema={loginValid}
-        onSubmit={async (data, { setSubmitting, resetForm }) => {
-          setSubmitting(true);
+    <Formik
+      initialValues={{ email: '123@123.com', password: '123123' }}
+      validationSchema={loginValid}
+      onSubmit={async (data, { setSubmitting, resetForm }) => {
+        setSubmitting(true);
 
-          try {
-            await signInWithEmail(data.email, data.password);
+        try {
+          await signInWithEmail(data.email, data.password);
 
-            setSubmitting(false);
-            resetForm();
+          resetForm();
+        } catch (error) {
+          toast({
+            title: 'An error occurred.',
+            description: 'Invalid email or password.',
+            status: 'error',
+            duration: 9001,
+            isClosable: true
+          });
+        } finally {
+          setSubmitting(false);
+        }
+      }}
+    >
+      {({ values, isSubmitting }) => (
+        <Form>
+          <ValidatorField
+            placeholder="Email Address"
+            name="email"
+            value={values.email}
+            type="input"
+          />
 
-            history.push('/profile');
-          } catch (error) {
-            setSubmitting(false);
-            alert('Incorrect Email or Password.');
-          }
-        }}
-      >
-        {({ values, isSubmitting }) => (
-          <Form>
-            <ValidatorField
-              placeholder="Email Address"
-              name="email"
-              value={values.email}
-              type="input"
-            />
-            <ValidatorField
-              placeholder="Password"
-              name="password"
-              value={values.password}
-              type="password"
-            />
+          <ValidatorField
+            placeholder="Password"
+            name="password"
+            value={values.password}
+            type="password"
+          />
+
+          <Button
+            variant="solid"
+            isDisabled={isSubmitting}
+            isLoading={isSubmitting}
+            type="submit"
+          >
+            Email Login
+          </Button>
+
+          <div>
             <Button
               variant="solid"
               isDisabled={isSubmitting}
               isLoading={isSubmitting}
-              type="submit"
+              onClick={signInWithGoogle}
             >
-              Email Login
+              Google OAuth
             </Button>
-          </Form>
-        )}
-      </Formik>
+          </div>
 
-      <div>
-        <Button variant="solid" onClick={handleOAuth}>
-          Google OAuth
-        </Button>
-      </div>
-
-      <Link to="/" style={{ textDecoration: 'none' }}>
-        <Button variant="solid">Return</Button>
-      </Link>
-    </div>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Button
+              variant="solid"
+              isDisabled={isSubmitting}
+              isLoading={isSubmitting}
+            >
+              Return
+            </Button>
+          </Link>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

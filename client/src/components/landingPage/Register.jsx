@@ -1,10 +1,10 @@
 // Dependencies
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // Forms
 import { Formik, Form } from 'formik';
-import { Button } from '@chakra-ui/core';
+import { Button, useToast } from '@chakra-ui/core';
 import { registerValid } from '../formHelpers/validators.js';
 
 // Firebase Auth
@@ -14,7 +14,7 @@ import { auth, createUserProfileDocument } from '../../firebase.js';
 import ValidatorField from '../formHelpers/ValidatorField.jsx';
 
 const Register = () => {
-  const history = useHistory();
+  const toast = useToast();
 
   return (
     <Formik
@@ -33,12 +33,17 @@ const Register = () => {
 
           createUserProfileDocument(user, { displayName: data.displayName });
 
-          setSubmitting(false);
           resetForm();
-          history.push('/profile');
         } catch (error) {
+          toast({
+            title: 'An error occurred.',
+            description: 'Email already in use.',
+            status: 'error',
+            duration: 9001,
+            isClosable: true
+          });
+        } finally {
           setSubmitting(false);
-          alert('Incorrect Email or Password.');
         }
       }}
     >
@@ -50,12 +55,14 @@ const Register = () => {
             value={values.email}
             type="input"
           />
+
           <ValidatorField
             placeholder="Password"
             name="password"
             value={values.password}
             type="password"
           />
+
           <ValidatorField
             placeholder="Display Name"
             name="displayName"
@@ -64,7 +71,13 @@ const Register = () => {
           />
 
           <Link to="/" style={{ textDecoration: 'none' }}>
-            <Button variant="solid">Cancel</Button>
+            <Button
+              variant="solid"
+              isDisabled={isSubmitting}
+              isLoading={isSubmitting}
+            >
+              Cancel
+            </Button>
           </Link>
 
           <Button

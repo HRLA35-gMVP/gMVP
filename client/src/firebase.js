@@ -91,7 +91,7 @@ export const getUserDocument = async (uid) => {
         friends: {
           [uid]: 2
         },
-        groups: {},
+        challenges: {},
         ...userDoc.data()
       });
     }
