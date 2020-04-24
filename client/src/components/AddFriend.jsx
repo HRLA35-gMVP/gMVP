@@ -11,16 +11,32 @@ import { UserContext } from '../providers/UsersProvider.jsx';
 // Components
 import ValidatedTextField from './formHelpers/ValidatedField.jsx';
 
+// Firestore
+import { addFriend } from '../firebase.js';
+import { friendCodeValidation } from './formHelpers/validators.js';
+
 const AddFriend = () => {
   const user = useContext(UserContext);
 
   return (
     <Formik
       initialValues={{ friendCode: '' }}
+      validationSchema={friendCodeValidation}
       onSubmit={async (data, { setSubmitting, resetForm }) => {
         setSubmitting(true);
 
-        console.log('Formik:', data);
+        if (user.friends[data.friendCode] === undefined) {
+          try {
+            await addFriend(user.uid, data.friendCode);
+            console.log('Success');
+          } catch (error) {
+            console.error('AddFriend: ', error);
+          }
+        }
+
+        if (data.friendCode === user.uid) {
+          alert('Why are you adding yourself?');
+        }
 
         setSubmitting(false);
         resetForm();

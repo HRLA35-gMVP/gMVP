@@ -5,15 +5,13 @@ import { Link, useHistory } from 'react-router-dom';
 // Forms
 import { Formik, Form } from 'formik';
 import { Input, Button } from '@chakra-ui/core';
+import { loginValidation } from '../formHelpers/validators.js';
 
 // Firebase Auth
 import { signInWithGoogle, signInWithEmail } from '../../firebase.js';
 
 // Components
 import ValidatedTextField from '../formHelpers/ValidatedField.jsx';
-
-// Yup Validation
-import { loginValidation } from '../formHelpers/validators.js';
 
 const Login = () => {
   const history = useHistory();
