@@ -28,7 +28,7 @@ const UserPage = () => {
   const user = useContext(UserContext);
 
   return (
-    <StyledStack spacing={'1rem'}>
+    <StyledStack spacing="1rem">
       <Box>
         <Avatar name={user.displayName} src={user.photoURL} size="xl"></Avatar>
 
@@ -40,10 +40,10 @@ const UserPage = () => {
         </StyledAccItem>
       </Box>
 
-      <SimpleGrid columns={2} spacing={'3rem'}>
+      <SimpleGrid columns={2} spacing="3rem">
         <StyledBox>
           <Box>
-            <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
+            <Heading as="h6" size="sm" paddingBottom="0.35rem">
               Completed Challenges
             </Heading>
             <StyledText>0</StyledText>
@@ -52,17 +52,17 @@ const UserPage = () => {
             <Heading
               as="h6"
               size="sm"
-              paddingBottom={'0.35rem'}
-              paddingTop={'0.25rem'}
+              paddingBottom="0.35rem"
+              paddingTop="0.25rem"
             >
               Wins
             </Heading>
             <StyledText>0</StyledText>
           </Box>
         </StyledBox>
-        <Link to="/friends">
+        <Link to="/">
           <StyledBox>
-            <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
+            <Heading as="h6" size="sm" paddingBottom="0.35rem">
               Friends
             </Heading>
             <StyledText>{Object.keys(user.friends).length - 1}</StyledText>
@@ -71,7 +71,7 @@ const UserPage = () => {
       </SimpleGrid>
 
       <StyledBox>
-        <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
+        <Heading as="h6" size="sm" paddingBottom="0.35rem">
           Active Challenges
         </Heading>
         <StyledText>{Object.keys(user.challenges).length}</StyledText>

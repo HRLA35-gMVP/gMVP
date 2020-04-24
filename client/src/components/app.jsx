@@ -31,9 +31,9 @@ const App = () => {
     <Switch>
       {!!user ? (
         <React.Fragment>
-          <Redirect to="/friends" />
+          <Route exact path="/" component={FriendsList} />
+          <Redirect to="/" />
           <Route exact path="/profile" component={UserPage} />
-          <Route exact path="/friends" component={FriendsList} />
         </React.Fragment>
       ) : (
         <React.Fragment>
