@@ -56,6 +56,7 @@ const ForgotPassword = ({ children }) => {
               </Flex>
             </Box>
             
+            
         </ThemeProvider>
       </>
        
