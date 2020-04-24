@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 // Forms
 import { Formik, Form } from 'formik';
-import { Button } from '@chakra-ui/core';
+import { Button, useToast } from '@chakra-ui/core';
 import { registerValid } from '../formHelpers/validators.js';
 
 // Firebase Auth
@@ -14,6 +14,8 @@ import { auth, createUserProfileDocument } from '../../firebase.js';
 import ValidatorField from '../formHelpers/ValidatorField.jsx';
 
 const Register = () => {
+  const toast = useToast();
+
   return (
     <Formik
       initialValues={{ email: '', password: '', displayName: '' }}
@@ -33,7 +35,13 @@ const Register = () => {
 
           resetForm();
         } catch (error) {
-          alert('Incorrect Email or Password.');
+          toast({
+            title: 'An error occurred.',
+            description: 'Email already in use.',
+            status: 'error',
+            duration: 9001,
+            isClosable: true
+          });
         } finally {
           setSubmitting(false);
         }

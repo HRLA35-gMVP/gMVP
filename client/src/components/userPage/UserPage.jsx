@@ -71,7 +71,7 @@ export const UserPage = () => {
         <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
           Active Challenges
         </Heading>
-        <StyledText>{Object.keys(user.groups).length}</StyledText>
+        <StyledText>{Object.keys(user.challenges).length}</StyledText>
       </StyledBox>
 
       <Box>
