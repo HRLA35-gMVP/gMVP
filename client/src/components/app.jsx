@@ -9,6 +9,7 @@ import { Button } from '@chakra-ui/core';
 import { UserPage } from './userPage/userPage.jsx';
 import Register from './landingPage/Register.jsx';
 import Login from './landingPage/Login.jsx';
+import BuildChallenge from './BuildChallenge/BuildAChallenge.jsx';
 
 // Contexts
 import { UserContext } from '../providers/UsersProvider.jsx';
