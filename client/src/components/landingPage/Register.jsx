@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Forms
+// Chakra + Forms
 import { Formik, Form } from 'formik';
 import { Button, useToast } from '@chakra-ui/core';
 import { registerValid } from '../formHelpers/validators.js';

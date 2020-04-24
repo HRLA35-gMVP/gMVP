@@ -1,15 +1,15 @@
 // Dependencies
 import React, { useContext } from 'react';
-import { UserContext } from '../providers/UsersProvider.jsx';
-import { addFriend } from '../firebase.js';
+import { UserContext } from '../../providers/UsersProvider.jsx';
+import { addFriend } from '../../firebase.js';
 
-// Forms
+// Chakra + Forms
 import { Formik, Form } from 'formik';
 import { Button, Flex, useToast } from '@chakra-ui/core';
-import { friendCodeValid } from './formHelpers/validators.js';
+import { friendCodeValid } from '../formHelpers/validators.js';
 
 // Components + Styles
-import ValidatorField from './formHelpers/ValidatorField.jsx';
+import ValidatorField from '../formHelpers/ValidatorField.jsx';
 
 // Check if the input is the same as the current user's ID
 const selfCheck = (input, user) => {
