@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 
 // Chakra + Forms
 import { Flex, Box, Avatar } from '@chakra-ui/core';
-import { BsFillPersonPlusFill, BsFillPersonDashFill } from 'react-icons/bs';
+import { BsFillPersonPlusFill, BsPersonDash } from 'react-icons/bs';
 import { StyledIconButton } from '../../styledComponents/ericStyles';
 import { FriendsContext } from '../../providers/FriendsProvider';
 
@@ -21,7 +21,7 @@ const Friend = ({ UID, photoUrl, displayName }) => {
       <StyledIconButton
         icon={
           friends.friends[UID] !== undefined
-            ? BsFillPersonDashFill
+            ? BsPersonDash
             : BsFillPersonPlusFill
         }
         verticalAlign="middle"

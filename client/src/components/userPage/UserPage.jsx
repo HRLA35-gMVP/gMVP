@@ -27,7 +27,6 @@ import {
 
 const UserPage = () => {
   const user = useContext(UserContext);
-  const friends = useContext(FriendsContext);
 
   return (
     <StyledStack spacing="1rem">
@@ -62,14 +61,12 @@ const UserPage = () => {
             <StyledText>0</StyledText>
           </Box>
         </StyledBox>
-        <Link to="/friends">
-          <StyledBox>
-            <Heading as="h6" size="sm" paddingBottom="0.35rem">
-              Friends
-            </Heading>
-            <StyledText>{Object.keys(user.friends).length - 1}</StyledText>
-          </StyledBox>
-        </Link>
+        <StyledBox>
+          <Heading as="h6" size="sm" paddingBottom="0.35rem">
+            Friends
+          </Heading>
+          <StyledText>{Object.keys(user.friends).length - 1}</StyledText>
+        </StyledBox>
       </SimpleGrid>
 
       <StyledBox>
@@ -83,7 +80,7 @@ const UserPage = () => {
         <AddFriend />
       </Box>
 
-      <Button variant="solid" onClick={() => console.log(friends.getFriends())}>
+      <Button as={Link} to="/friends" variant="solid">
         Friends
       </Button>
 
