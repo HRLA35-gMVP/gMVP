@@ -33,7 +33,7 @@ const Login = () => {
                 "15%", // 992px upwards
             ]}>
          <Box><Image rounded="full" size="150px" src="https://mvp2020.s3-us-west-1.amazonaws.com/enter.png" ml="auto" mr="auto" mt="20%"/></Box>
-             <Box pl="5%" pr="5%" pt="10%"> 
+             <Box pl="10%" pr="10%" pt="18%"> 
                   <Formik
                     initialValues={{ email: '123@123.com', password: '123123' }}
                     validationSchema={loginValid}
@@ -54,7 +54,7 @@ const Login = () => {
                     }}
                   >
                     {({ values, isSubmitting }) => (
-                     <Box pl="8%" >
+                     <Box >
                         <Form>
                           <ValidatorField
                             placeholder="Email Address"
@@ -68,11 +68,11 @@ const Login = () => {
                           value={values.password}
                           type="password"
                         />
-                    <Box pt="20px"></Box>
+                    <Box pt="15%"></Box>
                         <PseudoBox
                               as="button"
                               bg="#FFB6BA"
-                              m="5%"
+                              
 
                               rounded="20px"
                               fontWeight="semibold"
@@ -80,7 +80,7 @@ const Login = () => {
                               isLoading={isSubmitting}
                               type="submit"
                               color="white"
-                              w="80%"
+                              w="100%"
                               h="40px"
                               color="#373737"
                               _hover={{ bg: "#FFB6BA" }}
@@ -90,14 +90,13 @@ const Login = () => {
                         <PseudoBox
                               as="button"
                               bg="#FF6161"
-                              m="5%"
-                              mt="3"
+                              mt="10%"
                               rounded="20px"
                               fontWeight="semibold"
                               onClick={handleOAuth}
                               type="submit"
                               color="white"
-                              w="80%"
+                              w="100%"
                               h="40px"
                               color="#373737"
                               _hover={{ bg: "#FF5454" }}
@@ -108,10 +107,11 @@ const Login = () => {
                     </Box>
                 )}
               </Formik> 
-
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <Button pt="15px" pb="15px" mt="20px" mb="20px" variant="solid">Return</Button>
-          </Link>
+          <Box align="center" verticalAlign="center" mt="10%">
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <Button pt="10px" pb="10px" mb="50%" w="100%" variant="outline" borderColor="gray" textAlign="center" rounded="20px" color="#A2A2A2">Back</Button>
+            </Link>
+          </Box>
            </Box> 
            </Box>  
          </Flex>
