@@ -21,6 +21,7 @@ import UserPage from './userPage/userPage.jsx';
 import Register from './landingPage/Register.jsx';
 import Login from './landingPage/Login.jsx';
 import FriendsListHelper from './friends/FriendsListHelper.jsx';
+import EditProfile from './userPage/EditProfile.jsx';
 import BuildChallenge from './BuildChallenge/BuildAChallenge.jsx';
 
 // Styles
@@ -48,7 +49,7 @@ const App = () => {
         <Switch>
           {!!user ? (
             <React.Fragment>
-              <Route exact path="/edit" component={FriendsListHelper} />
+              <Route exact path="/edit" component={EditProfile} />
               <Route exact path="/friends" component={FriendsListHelper} />
               <Redirect to="/profile" />
               <Route exact path="/profile" component={UserPage} />

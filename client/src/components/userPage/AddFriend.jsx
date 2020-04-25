@@ -26,9 +26,7 @@ const AddFriend = () => {
     <Formik
       initialValues={{ friendCode: '' }}
       validationSchema={friendCodeValid}
-      onSubmit={async (data, { setSubmitting, resetForm }) => {
-        setSubmitting(true);
-
+      onSubmit={async (data, { resetForm }) => {
         if (
           user.friends[data.friendCode] === undefined &&
           data.friendCode !== ''
@@ -66,8 +64,6 @@ const AddFriend = () => {
             });
           }
         }
-
-        setSubmitting(false);
       }}
     >
       {({ values, isSubmitting }) => (
