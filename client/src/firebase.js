@@ -87,7 +87,7 @@ export const getUserDocument = async (uid) => {
      * Because if we were to do it in createUserProfile
      * Then Google OAuth accounts wouldn't receive them
      */
-    if (userDoc.friends === undefined) {
+    if (userDoc.data().friends === undefined) {
       await userRef.set({
         friends: {
           [uid]: 2
