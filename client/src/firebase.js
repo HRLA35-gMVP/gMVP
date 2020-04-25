@@ -2,6 +2,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/storage';
 
 /**
  * Fine to not gitignore
@@ -28,13 +29,12 @@ firebase.initializeApp(config);
 
 window.firebase = firebase;
 
-// Firestore for the application
+// Firebase
 export const firestore = firebase.firestore();
-window.firestore = firestore;
-
-// Firebase Auth
+export const storage = firebase.storage();
 export const auth = firebase.auth();
 
+// Auth + Firestore Functions
 export const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
@@ -68,6 +68,7 @@ export const createUserProfileDocument = async (user, additionalData) => {
       });
     } catch (error) {
       console.error('createUserProfileDocument Error:', error);
+      return error;
     }
   }
 
@@ -86,12 +87,12 @@ export const getUserDocument = async (uid) => {
      * Because if we were to do it in createUserProfile
      * Then Google OAuth accounts wouldn't receive them
      */
-    if (userDoc.friends === undefined) {
+    if (userDoc.data().friends === undefined) {
       await userRef.set({
         friends: {
           [uid]: 2
         },
-        groups: {},
+        challenges: {},
         ...userDoc.data()
       });
     }
@@ -99,11 +100,28 @@ export const getUserDocument = async (uid) => {
     return userRef;
   } catch (error) {
     console.error('getUserDocument Error:', error);
+    return error;
+  }
+};
+
+export const getFriend = async (friendUID) => {
+  if (!friendUID) return null;
+
+  try {
+    const friendRef = firestore.collection('users').doc(friendUID);
+    const friendDoc = await friendRef.get();
+
+    return friendDoc.data();
+  } catch (error) {
+    console.error('getUserDocument Error:', error);
+    return error;
   }
 };
 
 // Add Friend
 export const addFriend = async (uid, friendUID) => {
+  if (!uid || !friendUID) return null;
+
   const friend = { [friendUID]: 1 };
 
   const userRef = firestore.collection('users').doc(uid);
@@ -126,6 +144,30 @@ export const addFriend = async (uid, friendUID) => {
   }
 
   return false;
+};
+
+// Edit display name
+export const editProfile = async (uid, field) => {
+  if (!uid) return null;
+
+  try {
+    const userRef = firestore.collection('users').doc(uid);
+    const userDoc = await userRef.get();
+
+    const check = Object.keys(field)[0];
+
+    if (check === 'displayName') {
+      await userRef.set({
+        ...userDoc.data(),
+        displayName: field.displayName
+      });
+    } else {
+      return 'Neither';
+    }
+  } catch (error) {
+    console.error('editProfile Error:', error);
+    return error;
+  }
 };
 
 export default firebase;

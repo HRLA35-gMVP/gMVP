@@ -50,4 +50,12 @@ const friendCodeValid = yup.object().shape({
     .length(28, 'Friend codes are 28 characters long.')
 });
 
-export { loginValid, registerValid, friendCodeValid };
+const displayNameValid = yup.object().shape({
+  displayName: yup
+    .string()
+    .required(errorRequired)
+    .test(errorHTML, errorHTML, (value) => !containsHTML(value))
+    .max(64, errorMax(64))
+});
+
+export { loginValid, registerValid, friendCodeValid, displayNameValid };

@@ -20,5 +20,10 @@ coverage
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
+<<<<<<< HEAD
 # avoid conflicts
 bundle.js
+=======
+# Webpack Bundle
+client/dist/bundle.js
+>>>>>>> 30051fc4ebab10fdcf6eeb9ca9381a69e6b09fa2
