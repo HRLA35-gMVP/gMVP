@@ -19,7 +19,6 @@ const Friend = ({ UID, photoUrl, displayName }) => {
         </Box>
       </Flex>
       <StyledIconButton
-        variant="outline"
         icon={
           friends.friends[UID] !== undefined
             ? BsFillPersonDashFill
