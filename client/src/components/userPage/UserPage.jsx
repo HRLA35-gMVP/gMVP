@@ -1,6 +1,7 @@
 // Dependencies
 import React, { useContext } from 'react';
 import { UserContext } from '../../providers/UsersProvider.jsx';
+import { FriendsContext } from '../../providers/FriendsProvider.jsx';
 import { Link } from 'react-router-dom';
 
 // Chakra + Forms
@@ -26,6 +27,7 @@ import {
 
 const UserPage = () => {
   const user = useContext(UserContext);
+  const friends = useContext(FriendsContext);
 
   return (
     <StyledStack spacing="1rem">
@@ -60,7 +62,7 @@ const UserPage = () => {
             <StyledText>0</StyledText>
           </Box>
         </StyledBox>
-        <Link to="/">
+        <Link to="/friends">
           <StyledBox>
             <Heading as="h6" size="sm" paddingBottom="0.35rem">
               Friends
@@ -80,6 +82,10 @@ const UserPage = () => {
       <Box>
         <AddFriend />
       </Box>
+
+      <Button variant="solid" onClick={() => console.log(friends.getFriends())}>
+        Friends
+      </Button>
 
       <Button variant="solid" onClick={signOut}>
         Sign Out

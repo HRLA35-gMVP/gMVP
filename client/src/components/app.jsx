@@ -17,7 +17,7 @@ import {
 import UserPage from './userPage/userPage.jsx';
 import Register from './landingPage/Register.jsx';
 import Login from './landingPage/Login.jsx';
-import FriendsList from './userPage/FriendsList.jsx';
+import FriendsListHelper from './userPage/FriendsListHelper.jsx';
 import BuildChallenge from './BuildChallenge/BuildAChallenge.jsx';
 import {
   StyledPopoverContent,
@@ -31,8 +31,8 @@ const App = () => {
     <Switch>
       {!!user ? (
         <React.Fragment>
-          <Route exact path="/" component={FriendsList} />
-          <Redirect to="/" />
+          <Route exact path="/friends" component={FriendsListHelper} />
+          <Redirect to="/profile" />
           <Route exact path="/profile" component={UserPage} />
         </React.Fragment>
       ) : (

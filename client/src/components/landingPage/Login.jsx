@@ -1,14 +1,12 @@
 // Dependencies
+import { signInWithGoogle, signInWithEmail } from '../../firebase.js';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 // Chakra + Forms
 import { Formik, Form } from 'formik';
-import { Button, useToast } from '@chakra-ui/core';
+import { Button, useToast, NumberInput } from '@chakra-ui/core';
 import { loginValid } from '../formHelpers/validators.js';
-
-// Firebase Auth
-import { signInWithGoogle, signInWithEmail } from '../../firebase.js';
 
 // Components
 import ValidatorField from '../formHelpers/ValidatorField.jsx';
@@ -18,7 +16,7 @@ const Login = () => {
 
   return (
     <Formik
-      initialValues={{ email: '123@123.com', password: '123123' }}
+      initialValues={{ email: '', password: '' }}
       validationSchema={loginValid}
       onSubmit={async (data, { setSubmitting, resetForm }) => {
         setSubmitting(true);

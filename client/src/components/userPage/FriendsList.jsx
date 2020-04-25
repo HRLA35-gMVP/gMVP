@@ -1,38 +1,89 @@
 // Dependencies
-import React, { useContext } from 'react';
-import { UserContext } from '../../providers/UsersProvider.jsx';
+import { getFriend } from '../../firebase.js';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getUserDocument } from '../../firebase.js';
 
-// Chakra + Forms
-import { Button, Box, Text, Stack } from '@chakra-ui/core';
+// Chakra
+import { Spinner, SimpleGrid } from '@chakra-ui/core';
+import { StyledButton } from '../../styledComponents/ericStyles.js';
 
-const FriendsList = () => {
-  const user = useContext(UserContext);
+// Components
+import Friend from './Friend.jsx';
 
-  console.log(user);
+class FriendsList extends Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <Box>
-      <Link to="/profile">
-        <Button>Profile</Button>
-      </Link>
-      <Text>Number of Friends: {Object.keys(user.friends).length - 1}</Text>
-      <Stack spacing="1rem" textAlign="center">
-        {Object.keys(user.friends).map(async (friendUID, index) => {
-          if (friendUID !== user.uid) {
-            let user = await getUserDocument(friendUID);
-            console.log(user);
-            return (
-              <Text key={index} index={index}>
-                {friendUID}
-              </Text>
-            );
-          }
-        })}
-      </Stack>
-    </Box>
-  );
-};
+    this.state = {
+      friends: []
+    };
+  }
+
+  async componentDidMount() {
+    const friends = [];
+    for (let friend of this.props.friends) {
+      if (friend !== this.props.user) {
+        let { photoURL, displayName } = await getFriend(friend);
+        friends.push({ photoURL, displayName, friend });
+      }
+    }
+    this.setState({ friends });
+  }
+
+  render() {
+    if (this.state.friends.lengh === 0) {
+      return <Spinner size="xl" />;
+    } else {
+      return (
+        <SimpleGrid
+          columns="1"
+          spacing="1rem"
+          paddingLeft="1rem"
+          paddingRight="1rem"
+        >
+          {this.state.friends.map((friend) => (
+            <Friend
+              key={friend.friend}
+              UID={friend.friend}
+              photoURL={friend.photoURL}
+              displayName={friend.displayName}
+            />
+          ))}
+          <Link to="/profile">
+            <StyledButton>Profile</StyledButton>
+          </Link>
+        </SimpleGrid>
+      );
+    }
+  }
+}
 
 export default FriendsList;
+
+// {
+//   photoURL:
+//     'https://lh4.googleusercontent.com/-lwkKptiRKDw/AAA…AAAA/AAKWJJN74m7vjEVbDK6ZDz3yUHc250eKVw/photo.jpg',
+//   displayName: 'Eric Lau',
+//   friend: 'C8gVA1A8ddcaQnawSKoJMVUOTRv2'
+// },
+// {
+//   photoURL: null,
+//   displayName: 'Joshie',
+//   friend: 'ZGjTOZNOeHcu2g1yJMNp0Q9tjlY2'
+// },
+// {
+//   photoURL: null,
+//   displayName: 'Test User #1',
+//   friend: 'A3ggHPGhlYYvX0AevZ0tyy2tQEt1'
+// },
+// {
+//   photoURL: null,
+//   displayName: 'Test User #2',
+//   friend: 'KMgRuIxINMetOinCtvQm3fwxMkb2'
+// },
+// {
+//   photoURL:
+//     'https://lh3.googleusercontent.com/a-/AOh14Gi4Y-vK45bZ2bGiwIncc9_GN6DKavRdDYjJKdH_Kw',
+//   displayName: 'Eric Lau',
+//   friend: 'kQrkwatQaggxtHcWpR2Yc1tlOxT2'
+// }
