@@ -1,7 +1,6 @@
 // Dependencies
 import React, { useContext } from 'react';
 import { UserContext } from '../../providers/UsersProvider.jsx';
-import { FriendsContext } from '../../providers/FriendsProvider.jsx';
 import { Link } from 'react-router-dom';
 
 // Chakra + Forms
@@ -80,8 +79,8 @@ const UserPage = () => {
         <AddFriend />
       </Box>
 
-      <Button as={Link} to="/friends" variant="solid">
-        Friends
+      <Button as={Link} to="/edit" variant="solid">
+        Edit
       </Button>
 
       <Button variant="solid" onClick={signOut}>
