@@ -1,7 +1,7 @@
 // Dependencies
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { ThemeProvider, CSSReset, Box, Flex, IconButton, Avatar, Text, Stack, Input, Divider, Button, PseudoBox, Icon, Image} from "@chakra-ui/core";
+import { ThemeProvider, CSSReset, Box, Flex,  Button, PseudoBox, Icon, Image} from "@chakra-ui/core";
 
 // Forms
 import { Formik, Form } from 'formik';
@@ -25,8 +25,6 @@ const Login = () => {
     <>
     <ThemeProvider>
       <CSSReset />
-    
-    
       <Flex direction="column" align="center" justify="center">
       <Box bg='#BEEBE9'  p={[2, 4, 6, 8]} height="100%"  width={[
                 "100%", // base
@@ -108,7 +106,6 @@ const Login = () => {
                         {/* <Box bg='#BEEBE9'h="20px" ></Box> */}
                     </Form>
                     </Box>
-                  
                 )}
               </Formik> 
 
