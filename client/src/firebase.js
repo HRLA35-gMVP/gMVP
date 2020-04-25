@@ -92,6 +92,8 @@ export const getUserDocument = async (uid) => {
           [uid]: 2
         },
         challenges: {},
+        completed: 0,
+        wins: 0,
         ...userDoc.data()
       });
     }

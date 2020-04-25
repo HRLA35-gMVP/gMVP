@@ -48,7 +48,7 @@ const UserPage = () => {
             <Heading as="h6" size="sm" paddingBottom="0.35rem">
               Completed Challenges
             </Heading>
-            <StyledText>0</StyledText>
+            <StyledText>{user.completed}</StyledText>
           </Box>
           <Box>
             <Heading
@@ -59,7 +59,7 @@ const UserPage = () => {
             >
               Wins
             </Heading>
-            <StyledText>0</StyledText>
+            <StyledText>{user.wins}</StyledText>
           </Box>
         </StyledBox>
         <StyledBox>
