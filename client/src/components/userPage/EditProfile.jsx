@@ -23,8 +23,6 @@ const EditProfile = () => {
   const user = useContext(UserContext);
   const toast = useToast();
 
-  var imageInput = null;
-
   return (
     <React.Fragment>
       <Stack
@@ -64,6 +62,7 @@ const EditProfile = () => {
         <Button
           as={Link}
           to="/profile"
+          align="center"
           variant="link"
           color="#E8E8E8"
           pb="4%"

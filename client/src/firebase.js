@@ -161,8 +161,6 @@ export const editProfile = async (uid, field) => {
         ...userDoc.data(),
         displayName: field.displayName
       });
-    } else if (check === 'file') {
-      return 'file';
     } else {
       return 'Neither';
     }
