@@ -1,8 +1,10 @@
 // Dependencies
 import React, { useContext } from 'react';
 import { UserContext } from '../../providers/UsersProvider.jsx';
+import { FriendsContext } from '../../providers/FriendsProvider.jsx';
+import { Link } from 'react-router-dom';
 
-// Forms
+// Chakra + Forms
 import { signOut } from '../../firebase.js';
 import {
   Button,
@@ -14,7 +16,7 @@ import {
 } from '@chakra-ui/core';
 
 // Components + Styles
-import AddFriend from '../AddFriend.jsx';
+import AddFriend from './AddFriend.jsx';
 import {
   StyledStack,
   StyledAccItem,
@@ -23,11 +25,12 @@ import {
   StyledText
 } from '../../styledComponents/ericStyles.js';
 
-export const UserPage = () => {
+const UserPage = () => {
   const user = useContext(UserContext);
+  const friends = useContext(FriendsContext);
 
   return (
-    <StyledStack spacing={'1rem'}>
+    <StyledStack spacing="1rem">
       <Box>
         <Avatar name={user.displayName} src={user.photoURL} size="xl"></Avatar>
 
@@ -39,10 +42,10 @@ export const UserPage = () => {
         </StyledAccItem>
       </Box>
 
-      <SimpleGrid columns={2} spacing={'3rem'}>
+      <SimpleGrid columns={2} spacing="3rem">
         <StyledBox>
           <Box>
-            <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
+            <Heading as="h6" size="sm" paddingBottom="0.35rem">
               Completed Challenges
             </Heading>
             <StyledText>0</StyledText>
@@ -51,24 +54,26 @@ export const UserPage = () => {
             <Heading
               as="h6"
               size="sm"
-              paddingBottom={'0.35rem'}
-              paddingTop={'0.25rem'}
+              paddingBottom="0.35rem"
+              paddingTop="0.25rem"
             >
               Wins
             </Heading>
             <StyledText>0</StyledText>
           </Box>
         </StyledBox>
-        <StyledBox>
-          <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
-            Friends
-          </Heading>
-          <StyledText>{Object.keys(user.friends).length - 1}</StyledText>
-        </StyledBox>
+        <Link to="/friends">
+          <StyledBox>
+            <Heading as="h6" size="sm" paddingBottom="0.35rem">
+              Friends
+            </Heading>
+            <StyledText>{Object.keys(user.friends).length - 1}</StyledText>
+          </StyledBox>
+        </Link>
       </SimpleGrid>
 
       <StyledBox>
-        <Heading as="h6" size="sm" paddingBottom={'0.35rem'}>
+        <Heading as="h6" size="sm" paddingBottom="0.35rem">
           Active Challenges
         </Heading>
         <StyledText>{Object.keys(user.challenges).length}</StyledText>
@@ -78,9 +83,15 @@ export const UserPage = () => {
         <AddFriend />
       </Box>
 
+      <Button variant="solid" onClick={() => console.log(friends.getFriends())}>
+        Friends
+      </Button>
+
       <Button variant="solid" onClick={signOut}>
         Sign Out
       </Button>
     </StyledStack>
   );
 };
+
+export default UserPage;

@@ -102,6 +102,19 @@ export const getUserDocument = async (uid) => {
   }
 };
 
+export const getFriend = async (friendUID) => {
+  if (!friendUID) return null;
+
+  try {
+    const friendRef = firestore.collection('users').doc(friendUID);
+    const friendDoc = await friendRef.get();
+
+    return friendDoc.data();
+  } catch (error) {
+    console.error('getUserDocument Error:', error);
+  }
+};
+
 // Add Friend
 export const addFriend = async (uid, friendUID) => {
   const friend = { [friendUID]: 1 };

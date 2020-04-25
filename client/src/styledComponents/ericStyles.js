@@ -7,7 +7,8 @@ import {
   AccordionItem,
   AccordionHeader,
   PopoverContent,
-  Button
+  Button,
+  IconButton
 } from '@chakra-ui/core';
 
 const StyledStack = styled(Stack)`
@@ -73,6 +74,15 @@ const StyledButton = styled(Button)`
   }
 `;
 
+const StyledIconButton = styled(IconButton)`
+  :focus {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+  }
+`;
+
 export {
   StyledStack,
   StyledAccItem,
@@ -80,5 +90,6 @@ export {
   StyledBox,
   StyledText,
   StyledPopoverContent,
-  StyledButton
+  StyledButton,
+  StyledIconButton
 };

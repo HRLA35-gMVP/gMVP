@@ -1,14 +1,12 @@
 // Dependencies
+import { auth, createUserProfileDocument } from '../../firebase.js';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Forms
+// Chakra + Forms
 import { Formik, Form } from 'formik';
 import { Button, useToast } from '@chakra-ui/core';
 import { registerValid } from '../formHelpers/validators.js';
-
-// Firebase Auth
-import { auth, createUserProfileDocument } from '../../firebase.js';
 
 // Components
 import ValidatorField from '../formHelpers/ValidatorField.jsx';

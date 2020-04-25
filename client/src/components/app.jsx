@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { UserContext } from '../providers/UsersProvider.jsx';
 import { Switch, Route, Link, Redirect } from 'react-router-dom';
 
-// Forms
+// Chakra + Forms
 import {
   Button,
   Popover,
@@ -14,9 +14,10 @@ import {
 } from '@chakra-ui/core';
 
 // Componenets + Styles
-import { UserPage } from './userPage/userPage.jsx';
+import UserPage from './userPage/userPage.jsx';
 import Register from './landingPage/Register.jsx';
 import Login from './landingPage/Login.jsx';
+import FriendsListHelper from './userPage/FriendsListHelper.jsx';
 import BuildChallenge from './BuildChallenge/BuildAChallenge.jsx';
 import {
   StyledPopoverContent,
@@ -30,6 +31,7 @@ const App = () => {
     <Switch>
       {!!user ? (
         <React.Fragment>
+          <Route exact path="/friends" component={FriendsListHelper} />
           <Redirect to="/profile" />
           <Route exact path="/profile" component={UserPage} />
         </React.Fragment>

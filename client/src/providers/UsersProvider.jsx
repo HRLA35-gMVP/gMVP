@@ -1,13 +1,9 @@
 // Dependencies
 import React, { Component, createContext } from 'react';
-import { Link } from 'react-router-dom';
 import { auth, createUserProfileDocument } from '../firebase.js';
 
 // Context
 export const UserContext = createContext({});
-
-// URL
-const URL = 'localhost:3000';
 
 class UsersProvider extends Component {
   state = { user: null };

@@ -8,6 +8,7 @@ import App from './components/app.jsx';
 
 // Contexts
 import UsersProvider from './providers/UsersProvider.jsx';
+import FriendsProvider from './providers/FriendsProvider.jsx';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 ReactDOM.render(
@@ -15,7 +16,9 @@ ReactDOM.render(
     <CSSReset />
     <Router>
       <UsersProvider>
-        <App />
+        <FriendsProvider>
+          <App />
+        </FriendsProvider>
       </UsersProvider>
     </Router>
   </ThemeProvider>,
