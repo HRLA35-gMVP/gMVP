@@ -41,6 +41,9 @@ export const signInWithGoogle = () => auth.signInWithPopup(provider);
 export const signInWithEmail = (email, password) =>
   auth.signInWithEmailAndPassword(email, password);
 
+export const resetPasswordWithEmail = (email) =>
+  auth.sendPasswordResetEmail(email);
+
 export const signOut = () => auth.signOut();
 
 export const createUserProfileDocument = async (user, additionalData) => {

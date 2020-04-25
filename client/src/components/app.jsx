@@ -22,6 +22,8 @@ import Register from './landingPage/Register.jsx';
 import Login from './landingPage/Login.jsx';
 import FriendsListHelper from './friends/FriendsListHelper.jsx';
 import EditProfile from './userPage/EditProfile.jsx';
+import ForgotPassword from './password/ForgotPw.jsx';
+import CheckEmail from './password/CheckEmail.jsx';
 import BuildChallenge from './BuildChallenge/BuildAChallenge.jsx';
 
 // Styles
@@ -169,6 +171,8 @@ const App = () => {
               </Route>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
+              <Route exact path="/reset" component={ForgotPassword} />
+              <Route exact path="/reset/confirmation" component={CheckEmail} />
             </React.Fragment>
           )}
         </Switch>

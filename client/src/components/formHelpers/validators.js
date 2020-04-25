@@ -50,6 +50,15 @@ const friendCodeValid = yup.object().shape({
     .length(28, 'Friend codes are 28 characters long.')
 });
 
+const emailValid = yup.object().shape({
+  email: yup
+    .string()
+    .required(errorRequired)
+    .test(errorHTML, errorHTML, (value) => !containsHTML(value))
+    .email('Must be a valid email.')
+    .max(64, errorMax(64))
+});
+
 const displayNameValid = yup.object().shape({
   displayName: yup
     .string()
@@ -58,4 +67,10 @@ const displayNameValid = yup.object().shape({
     .max(64, errorMax(64))
 });
 
-export { loginValid, registerValid, friendCodeValid, displayNameValid };
+export {
+  loginValid,
+  registerValid,
+  friendCodeValid,
+  emailValid,
+  displayNameValid
+};

@@ -39,7 +39,7 @@ const Login = () => {
           <Formik
             initialValues={{ email: '', password: '' }}
             validationSchema={loginValid}
-            onSubmit={async (data, { resetForm }) => {
+            onSubmit={async (data, { setErrors, resetForm }) => {
               try {
                 await signInWithEmail(data.email, data.password);
                 resetForm();
@@ -106,29 +106,50 @@ const Login = () => {
                 >
                   Google OAuth
                 </Button>
-
-                <Link to="/" style={{ textDecoration: 'none' }}>
-                  <Button
-                    bg="#F7EEC7"
-                    mt="10%"
-                    mb="50%"
-                    pt="10px"
-                    pb="10px"
-                    rounded="20px"
-                    fontWeight="semibold"
-                    type="submit"
-                    color="white"
-                    w="100%"
-                    h="40px"
-                    color="#373737"
-                    _hover={{ bg: '#FF5454' }}
-                    _focus={{ boxShadow: 'outline' }}
-                    isDisabled={isSubmitting}
-                    isLoading={isSubmitting}
-                  >
-                    Return
-                  </Button>
-                </Link>
+                <Flex align="center" justify="center">
+                  <Link to="/reset" style={{ textDecoration: 'none' }}>
+                    <Button
+                      bg="#F7EEC7"
+                      mt="10%"
+                      pt="10px"
+                      pb="10px"
+                      rounded="20px"
+                      fontWeight="semibold"
+                      type="submit"
+                      color="white"
+                      w="100%"
+                      h="40px"
+                      color="#373737"
+                      _hover={{ bg: '#FF5454' }}
+                      _focus={{ boxShadow: 'outline' }}
+                      isDisabled={isSubmitting}
+                      isLoading={isSubmitting}
+                    >
+                      Reset
+                    </Button>
+                  </Link>
+                  <Link to="/" style={{ textDecoration: 'none' }}>
+                    <Button
+                      bg="#F7EEC7"
+                      mt="10%"
+                      pt="10px"
+                      pb="10px"
+                      rounded="20px"
+                      fontWeight="semibold"
+                      type="submit"
+                      color="white"
+                      w="100%"
+                      h="40px"
+                      color="#373737"
+                      _hover={{ bg: '#FF5454' }}
+                      _focus={{ boxShadow: 'outline' }}
+                      isDisabled={isSubmitting}
+                      isLoading={isSubmitting}
+                    >
+                      Return
+                    </Button>
+                  </Link>
+                </Flex>
               </Form>
             )}
           </Formik>
