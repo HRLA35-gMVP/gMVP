@@ -4,7 +4,7 @@ const path = require('path');
 
 // Declarations
 const server = express();
-const port = 3001;
+const port = 3000;
 
 // Middleware
 server.use(express.json());
