@@ -7,13 +7,13 @@ import { BsFillPersonPlusFill, BsPersonDash } from 'react-icons/bs';
 import { StyledIconButton } from '../../styledComponents/ericStyles';
 import { FriendsContext } from '../../providers/FriendsProvider';
 
-const Friend = ({ UID, photoUrl, displayName }) => {
+const Friend = ({ UID, photoURL, displayName }) => {
   const friends = useContext(FriendsContext);
 
   return (
     <Flex justifyContent="space-between" alignItems="center">
       <Flex>
-        <Avatar name={displayName} src={photoUrl} />
+        <Avatar name={displayName} src={photoURL} />
         <Box alignSelf="center" paddingLeft="1rem">
           {displayName}
         </Box>
