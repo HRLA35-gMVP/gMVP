@@ -43,7 +43,6 @@ export const signInWithEmail = (email, password) =>
 
 export const signOut = () => auth.signOut();
 
-// User Documents
 export const createUserProfileDocument = async (user, additionalData) => {
   // If this function is called somehow without a user, just leave immediately
   if (!user) return;
@@ -118,7 +117,20 @@ export const getFriend = async (friendUID) => {
   }
 };
 
-// Add Friend
+export const getChallenge = async (challengeUID) => {
+  if (!challengeUID) return null;
+
+  try {
+    const challengeRef = firestore.collection('challenges').doc(challengeUID);
+    const challengeDoc = await challengeRef.get();
+
+    return challengeDoc.data();
+  } catch (error) {
+    console.error('getChallenge Error:', error);
+    return error;
+  }
+};
+
 export const addFriend = async (uid, friendUID) => {
   if (!uid || !friendUID) return null;
 
@@ -146,7 +158,6 @@ export const addFriend = async (uid, friendUID) => {
   return false;
 };
 
-// Edit display name
 export const editProfile = async (uid, field) => {
   if (!uid) return null;
 

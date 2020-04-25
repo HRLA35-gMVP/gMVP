@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {
   Stack,
   Text,
+  Flex,
   Box,
   AccordionItem,
   AccordionHeader,
@@ -51,7 +52,17 @@ const StyledBox = styled(Box)`
   padding: 0.75rem;
 `;
 
+const StyledBoxC = styled(Box)`
+  background: #f7fafc;
+  border-radius: 0.5rem;
+`;
+
 const StyledText = styled(Text)`
+  background: #f7fafc;
+  border-radius: 0.5rem;
+`;
+
+const StyledFlex = styled(Flex)`
   background: #f7fafc;
   border-radius: 0.5rem;
 `;
@@ -88,7 +99,9 @@ export {
   StyledAccItem,
   StyleAccHeader,
   StyledBox,
+  StyledBoxC,
   StyledText,
+  StyledFlex,
   StyledPopoverContent,
   StyledButton,
   StyledIconButton

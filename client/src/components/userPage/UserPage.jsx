@@ -11,7 +11,8 @@ import {
   Box,
   Avatar,
   AccordionPanel,
-  Heading
+  Heading,
+  Stack
 } from '@chakra-ui/core';
 
 // Components + Styles
@@ -23,6 +24,7 @@ import {
   StyledBox,
   StyledText
 } from '../../styledComponents/ericStyles.js';
+import ActiveChallenges from './ActiveChallenges.jsx';
 
 const UserPage = () => {
   const user = useContext(UserContext);
@@ -71,10 +73,29 @@ const UserPage = () => {
       </SimpleGrid>
 
       <StyledBox>
-        <Heading as="h6" size="sm" paddingBottom="0.35rem">
-          Active Challenges
-        </Heading>
-        <StyledText>{Object.keys(user.challenges).length}</StyledText>
+        {Object.keys(user.challenges).length === 0 ? (
+          <Heading as="h6" size="sm">
+            No Active Challenges
+          </Heading>
+        ) : (
+          <Stack spacing="0.25rem">
+            <Heading as="h6" size="sm">
+              Active Challenges
+            </Heading>
+            <SimpleGrid columns={3}>
+              <Heading as="h6" size="xs">
+                Challenge
+              </Heading>
+              <Heading as="h6" size="xs">
+                Members
+              </Heading>
+              <Heading as="h6" size="xs">
+                Duration
+              </Heading>
+            </SimpleGrid>
+            <ActiveChallenges user={user} />
+          </Stack>
+        )}
       </StyledBox>
 
       <Box>
