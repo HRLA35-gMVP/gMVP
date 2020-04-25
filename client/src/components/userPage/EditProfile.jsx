@@ -1,6 +1,7 @@
 // Dependencies
 import { editProfile, storage } from '../../firebase';
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { UserContext } from '../../providers/UsersProvider';
 
 // Chakra + Forms
@@ -39,7 +40,15 @@ const EditProfile = () => {
         ]}
         justifyContent="space-between"
       >
-        <Button align="center" variant="link" color="#E8E8E8" pb="4%" pt="4%">
+        <Button
+          as={Link}
+          to="/profile"
+          align="center"
+          variant="link"
+          color="#E8E8E8"
+          pb="4%"
+          pt="4%"
+        >
           Cancel
         </Button>
         <Text
@@ -52,7 +61,14 @@ const EditProfile = () => {
         >
           Edit Profile
         </Text>
-        <Button variant="link" color="#E8E8E8" pb="4%" pt="4%">
+        <Button
+          as={Link}
+          to="/profile"
+          variant="link"
+          color="#E8E8E8"
+          pb="4%"
+          pt="4%"
+        >
           Save
         </Button>
       </Stack>
