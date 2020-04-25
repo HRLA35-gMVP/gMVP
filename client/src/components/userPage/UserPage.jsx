@@ -61,10 +61,12 @@ const UserPage = () => {
           </Box>
         </StyledBox>
         <StyledBox>
-          <Heading as="h6" size="sm" paddingBottom="0.35rem">
-            Friends
-          </Heading>
-          <StyledText>{Object.keys(user.friends).length - 1}</StyledText>
+          <Link to="/friends">
+            <Heading as="h6" size="sm" paddingBottom="0.35rem">
+              Friends
+            </Heading>
+            <StyledText>{Object.keys(user.friends).length - 1}</StyledText>
+          </Link>
         </StyledBox>
       </SimpleGrid>
 
