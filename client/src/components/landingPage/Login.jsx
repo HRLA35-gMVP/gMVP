@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 // Chakra + Forms
 import { Formik, Form } from 'formik';
-import { Button, useToast, NumberInput } from '@chakra-ui/core';
+import { useToast, Box, Flex, Button, Image } from '@chakra-ui/core';
 import { loginValid } from '../formHelpers/validators.js';
 
 // Components
@@ -15,77 +15,126 @@ const Login = () => {
   const toast = useToast();
 
   return (
-    <Formik
-      initialValues={{ email: '', password: '' }}
-      validationSchema={loginValid}
-      onSubmit={async (data, { setSubmitting, resetForm }) => {
-        setSubmitting(true);
-
-        try {
-          await signInWithEmail(data.email, data.password);
-
-          resetForm();
-        } catch (error) {
-          toast({
-            title: 'An error occurred.',
-            description: 'Invalid email or password.',
-            status: 'error',
-            duration: 9001,
-            isClosable: true
-          });
-        } finally {
-          setSubmitting(false);
-        }
-      }}
-    >
-      {({ values, isSubmitting }) => (
-        <Form>
-          <ValidatorField
-            placeholder="Email Address"
-            name="email"
-            value={values.email}
-            type="input"
-          />
-
-          <ValidatorField
-            placeholder="Password"
-            name="password"
-            value={values.password}
-            type="password"
-          />
-
-          <Button
-            variant="solid"
-            isDisabled={isSubmitting}
-            isLoading={isSubmitting}
-            type="submit"
+    <Flex direction="column" align="center" justify="center">
+      <Box
+        bg="#BEEBE9"
+        p={[2, 4, 6, 8]}
+        height="100%"
+        width={[
+          '100%', // base
+          '50%', // 480px upwards
+          '25%', // 768px upwards
+          '15%' // 992px upwards
+        ]}
+      >
+        <Image
+          rounded="full"
+          size="150px"
+          src="https://mvp2020.s3-us-west-1.amazonaws.com/enter.png"
+          ml="auto"
+          mr="auto"
+          mt="20%"
+        />
+        <Box pl="10%" pr="10%" pt="18%">
+          <Formik
+            initialValues={{ email: '', password: '' }}
+            validationSchema={loginValid}
+            onSubmit={async (data, { resetForm }) => {
+              try {
+                await signInWithEmail(data.email, data.password);
+                resetForm();
+              } catch (error) {
+                toast({
+                  title: 'An error occurred.',
+                  description: 'Invalid email or password.',
+                  status: 'error',
+                  duration: 9001,
+                  isClosable: true
+                });
+              }
+            }}
           >
-            Email Login
-          </Button>
+            {({ values, isSubmitting }) => (
+              <Form>
+                <ValidatorField
+                  placeholder="Email Address"
+                  name="email"
+                  value={values.email}
+                  type="input"
+                />
 
-          <div>
-            <Button
-              variant="solid"
-              isDisabled={isSubmitting}
-              isLoading={isSubmitting}
-              onClick={signInWithGoogle}
-            >
-              Google OAuth
-            </Button>
-          </div>
+                <ValidatorField
+                  placeholder="Password"
+                  name="password"
+                  value={values.password}
+                  type="password"
+                />
 
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <Button
-              variant="solid"
-              isDisabled={isSubmitting}
-              isLoading={isSubmitting}
-            >
-              Return
-            </Button>
-          </Link>
-        </Form>
-      )}
-    </Formik>
+                <Box pt="15%"></Box>
+                <Button
+                  bg="#FFB6BA"
+                  rounded="20px"
+                  fontWeight="semibold"
+                  isDisabled={isSubmitting}
+                  isLoading={isSubmitting}
+                  type="submit"
+                  color="white"
+                  w="100%"
+                  h="40px"
+                  color="#373737"
+                  _hover={{ bg: '#FFB6BA' }}
+                  _focus={{ boxShadow: 'outline' }}
+                >
+                  Sign In
+                </Button>
+
+                <Button
+                  bg="#FF6161"
+                  mt="10%"
+                  rounded="20px"
+                  fontWeight="semibold"
+                  isDisabled={isSubmitting}
+                  isLoading={isSubmitting}
+                  onClick={signInWithGoogle}
+                  type="submit"
+                  color="white"
+                  w="100%"
+                  h="40px"
+                  color="#373737"
+                  _hover={{ bg: '#FF5454' }}
+                  _focus={{ boxShadow: 'outline' }}
+                >
+                  Google OAuth
+                </Button>
+
+                <Link to="/" style={{ textDecoration: 'none' }}>
+                  <Button
+                    bg="#F7EEC7"
+                    mt="10%"
+                    mb="50%"
+                    pt="10px"
+                    pb="10px"
+                    rounded="20px"
+                    fontWeight="semibold"
+                    type="submit"
+                    color="white"
+                    w="100%"
+                    h="40px"
+                    color="#373737"
+                    _hover={{ bg: '#FF5454' }}
+                    _focus={{ boxShadow: 'outline' }}
+                    isDisabled={isSubmitting}
+                    isLoading={isSubmitting}
+                  >
+                    Return
+                  </Button>
+                </Link>
+              </Form>
+            )}
+          </Formik>
+        </Box>
+      </Box>
+    </Flex>
   );
 };
 

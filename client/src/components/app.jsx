@@ -7,7 +7,6 @@ import { Switch, Route, Link, Redirect } from 'react-router-dom';
 import {
   Box,
   Flex,
-  Button,
   Popover,
   PopoverTrigger,
   PopoverHeader,
@@ -83,21 +82,35 @@ const App = () => {
                     >
                       Welcome!
                     </Box>
-                    <Box
-                      bg="#F7EEC7"
-                      textAlign="center"
-                      w="40%"
-                      mr="auto"
-                      ml="auto"
-                      mt="14px"
-                      height="20px"
-                      fontSize="xs"
-                      boxShadow="1px 2px 3px #A2A2A2"
-                      pt="2px"
-                      pb="2px"
-                    >
-                      Learn More
-                    </Box>
+
+                    <Popover>
+                      <PopoverTrigger>
+                        <StyledButton
+                          as={Box}
+                          bg="#F7EEC7"
+                          textAlign="center"
+                          w="40%"
+                          mr="auto"
+                          ml="auto"
+                          mt="14px"
+                          height="20px"
+                          fontSize="xs"
+                          boxShadow="1px 2px 3px #A2A2A2"
+                          pt="2px"
+                          pb="2px"
+                        >
+                          Learn More
+                        </StyledButton>
+                      </PopoverTrigger>
+                      <StyledPopoverContent zIndex={4}>
+                        <PopoverArrow />
+                        <PopoverHeader>Yo.</PopoverHeader>
+                        <PopoverBody>
+                          We're going public on May 1st.
+                        </PopoverBody>
+                      </StyledPopoverContent>
+                    </Popover>
+
                     <Box mt="15%">
                       <Image
                         rounded="full"

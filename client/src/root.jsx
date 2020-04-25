@@ -7,10 +7,10 @@ import { ThemeProvider, CSSReset } from '@chakra-ui/core';
 import App from './components/app.jsx';
 
 // Evelyn's tests
-//import EditProfile from './components/userPage/EditProfile.jsx';
-//import ForgotPassword from './components/password/ForgotPw.jsx';
-//import CheckEmail from './components/password/CheckEmail.jsx';
-//import ChallengeStatus from './components/userPage/ChallengeStatus.jsx';
+// import EditProfile from './components/userPage/EditProfile.jsx';
+// import ForgotPassword from './components/password/ForgotPw.jsx';
+// import CheckEmail from './components/password/CheckEmail.jsx';
+// import ChallengeStatus from './components/userPage/ChallengeStatus.jsx';
 
 // Contexts
 import UsersProvider from './providers/UsersProvider.jsx';
