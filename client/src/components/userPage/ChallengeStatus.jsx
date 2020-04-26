@@ -11,14 +11,9 @@ import { StyledButton } from '../../styledComponents/ericStyles.js';
 // Components
 import ChallengeStatusList from './ChallengeStatusList.jsx';
 
-// Chakra
-import { Box, Flex, Text, Grid } from '@chakra-ui/core';
-
 const ChallengeStatus = () => {
   const challenge = useContext(ChallengeContext);
   const friends = useContext(FriendsContext);
-
-  console.log('ChallengeStatus:', challenge);
 
   return (
     <React.Fragment>

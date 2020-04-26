@@ -4,7 +4,7 @@ import { UserContext } from '../../providers/UsersProvider.jsx';
 import { Link } from 'react-router-dom';
 
 // Chakra + Forms
-import { signOut } from '../../firebase.js';
+import { signOut, getFriend } from '../../firebase.js';
 import {
   Button,
   SimpleGrid,
@@ -27,7 +27,8 @@ import {
 import ActiveChallenges from './ActiveChallenges.jsx';
 
 const UserPage = () => {
-  const user = useContext(UserContext);
+  var user = useContext(UserContext);
+
 
   return (
     <StyledStack spacing="1rem">
@@ -110,9 +111,16 @@ const UserPage = () => {
         Edit
       </Button>
 
-      <Button variant="solid" onClick={signOut}>
-        Sign Out
-      </Button>
+      {window.location.href.slice(window.location.href.length - 7) ===
+      'profile' ? (
+        <Button variant="solid" onClick={signOut}>
+          Sign Out
+        </Button>
+      ) : (
+        <Button as={Link} to="/profile" variant="solid">
+          Back To Your Profile
+        </Button>
+      )}
     </StyledStack>
   );
 };

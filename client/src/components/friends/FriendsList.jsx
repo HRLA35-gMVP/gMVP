@@ -27,7 +27,6 @@ class FriendsList extends Component {
   };
 
   render() {
-    console.log(this.props);
     if (this.state.friends.length + 1 === this.props.friends.length) {
       return (
         <SimpleGrid
@@ -44,9 +43,16 @@ class FriendsList extends Component {
               displayName={friend.displayName}
             />
           ))}
-          <Link to={`/challenge/view/${this.props.CUID}`}>
-            <StyledButton>Return</StyledButton>
-          </Link>
+          {window.location.href.slice(window.location.href.length - 7) ===
+          'friends' ? (
+            <Link to="/profile">
+              <StyledButton>Return</StyledButton>
+            </Link>
+          ) : (
+            <Link to={`/challenge/view/${this.props.CUID}`}>
+              <StyledButton>Return</StyledButton>
+            </Link>
+          )}
         </SimpleGrid>
       );
     } else {
@@ -62,9 +68,16 @@ class FriendsList extends Component {
               return <Skeleton key={index} height="48px" />;
             }
           })}
-          <Link to={`/challenge/view/${this.props.CUID}`}>
-            <StyledButton>Return</StyledButton>
-          </Link>
+          {window.location.href.slice(window.location.href.length - 7) ===
+          'friends' ? (
+            <Link to="/profile">
+              <StyledButton>Return</StyledButton>
+            </Link>
+          ) : (
+            <Link to={`/challenge/view/${this.props.CUID}`}>
+              <StyledButton>Return</StyledButton>
+            </Link>
+          )}
         </SimpleGrid>
       );
     }

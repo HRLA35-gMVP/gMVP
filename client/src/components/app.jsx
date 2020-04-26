@@ -77,10 +77,9 @@ const App = () => {
                 </ChallengeProvider>
               </Route>
               <Redirect to="/profile" />
-              <Route exact path="/profile" component={UserPage} />
+              <Route path="/profile" component={UserPage} />
               <Route exact path="/friends" component={FriendsListHelper} />
               <Route exact path="/challenge" component={ChallengeStatus} />
-              <Route exact path="/edit" component={EditProfile} />
             </React.Fragment>
           ) : (
             <React.Fragment>

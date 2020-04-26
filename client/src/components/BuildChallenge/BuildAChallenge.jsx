@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import {
+  auth,
   createChallengeProfileDocument,
   setUserChallenges
 } from '../../firebase.js';
@@ -230,7 +231,7 @@ export default class challengeViewer extends React.Component {
     } else if (this.state.page === 2) {
       const CUID = await createChallengeProfileDocument(this.state);
 
-      await setUserChallenges(CUID);
+      await setUserChallenges(CUID, auth.currentUser.uid);
 
       this.setState({ page: 3, CUID });
     }
