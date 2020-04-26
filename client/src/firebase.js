@@ -148,45 +148,47 @@ export const addFriend = async (UID, friendUID) => {
   const uRef = getRef('users', UID);
   const fRef = getRef('users', friendUID);
 
-  const fDoc = await fRef.get();
+  try {
+    const fDoc = await fRef.get();
 
-  if (fDoc.exists) {
-    const uDoc = await uRef.get();
+    if (fDoc.exists) {
+      const uDoc = await uRef.get();
 
-    await uRef.update({
-      friends: { ...{ [friendUID]: 1 }, ...uDoc.data().friends }
-    });
+      await uRef.update({
+        friends: { ...{ [friendUID]: 1 }, ...uDoc.data().friends }
+      });
 
-    await fRef.update({
-      friends: { ...{ [UID]: 1 }, ...fDoc.data().friends }
-    });
+      await fRef.update({
+        friends: { ...{ [UID]: 1 }, ...fDoc.data().friends }
+      });
 
-    return fDoc.data().displayName;
+      return fDoc.data().displayName;
+    }
+
+    return false;
+  } catch (error) {
+    console.error('addFriend Error:', error);
+    return 'addFriend Error';
   }
-
-  return false;
 };
 
-export const editProfile = async (uid, field) => {
-  if (!uid) return null;
+export const editProfile = async (UID, field) => {
+  if (!UID) return null;
+
+  const uRef = getRef('users', UID);
 
   try {
-    const userRef = firestore.collection('users').doc(uid);
-    const userDoc = await userRef.get();
-
     const check = Object.keys(field)[0];
 
     if (check === 'displayName') {
-      await userRef.set({
-        ...userDoc.data(),
-        displayName: field.displayName
-      });
-    } else {
-      return 'Neither';
+      await uRef.update({ displayName: field.displayName });
+      return field.displayName;
     }
+
+    return 'editProfile Error #1';
   } catch (error) {
     console.error('editProfile Error:', error);
-    return error;
+    return 'editProfile Error #2';
   }
 };
 
