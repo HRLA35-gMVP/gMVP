@@ -37,7 +37,7 @@ const Register = () => {
           ml="auto"
           mr="auto"
           pl="10%"
-          mb="18%"
+          mb="15%"
         />
 
         <Formik
@@ -115,7 +115,7 @@ const Register = () => {
                   bg="#F7EEC7"
                   rounded="20px"
                   mt="10%"
-                  mb="25%"
+                  mb="28%"
                   isDisabled={isSubmitting}
                   isLoading={isSubmitting}
                 >

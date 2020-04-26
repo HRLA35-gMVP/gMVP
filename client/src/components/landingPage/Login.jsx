@@ -33,7 +33,7 @@ const Login = () => {
           src="https://mvp2020.s3-us-west-1.amazonaws.com/enter.png"
           ml="auto"
           mr="auto"
-          mt="20%"
+          mt="18%"
         />
         <Box pl="10%" pr="10%" pt="18%">
           <Formik
@@ -62,7 +62,7 @@ const Login = () => {
                   value={values.email}
                   type="input"
                 />
-
+                <Box mb="8%"></Box>
                 <ValidatorField
                   placeholder="Password"
                   name="password"
@@ -70,7 +70,7 @@ const Login = () => {
                   type="password"
                 />
 
-                <Box pt="15%"></Box>
+                <Box mt="15%"></Box>
                 <Button
                   bg="#FFB6BA"
                   rounded="20px"
@@ -106,11 +106,11 @@ const Login = () => {
                 >
                   Google OAuth
                 </Button>
-                <Flex align="center" justify="center">
+                <Flex align="center" justify="space-between">
                   <Link to="/reset" style={{ textDecoration: 'none' }}>
                     <Button
                       bg="#F7EEC7"
-                      mt="10%"
+                      mt="18%"
                       pt="10px"
                       pb="10px"
                       rounded="20px"
@@ -119,19 +119,20 @@ const Login = () => {
                       color="white"
                       w="100%"
                       h="40px"
-                      color="#373737"
+                      color="#747474"
+                      mb="25%"
                       _hover={{ bg: '#FF5454' }}
                       _focus={{ boxShadow: 'outline' }}
                       isDisabled={isSubmitting}
                       isLoading={isSubmitting}
                     >
-                      Reset
+                      Forgot Password
                     </Button>
                   </Link>
                   <Link to="/" style={{ textDecoration: 'none' }}>
                     <Button
                       bg="#F7EEC7"
-                      mt="10%"
+                      mt="18%"
                       pt="10px"
                       pb="10px"
                       rounded="20px"
@@ -140,13 +141,14 @@ const Login = () => {
                       color="white"
                       w="100%"
                       h="40px"
-                      color="#373737"
+                      color="#747474"
+                      mb="25%"
                       _hover={{ bg: '#FF5454' }}
                       _focus={{ boxShadow: 'outline' }}
                       isDisabled={isSubmitting}
                       isLoading={isSubmitting}
                     >
-                      Return
+                      Cancel
                     </Button>
                   </Link>
                 </Flex>
