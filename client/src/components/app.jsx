@@ -53,6 +53,7 @@ const App = () => {
             <React.Fragment>
               <Route exact path="/edit" component={EditProfile} />
               <Route exact path="/friends" component={FriendsListHelper} />
+              <Route exact path="/challenge" component={BuildChallenge} />
               <Redirect to="/profile" />
               <Route exact path="/profile" component={UserPage} />
             </React.Fragment>
