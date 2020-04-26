@@ -225,15 +225,13 @@ export default class confirmDetailsPage extends React.Component {
 
   // handleSubmit
   handleButton = (event) => {
-    if (this.state.page === 1) {
-      this.setState({
-        page: 2
-      });
-      console.log(this.state);
-    }
-
     event.preventDefault();
+
+    if (this.state.page === 1) {
+      this.setState({ page: 2 });
+    }
   };
+
   // handleChange
   handleInputChange = (event) => {
     const target = event.target;
@@ -262,12 +260,10 @@ export default class confirmDetailsPage extends React.Component {
       });
     }
   };
-  // handleViewer
 
   render() {
     // return this if they are first creating the challenge or edit has been clicked
 
-    console.log(this.props);
     return (
       <ConfirmDetailsWrapper>
         <div className="title">Confirm Details</div>

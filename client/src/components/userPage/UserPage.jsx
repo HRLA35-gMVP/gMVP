@@ -72,31 +72,33 @@ const UserPage = () => {
         </StyledBox>
       </SimpleGrid>
 
-      <StyledBox>
-        {Object.keys(user.challenges).length === 0 ? (
-          <Heading as="h6" size="sm">
-            No Active Challenges
-          </Heading>
-        ) : (
-          <Stack spacing="0.25rem">
+      <Link to="/challenge/create">
+        <StyledBox>
+          {Object.keys(user.challenges).length === 0 ? (
             <Heading as="h6" size="sm">
-              Active Challenges
+              No Active Challenges
             </Heading>
-            <SimpleGrid columns={3}>
-              <Heading as="h6" size="xs">
-                Challenge
+          ) : (
+            <Stack spacing="0.25rem">
+              <Heading as="h6" size="sm">
+                Active Challenges
               </Heading>
-              <Heading as="h6" size="xs">
-                Members
-              </Heading>
-              <Heading as="h6" size="xs">
-                Duration
-              </Heading>
-            </SimpleGrid>
-            <ActiveChallenges user={user} />
-          </Stack>
-        )}
-      </StyledBox>
+              <SimpleGrid columns={3}>
+                <Heading as="h6" size="xs">
+                  Challenge
+                </Heading>
+                <Heading as="h6" size="xs">
+                  Members
+                </Heading>
+                <Heading as="h6" size="xs">
+                  Duration
+                </Heading>
+              </SimpleGrid>
+              <ActiveChallenges user={user} />
+            </Stack>
+          )}
+        </StyledBox>
+      </Link>
 
       <Box>
         <AddFriend />

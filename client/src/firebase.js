@@ -29,12 +29,18 @@ firebase.initializeApp(config);
 
 window.firebase = firebase;
 
-// Firebase
+/**
+ * Firebase Solutions
+ */
+
 export const firestore = firebase.firestore();
 export const storage = firebase.storage();
 export const auth = firebase.auth();
 
-// Auth + Firestore Functions
+/**
+ * Firebase Packaged Functionality
+ */
+
 export const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
@@ -45,6 +51,10 @@ export const resetPasswordWithEmail = (email) =>
   auth.sendPasswordResetEmail(email);
 
 export const signOut = () => auth.signOut();
+
+/**
+ * User Related Functionality
+ */
 
 export const createUserProfileDocument = async (user, additionalData) => {
   // If this function is called somehow without a user, just leave immediately
@@ -183,6 +193,37 @@ export const editProfile = async (uid, field) => {
   } catch (error) {
     console.error('editProfile Error:', error);
     return error;
+  }
+};
+
+/**
+ * Challenge Related Functionality
+ */
+
+export const createChallengeProfileDocument = async (
+  challenge,
+  additionalData
+) => {
+  if (!challenge) return;
+
+  let newChallenge = challenge;
+  delete newChallenge.page;
+
+  let challengeRef = await firestore
+    .collection('challenges')
+    .add({ ...newChallenge, ...additionalData });
+
+  const CUID = challengeRef.id;
+
+  challengeRef = firestore.collection('challenges').doc(CUID);
+
+  const challengeDoc = await challengeRef.get();
+
+  if (challengeDoc.data().CUID === undefined) {
+    await challengeRef.update({ CUID: CUID, members: {} });
+    return CUID;
+  } else {
+    return challengeRef;
   }
 };
 

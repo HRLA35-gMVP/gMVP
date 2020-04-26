@@ -1,7 +1,13 @@
+// Dependencies + Functionality
 import React from 'react';
-import { Formik, Form } from 'formik';
-import { Input, Button, Select, IconButton } from '@chakra-ui/core';
+import { Redirect } from 'react-router-dom';
+import { createChallengeProfileDocument } from '../../firebase.js';
+
+// Chakra
 import styled from 'styled-components';
+import { Input, Select, IconButton } from '@chakra-ui/core';
+
+// Components
 import ChangeButton from './ChangeButton.jsx';
 import ConfirmDetailsPage from './ConfirmDeet.jsx';
 
@@ -200,6 +206,7 @@ const BuildChallengeWrapper = styled.div`
 export default class challengeViewer extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       challengeName: '',
       task: '',
@@ -211,18 +218,18 @@ export default class challengeViewer extends React.Component {
   }
 
   // handleSubmit
-  handleButton = (event) => {
-    if (this.state.page === 1) {
-      this.setState({
-        page: 2
-      });
-    } else if (this.state.page === 2) {
-      this.setState({
-        page: 3
-      });
-    }
+  handleButton = async (event) => {
     event.preventDefault();
+
+    if (this.state.page === 1) {
+      this.setState({ page: 2 });
+    } else if (this.state.page === 2) {
+      const CUID = await createChallengeProfileDocument(this.state);
+
+      this.setState({ page: 3, CUID });
+    }
   };
+
   // handleChange
   handleInputChange = (event) => {
     const target = event.target;
@@ -386,7 +393,7 @@ export default class challengeViewer extends React.Component {
       );
     } else if (this.state.page === 3) {
       // return this if they have clicked "submit"
-      return <div>page 3</div>;
+      return <Redirect to={`/challenge/view/${this.state.CUID}`} />;
     }
   }
 }
