@@ -203,29 +203,29 @@ export const createChallengeProfileDocument = async (
   if (!challenge) return;
 
   try {
-    let challengeRef = await firestore
+    let cRef = await firestore
       .collection('challenges')
       .add({ ...challenge, ...additionalData });
 
-    const CUID = challengeRef.id;
+    const CUID = cRef.id;
 
-    challengeRef = firestore.collection('challenges').doc(CUID);
+    cRef = getRef('challenges', CUID);
 
-    const challengeDoc = await challengeRef.get();
+    const cDoc = await cRef.get();
 
-    if (challengeDoc.data().CUID === '') {
-      await challengeRef.update({
+    if (cDoc.data().CUID === '') {
+      await cRef.update({
         CUID,
         members: { [auth.currentUser.uid]: { currentStreak: 0 } },
         memberCount: 1
       });
       return CUID;
     } else {
-      return challengeRef;
+      return cRef;
     }
   } catch (error) {
     console.error('createChallengeProfileDocument Error:', error);
-    return error;
+    return 'createChallengeProfileDocument Error';
   }
 };
 
