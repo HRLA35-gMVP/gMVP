@@ -104,7 +104,7 @@ export const getUserDocument = async (uid) => {
         friends: {
           [uid]: 2
         },
-        challenges: {},
+        challenges: [],
         completed: 0,
         wins: 0,
         ...userDoc.data()
@@ -206,24 +206,45 @@ export const createChallengeProfileDocument = async (
 ) => {
   if (!challenge) return;
 
-  let newChallenge = challenge;
-  delete newChallenge.page;
+  try {
+    let challengeRef = await firestore
+      .collection('challenges')
+      .add({ ...challenge, ...additionalData });
 
-  let challengeRef = await firestore
-    .collection('challenges')
-    .add({ ...newChallenge, ...additionalData });
+    const CUID = challengeRef.id;
 
-  const CUID = challengeRef.id;
+    challengeRef = firestore.collection('challenges').doc(CUID);
 
-  challengeRef = firestore.collection('challenges').doc(CUID);
+    const challengeDoc = await challengeRef.get();
 
-  const challengeDoc = await challengeRef.get();
+    if (challengeDoc.data().CUID === '') {
+      await challengeRef.update({ CUID, members: {} });
+      return CUID;
+    } else {
+      return challengeRef;
+    }
+  } catch (error) {
+    console.error('createChallengeProfileDocument Error:', error);
+    return error;
+  }
+};
 
-  if (challengeDoc.data().CUID === undefined) {
-    await challengeRef.update({ CUID: CUID, members: {} });
-    return CUID;
-  } else {
-    return challengeRef;
+export const setUserChallenges = async (CUID) => {
+  if (!CUID) return;
+
+  try {
+    const userRef = firestore.collection('users').doc(auth.currentUser.uid);
+    const userDoc = await userRef.get();
+
+    await userRef.set({
+      ...userDoc.data(),
+      challenges: [CUID, ...userDoc.data().challenges]
+    });
+
+    return;
+  } catch (error) {
+    console.error('setUserChallenges Error:', error);
+    return;
   }
 };
 

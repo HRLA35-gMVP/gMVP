@@ -12,7 +12,7 @@ class ActiveChallenges extends Component {
   };
 
   componentDidMount = async () => {
-    for (let challengeUID of Object.keys(this.props.user.challenges)) {
+    for (let challengeUID of this.props.user.challenges) {
       let challengeData = await getChallenge(challengeUID);
 
       challengeData = {
@@ -25,10 +25,7 @@ class ActiveChallenges extends Component {
   };
 
   render() {
-    if (
-      Object.keys(this.props.user.challenges).length ===
-      this.state.challenges.length
-    ) {
+    if (this.props.user.challenges.length === this.state.challenges.length) {
       return (
         <SimpleGrid columns={1} spacing="0.4rem">
           {this.state.challenges.slice(0, 3).map((challenge) => (
@@ -39,13 +36,11 @@ class ActiveChallenges extends Component {
     } else {
       return (
         <SimpleGrid columns={1} spacing="0.4rem">
-          {Object.keys(this.props.user.challenges)
-            .slice(0, 3)
-            .map((doNotUse, index) => (
-              <Text key={index} as={Skeleton}>
-                Placeholder
-              </Text>
-            ))}
+          {this.props.user.challenges.slice(0, 3).map((doNotUse, index) => (
+            <Text key={index} as={Skeleton}>
+              Placeholder
+            </Text>
+          ))}
         </SimpleGrid>
       );
     }

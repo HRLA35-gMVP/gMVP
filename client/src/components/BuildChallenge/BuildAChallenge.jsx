@@ -1,7 +1,10 @@
 // Dependencies + Functionality
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { createChallengeProfileDocument } from '../../firebase.js';
+import {
+  createChallengeProfileDocument,
+  setUserChallenges
+} from '../../firebase.js';
 
 // Chakra
 import styled from 'styled-components';
@@ -213,7 +216,8 @@ export default class challengeViewer extends React.Component {
       numberOfChecks: 0,
       typeOfChecks: 'daily',
       duration: 0,
-      page: 1
+      page: 1,
+      CUID: ''
     };
   }
 
@@ -226,47 +230,34 @@ export default class challengeViewer extends React.Component {
     } else if (this.state.page === 2) {
       const CUID = await createChallengeProfileDocument(this.state);
 
+      console.log('Test CUID:', CUID);
+
+      await setUserChallenges(CUID);
+
       this.setState({ page: 3, CUID });
     }
   };
 
   // handleChange
   handleInputChange = (event) => {
-    const target = event.target;
-    const value = event.target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   handleEditButton = (event) => {
-    if (this.state.page === 2) {
-      this.setState({
-        page: 1
-      });
-    }
     event.preventDefault();
+    if (this.state.page === 2) {
+      this.setState({ page: 1 });
+    }
   };
 
   // handle duration
   handleDurationChange = (event) => {
-    const target = event.target;
-    const value = event.target.value;
-    const name = target.name;
-
-    if (name === 'minus') {
-      this.setState({
-        duration: this.state.duration - 1
-      });
-    } else if (name === 'add') {
-      this.setState({
-        duration: this.state.duration + 1
-      });
+    if (event.target.name === 'minus') {
+      this.setState({ duration: this.state.duration - 1 });
+    } else if (event.target.name === 'add') {
+      this.setState({ duration: this.state.duration + 1 });
     }
   };
-  // handleViewer
 
   render() {
     // return this if they are first creating the challenge or edit has been clicked
@@ -391,9 +382,14 @@ export default class challengeViewer extends React.Component {
           handleEditButton={this.handleEditButton}
         />
       );
-    } else if (this.state.page === 3) {
+    } else {
       // return this if they have clicked "submit"
-      return <Redirect to={`/challenge/view/${this.state.CUID}`} />;
+      console.log('Case #3:', this.state);
+      return (
+        <div>
+          <Redirect to={`/challenge/view/${this.state.CUID}`} />
+        </div>
+      );
     }
   }
 }

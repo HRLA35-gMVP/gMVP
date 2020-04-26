@@ -15,7 +15,7 @@ const ChallengeStatus = () => {
   const challenge = useContext(ChallengeContext);
   const friends = useContext(FriendsContext);
 
-  console.log(challenge);
+  console.log('ChallengeStatus:', challenge);
 
   return (
     <React.Fragment>
@@ -92,6 +92,9 @@ const ChallengeStatus = () => {
         </Flex>
         <Link to={`/challenge/invite/${challenge.CUID}`}>
           <StyledButton>Invite Friends</StyledButton>
+        </Link>
+        <Link to={`/profile`}>
+          <StyledButton>Profile</StyledButton>
         </Link>
       </Box>
     </React.Fragment>

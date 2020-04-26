@@ -219,47 +219,10 @@ export default class confirmDetailsPage extends React.Component {
       task: '',
       numberOfChecks: 0,
       typeOfChecks: '',
-      duration: 0
+      duration: 0,
+      page: 1
     };
   }
-
-  // handleSubmit
-  handleButton = (event) => {
-    event.preventDefault();
-
-    if (this.state.page === 1) {
-      this.setState({ page: 2 });
-    }
-  };
-
-  // handleChange
-  handleInputChange = (event) => {
-    const target = event.target;
-    const value = event.target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  };
-
-  // handle duration
-  handleDurationChange = (event) => {
-    const target = event.target;
-    const value = event.target.value;
-    const name = target.name;
-    console.log(target);
-
-    if (name === 'minus') {
-      this.setState({
-        duration: this.state.duration - 1
-      });
-    } else if (name === 'add') {
-      this.setState({
-        duration: this.state.duration + 1
-      });
-    }
-  };
 
   render() {
     // return this if they are first creating the challenge or edit has been clicked
