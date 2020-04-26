@@ -10,19 +10,28 @@ import { StyledButton } from '../../styledComponents/ericStyles.js';
 // Components
 import Friend from './Friend.jsx';
 
+const promiseGen = async (friend) => {
+  let data = await getFriend(friend);
+  data.friend = friend;
+  return data;
+};
+
 class FriendsList extends Component {
   state = {
     friends: []
   };
 
   componentDidMount = async () => {
-    const friends = [];
-    for (let friend of this.props.friends) {
+    let promises = this.props.friends.map((friend, index) => {
       if (friend !== this.props.user) {
-        let { photoURL, displayName } = await getFriend(friend);
-        friends.push({ photoURL, displayName, friend });
+        return promiseGen(friend);
       }
-    }
+    });
+
+    promises = promises.filter((promise) => promise !== undefined);
+
+    let friends = await Promise.all(promises);
+
     this.setState({ friends });
   };
 
