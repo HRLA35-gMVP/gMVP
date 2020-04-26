@@ -232,44 +232,35 @@ export const createChallengeProfileDocument = async (
 export const setUserChallenges = async (CUID, UID) => {
   if (!CUID || !UID) return;
 
-  try {
-    const userRef = firestore.collection('users').doc(UID);
-    const userDoc = await userRef.get();
+  const uRef = getRef('users', UID);
 
-    await userRef.set({
-      ...userDoc.data(),
-      challenges: [CUID, ...userDoc.data().challenges]
-    });
+  try {
+    const uDoc = await uRef.get();
+
+    await uRef.update({ challenges: [CUID, ...uDoc.data().challenges] });
 
     return;
   } catch (error) {
     console.error('setUserChallenges Error:', error);
-    return;
+    return ' setUserChallenges Error';
   }
 };
 
 export const challengeAdjustMember = async (CUID, UID, additionalData) => {
   if (!CUID || !UID) return;
 
-  console.log('challengeAdjustMember');
-  console.log('CUID:', CUID);
-  console.log('UID:', UID);
-
   try {
-    const cRef = firestore.collection('challenges').doc(CUID);
+    const cRef = getRef('challenges', CUID);
     const cDoc = await cRef.get();
-    console.log('cDoc');
-    console.log(cDoc.data());
 
     if (cDoc.data().members[UID] === undefined) {
       await cRef.update({
         members: { ...{ [UID]: { currentStreak: 0 } }, ...cDoc.data().members },
         memberCount: cDoc.data().memberCount + 1
       });
-      const cDoc2 = await cRef.get();
-      console.log('cDoc2');
-      console.log(cDoc2.data());
     }
+
+    return;
   } catch (error) {
     console.error('challengeAddNewMember Error:', error);
     return 'challengeAddNewMember Error';
