@@ -33,9 +33,9 @@ const Login = () => {
           src="https://mvp2020.s3-us-west-1.amazonaws.com/enter.png"
           ml="auto"
           mr="auto"
-          mt="18%"
+          mt="12%"
         />
-        <Box pl="10%" pr="10%" pt="18%">
+        <Box pl="10%" pr="10%" pt="15%">
           <Formik
             initialValues={{ email: '', password: '' }}
             validationSchema={loginValid}
@@ -100,17 +100,18 @@ const Login = () => {
                   color="white"
                   w="100%"
                   h="40px"
+                  mb="15%"
                   color="#373737"
                   _hover={{ bg: '#FF5454' }}
                   _focus={{ boxShadow: 'outline' }}
                 >
                   Google OAuth
                 </Button>
-                <Flex align="center" justify="space-between">
+
+                <Flex justify="space-between" align="center">
                   <Link to="/reset" style={{ textDecoration: 'none' }}>
                     <Button
                       bg="#F7EEC7"
-                      mt="18%"
                       pt="10px"
                       pb="10px"
                       rounded="20px"
@@ -120,7 +121,7 @@ const Login = () => {
                       w="100%"
                       h="40px"
                       color="#747474"
-                      mb="25%"
+                      // mb="60%"
                       _hover={{ bg: '#FF5454' }}
                       _focus={{ boxShadow: 'outline' }}
                       isDisabled={isSubmitting}
@@ -132,7 +133,6 @@ const Login = () => {
                   <Link to="/" style={{ textDecoration: 'none' }}>
                     <Button
                       bg="#F7EEC7"
-                      mt="18%"
                       pt="10px"
                       pb="10px"
                       rounded="20px"
@@ -142,7 +142,7 @@ const Login = () => {
                       w="100%"
                       h="40px"
                       color="#747474"
-                      mb="25%"
+                      // mb="60%"
                       _hover={{ bg: '#FF5454' }}
                       _focus={{ boxShadow: 'outline' }}
                       isDisabled={isSubmitting}
@@ -157,6 +157,7 @@ const Login = () => {
           </Formik>
         </Box>
       </Box>
+      <Box mb="20%"></Box>
     </Flex>
   );
 };
