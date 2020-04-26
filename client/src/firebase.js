@@ -118,11 +118,11 @@ export const getUserDocument = async (UID) => {
   }
 };
 
-export const getUser = async (friendUID) => {
-  if (!friendUID) return null;
+export const getUser = async (UID) => {
+  if (!UID) return null;
 
   try {
-    const fRef = getRef('users', friendUID);
+    const fRef = getRef('users', UID);
     const fDoc = await fRef.get();
 
     return fDoc.data();
