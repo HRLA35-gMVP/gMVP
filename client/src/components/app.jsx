@@ -28,21 +28,7 @@ const App = () => {
           <Route exact path="/profile" component={UserPage} />
         </React.Fragment>
       ) : (
-        <React.Fragment>
-          <Redirect to="/" />
-          <Route exact path="/">
-            <Link to="/login" style={{ textDecoration: 'none' }}>
-              <Button variant="solid">Login</Button>
-            </Link>
-            <div>
-              <Link to="/register" style={{ textDecoration: 'none' }}>
-                <Button variant="solid">Register</Button>
-              </Link>
-            </div>
-          </Route>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-        </React.Fragment>
+        <BuildChallenge />
       )}
     </Switch>
   );
