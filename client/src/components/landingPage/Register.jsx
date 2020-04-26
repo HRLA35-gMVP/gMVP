@@ -30,7 +30,7 @@ const Register = () => {
         pr="10%"
         pt="18%"
       >
-         <Image
+        <Image
           rounded="full"
           w="220px"
           src="https://mvp2020.s3-us-west-1.amazonaws.com/blueemail2.png"
