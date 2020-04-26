@@ -1,6 +1,6 @@
 // Dependencies + Functionality
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {
   createChallengeProfileDocument,
   setUserChallenges
@@ -230,8 +230,6 @@ export default class challengeViewer extends React.Component {
     } else if (this.state.page === 2) {
       const CUID = await createChallengeProfileDocument(this.state);
 
-      console.log('Test CUID:', CUID);
-
       await setUserChallenges(CUID);
 
       this.setState({ page: 3, CUID });
@@ -365,7 +363,11 @@ export default class challengeViewer extends React.Component {
 
           <div className="button">
             <ChangeButton text="Next" submit={this.handleButton} />
+            <Link to="/profile">
+              <ChangeButton text="Return" submit={this.handleButton} />
+            </Link>
           </div>
+
           <div className="menu"></div>
         </BuildChallengeWrapper>
       );
@@ -384,12 +386,7 @@ export default class challengeViewer extends React.Component {
       );
     } else {
       // return this if they have clicked "submit"
-      console.log('Case #3:', this.state);
-      return (
-        <div>
-          <Redirect to={`/challenge/view/${this.state.CUID}`} />
-        </div>
-      );
+      return <Redirect to={`/challenge/view/${this.state.CUID}`} />;
     }
   }
 }
