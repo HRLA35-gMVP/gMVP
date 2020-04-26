@@ -100,9 +100,7 @@ export const getUserDocument = async (UID) => {
 
     if (uDoc.data().friends === undefined) {
       await uRef.update({
-        friends: {
-          [UID]: 2
-        },
+        friends: { [UID]: 2 },
         challenges: [],
         completed: 0,
         wins: 0
@@ -156,17 +154,11 @@ export const addFriend = async (UID, friendUID) => {
     const uDoc = await uRef.get();
 
     await uRef.update({
-      friends: {
-        ...{ [friendUID]: 1 },
-        ...uDoc.data().friends
-      }
+      friends: { ...{ [friendUID]: 1 }, ...uDoc.data().friends }
     });
 
     await fRef.update({
-      friends: {
-        ...{ [UID]: 1 },
-        ...fDoc.data().friends
-      }
+      friends: { ...{ [UID]: 1 }, ...fDoc.data().friends }
     });
 
     return fDoc.data().displayName;
