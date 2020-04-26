@@ -14,12 +14,11 @@ const ButtonWrapper = styled.div`
 `;
 
 export default function changeButton(props) {
-  console.log(props.submit);
   return (
     <ButtonWrapper>
       <Button
+        variantColor="red"
         className="button"
-        variantColor="#ffb6b9"
         onClick={(e) => props.submit(e)}
       >
         {props.text}

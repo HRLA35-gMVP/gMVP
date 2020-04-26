@@ -2,7 +2,8 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import { Input, Button, Select, IconButton } from '@chakra-ui/core';
 import styled from 'styled-components';
-import ChangeButton from './changeButton.jsx';
+import ChangeButton from './ChangeButton.jsx';
+import ConfirmDetailsPage from './ConfirmDeet.jsx';
 
 const BuildChallengeWrapper = styled.div`
   /* ////////////////////////////////// */
@@ -51,6 +52,7 @@ const BuildChallengeWrapper = styled.div`
     box-shadow: 5px 5px 5px #888888;
     height: 10vw;
     font-size: 5vw;
+    border-radius: 0px;
   }
 
   /* /////////////////////////// */
@@ -76,6 +78,7 @@ const BuildChallengeWrapper = styled.div`
     box-shadow: 5px 5px 5px #888888;
     height: 10vw;
     font-size: 5vw;
+    border-radius: 0px;
   }
   /* //////////////////////////////////////// */
   /* ////////// CHECKIN & DRPDOWN /////////// */
@@ -105,6 +108,7 @@ const BuildChallengeWrapper = styled.div`
     box-shadow: 5px 5px 5px #888888;
     height: 10vw;
     font-size: 5vw;
+    border-radius: 0px;
   }
 
   /* /////////////////////////////// */
@@ -130,6 +134,7 @@ const BuildChallengeWrapper = styled.div`
     box-shadow: 5px 5px 5px #888888;
     height: 10vw;
     font-size: 5vw;
+    border-radius: 0px;
   }
 
   /* /////////////////////////////// */
@@ -177,7 +182,7 @@ const BuildChallengeWrapper = styled.div`
   /* ///////////////////////////// */
   .button {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 10rem;
   }
 
   /* /////////////////////////// */
@@ -187,6 +192,8 @@ const BuildChallengeWrapper = styled.div`
     width: 100%;
     height: 65px;
     background-color: #ffb6b9;
+    position: fixed;
+    bottom: 0px;
   }
 `;
 
@@ -197,7 +204,7 @@ export default class challengeViewer extends React.Component {
       challengeName: '',
       task: '',
       numberOfChecks: 0,
-      typeOfChecks: '',
+      typeOfChecks: 'daily',
       duration: 0,
       page: 1
     };
@@ -209,9 +216,11 @@ export default class challengeViewer extends React.Component {
       this.setState({
         page: 2
       });
-      console.log(this.state);
+    } else if (this.state.page === 2) {
+      this.setState({
+        page: 3
+      });
     }
-
     event.preventDefault();
   };
   // handleChange
@@ -224,10 +233,37 @@ export default class challengeViewer extends React.Component {
       [name]: value
     });
   };
+
+  handleEditButton = (event) => {
+    if (this.state.page === 2) {
+      this.setState({
+        page: 1
+      });
+    }
+    event.preventDefault();
+  };
+
+  // handle duration
+  handleDurationChange = (event) => {
+    const target = event.target;
+    const value = event.target.value;
+    const name = target.name;
+
+    if (name === 'minus') {
+      this.setState({
+        duration: this.state.duration - 1
+      });
+    } else if (name === 'add') {
+      this.setState({
+        duration: this.state.duration + 1
+      });
+    }
+  };
   // handleViewer
 
   render() {
     // return this if they are first creating the challenge or edit has been clicked
+
     if (this.state.page === 1) {
       return (
         <BuildChallengeWrapper>
@@ -239,14 +275,24 @@ export default class challengeViewer extends React.Component {
               <label htmlFor="challengeName" className="name-label">
                 Challenge Name:
               </label>
-              <Input className="name-box" name="challengeName" />
+              <Input
+                className="name-box"
+                name="challengeName"
+                value={this.state.challengeName}
+                onChange={(e) => this.handleInputChange(e)}
+              />
             </div>
 
             <div className="task-container">
               <label htmlFor="task" className="task-label">
                 Task:
               </label>
-              <Input className="task-box" name="task" />
+              <Input
+                className="task-box"
+                name="task"
+                value={this.state.task}
+                onChange={(e) => this.handleInputChange(e)}
+              />
             </div>
 
             <div className="frequency-container">
@@ -254,7 +300,12 @@ export default class challengeViewer extends React.Component {
                 <label htmlFor="numberOfChecks" className="checkin-label">
                   Check in
                 </label>
-                <Input className="checkin-box" name="numberOfChecks" />
+                <Input
+                  className="checkin-box"
+                  name="numberOfChecks"
+                  value={this.state.numberOfChecks}
+                  onChange={(e) => this.handleInputChange(e)}
+                />
               </div>
 
               <div className="typeOfChecks-container">
@@ -266,6 +317,8 @@ export default class challengeViewer extends React.Component {
                     placeholder=""
                     className="typeOfChecks-dropdown"
                     name="typeOfChecks"
+                    value={this.state.typeOfChecks}
+                    onChange={(e) => this.handleInputChange(e)}
                   >
                     <option value="daily">daily</option>
                     <option value="weekly">weekly</option>
@@ -283,19 +336,28 @@ export default class challengeViewer extends React.Component {
                 icon="minus"
                 size="sm"
                 isRound="true"
-                variantColor="#red 2"
+                variantColor="red"
                 width={{ md: 40 }}
+                name="minus"
+                onClick={(e) => this.handleDurationChange(e)}
               ></IconButton>
               <div className="duration-box-wrapper">
-                <Input className="duration-box" name="duration" />
+                <Input
+                  className="duration-box"
+                  name="duration"
+                  value={this.state.duration}
+                  onChange={(e) => this.handleInputChange(e)}
+                />
               </div>
               <IconButton
                 className="add"
                 icon="add"
                 size="sm"
                 isRound="true"
-                variantColor="#ffb6b9"
+                variantColor="red"
                 width={{ md: 40 }}
+                name="add"
+                onClick={(e) => this.handleDurationChange(e)}
               ></IconButton>
               <label htmlFor="duration" className="duration-label">
                 Days
@@ -311,13 +373,24 @@ export default class challengeViewer extends React.Component {
       );
     } else if (this.state.page === 2) {
       // return this if they have clicked "next"
-      return <div>page 2</div>;
+      return (
+        <ConfirmDetailsPage
+          challengeName={this.state.challengeName}
+          task={this.state.task}
+          numberOfChecks={this.state.numberOfChecks}
+          typeOfChecks={this.state.typeOfChecks}
+          duration={this.state.duration}
+          handleButton={this.handleButton}
+          handleEditButton={this.handleEditButton}
+        />
+      );
     } else if (this.state.page === 3) {
       // return this if they have clicked "submit"
       return <div>page 3</div>;
     }
   }
 }
+
 ///////////////////////////////////////////// ORIGINAL FORMIK CODE //////////////////////////////////
 // const buildChallenge = (props) => {
 //   return (
