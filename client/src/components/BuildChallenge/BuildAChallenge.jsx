@@ -204,6 +204,7 @@ const BuildChallengeWrapper = styled.div`
     background-color: #ffb6b9;
     position: fixed;
     bottom: 0px;
+    left: 0px;
   }
 `;
 
