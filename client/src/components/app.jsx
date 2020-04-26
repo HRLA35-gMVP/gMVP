@@ -17,13 +17,17 @@ import {
 } from '@chakra-ui/core';
 
 // Componenets + Styles
-import UserPage from './userPage/userPage.jsx';
-import Register from './landingPage/Register.jsx';
+// Landing Page
 import Login from './landingPage/Login.jsx';
-import FriendsListHelper from './friends/FriendsListHelper.jsx';
-import EditProfile from './userPage/EditProfile.jsx';
+import Register from './landingPage/Register.jsx';
 import ForgotPassword from './password/ForgotPw.jsx';
 import CheckEmail from './password/CheckEmail.jsx';
+
+// User Pages
+import UserPage from './userPage/userPage.jsx';
+import EditProfile from './userPage/EditProfile.jsx';
+import FriendsListHelper from './friends/FriendsListHelper.jsx';
+import ChallengeStatus from './userPage/ChallengeStatus.jsx';
 import BuildChallenge from './BuildChallenge/BuildAChallenge.jsx';
 
 // Styles
@@ -51,10 +55,11 @@ const App = () => {
         <Switch>
           {!!user ? (
             <React.Fragment>
-              <Route exact path="/edit" component={EditProfile} />
-              <Route exact path="/friends" component={FriendsListHelper} />
               <Redirect to="/profile" />
               <Route exact path="/profile" component={UserPage} />
+              <Route exact path="/friends" component={FriendsListHelper} />
+              <Route exact path="/challenge" component={ChallengeStatus} />
+              <Route exact path="/edit" component={EditProfile} />
             </React.Fragment>
           ) : (
             <React.Fragment>
