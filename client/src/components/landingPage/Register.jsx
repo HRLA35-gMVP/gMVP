@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 // Chakra + Forms
 import { Formik, Form } from 'formik';
-import { Button, useToast, Flex, Box } from '@chakra-ui/core';
+import { Button, useToast, Flex, Box, Image } from '@chakra-ui/core';
 import { registerValid } from '../formHelpers/validators.js';
 
 // Components
@@ -30,6 +30,16 @@ const Register = () => {
         pr="10%"
         pt="18%"
       >
+         <Image
+          rounded="full"
+          w="220px"
+          src="https://mvp2020.s3-us-west-1.amazonaws.com/blueemail2.png"
+          ml="auto"
+          mr="auto"
+          pl="10%"
+          mb="18%"
+        />
+
         <Formik
           initialValues={{ email: '', password: '', displayName: '' }}
           validationSchema={registerValid}
@@ -89,7 +99,7 @@ const Register = () => {
                 bg="#FFB6BA"
                 w="100%"
                 h="40px"
-                mt="10%"
+                mt="18%"
                 rounded="20px"
                 isDisabled={isSubmitting}
                 isLoading={isSubmitting}
@@ -105,7 +115,7 @@ const Register = () => {
                   bg="#F7EEC7"
                   rounded="20px"
                   mt="10%"
-                  mb="10%"
+                  mb="25%"
                   isDisabled={isSubmitting}
                   isLoading={isSubmitting}
                 >
