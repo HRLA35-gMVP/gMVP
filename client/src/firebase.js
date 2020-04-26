@@ -29,12 +29,18 @@ firebase.initializeApp(config);
 
 window.firebase = firebase;
 
-// Firebase
+/**
+ * Firebase Solutions
+ */
+
 export const firestore = firebase.firestore();
 export const storage = firebase.storage();
 export const auth = firebase.auth();
 
-// Auth + Firestore Functions
+/**
+ * Firebase Packaged Functionality
+ */
+
 export const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
@@ -45,6 +51,10 @@ export const resetPasswordWithEmail = (email) =>
   auth.sendPasswordResetEmail(email);
 
 export const signOut = () => auth.signOut();
+
+/**
+ * User Related Functionality
+ */
 
 export const createUserProfileDocument = async (user, additionalData) => {
   // If this function is called somehow without a user, just leave immediately
@@ -94,7 +104,7 @@ export const getUserDocument = async (uid) => {
         friends: {
           [uid]: 2
         },
-        challenges: {},
+        challenges: [],
         completed: 0,
         wins: 0,
         ...userDoc.data()
@@ -183,6 +193,58 @@ export const editProfile = async (uid, field) => {
   } catch (error) {
     console.error('editProfile Error:', error);
     return error;
+  }
+};
+
+/**
+ * Challenge Related Functionality
+ */
+
+export const createChallengeProfileDocument = async (
+  challenge,
+  additionalData
+) => {
+  if (!challenge) return;
+
+  try {
+    let challengeRef = await firestore
+      .collection('challenges')
+      .add({ ...challenge, ...additionalData });
+
+    const CUID = challengeRef.id;
+
+    challengeRef = firestore.collection('challenges').doc(CUID);
+
+    const challengeDoc = await challengeRef.get();
+
+    if (challengeDoc.data().CUID === '') {
+      await challengeRef.update({ CUID, members: {} });
+      return CUID;
+    } else {
+      return challengeRef;
+    }
+  } catch (error) {
+    console.error('createChallengeProfileDocument Error:', error);
+    return error;
+  }
+};
+
+export const setUserChallenges = async (CUID) => {
+  if (!CUID) return;
+
+  try {
+    const userRef = firestore.collection('users').doc(auth.currentUser.uid);
+    const userDoc = await userRef.get();
+
+    await userRef.set({
+      ...userDoc.data(),
+      challenges: [CUID, ...userDoc.data().challenges]
+    });
+
+    return;
+  } catch (error) {
+    console.error('setUserChallenges Error:', error);
+    return;
   }
 };
 

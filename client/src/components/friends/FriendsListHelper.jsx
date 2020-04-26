@@ -1,18 +1,23 @@
 // Dependencies
 import React, { useContext } from 'react';
 import { UserContext } from '../../providers/UsersProvider.jsx';
+import { ChallengeContext } from '../../providers/ChallengeProvider.jsx';
 
 // Components
 import FriendsList from './FriendsList.jsx';
-import FriendsProvider from '../../providers/FriendsProvider.jsx';
 
 const FriendsListHelper = () => {
   const user = useContext(UserContext);
+  const challenge = useContext(ChallengeContext);
+
+  console.log(challenge);
 
   return (
-    // <FriendsProvider>
-    <FriendsList user={user.uid} friends={Object.keys(user.friends)} />
-    // </FriendsProvider>
+    <FriendsList
+      user={user.uid}
+      friends={Object.keys(user.friends)}
+      CUID={challenge.CUID}
+    />
   );
 };
 

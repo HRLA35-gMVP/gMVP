@@ -2,9 +2,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-// Chakra
-import { ThemeProvider, CSSReset, Box, Text, Grid } from '@chakra-ui/core';
-
+import { Box, Text, Grid } from '@chakra-ui/core';
 const ChallengeStatusList = () => {
   const members = [
     { alias: 'JaneDope', streaks: 13, duration: 14 },

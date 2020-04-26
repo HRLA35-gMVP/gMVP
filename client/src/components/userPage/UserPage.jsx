@@ -74,14 +74,18 @@ const UserPage = () => {
 
       <StyledBox>
         {Object.keys(user.challenges).length === 0 ? (
-          <Heading as="h6" size="sm">
-            No Active Challenges
-          </Heading>
+          <Link to="/challenge/create">
+            <Heading as="h6" size="sm">
+              No Active Challenges
+            </Heading>
+          </Link>
         ) : (
           <Stack spacing="0.25rem">
-            <Heading as="h6" size="sm">
-              Active Challenges
-            </Heading>
+            <Link to="/challenge/create">
+              <Heading as="h6" size="sm">
+                Active Challenges
+              </Heading>
+            </Link>
             <SimpleGrid columns={3}>
               <Heading as="h6" size="xs">
                 Challenge

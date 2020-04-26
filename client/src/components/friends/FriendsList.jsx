@@ -27,6 +27,7 @@ class FriendsList extends Component {
   };
 
   render() {
+    console.log(this.props);
     if (this.state.friends.length + 1 === this.props.friends.length) {
       return (
         <SimpleGrid
@@ -43,8 +44,8 @@ class FriendsList extends Component {
               displayName={friend.displayName}
             />
           ))}
-          <Link to="/profile">
-            <StyledButton>Profile</StyledButton>
+          <Link to={`/challenge/view/${this.props.CUID}`}>
+            <StyledButton>Return</StyledButton>
           </Link>
         </SimpleGrid>
       );
@@ -61,8 +62,8 @@ class FriendsList extends Component {
               return <Skeleton key={index} height="48px" />;
             }
           })}
-          <Link to="/profile">
-            <StyledButton>Profile</StyledButton>
+          <Link to={`/challenge/view/${this.props.CUID}`}>
+            <StyledButton>Return</StyledButton>
           </Link>
         </SimpleGrid>
       );

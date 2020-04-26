@@ -35,6 +35,7 @@ import {
   StyledPopoverContent,
   StyledButton
 } from '../styledComponents/ericStyles.js';
+import ChallengeProvider from '../providers/ChallengeProvider.jsx';
 
 const App = () => {
   const user = useContext(UserContext);
@@ -55,6 +56,26 @@ const App = () => {
         <Switch>
           {!!user ? (
             <React.Fragment>
+              <Route exact path="/edit" component={EditProfile} />
+              <Route
+                exact
+                path="/challenge/create"
+                component={BuildChallenge}
+              />
+              <Route path="/challenge/(invite|view)">
+                <ChallengeProvider>
+                  <Route
+                    exact
+                    path="/challenge/invite/*"
+                    component={FriendsListHelper}
+                  />
+                  <Route
+                    exact
+                    path="/challenge/view/*"
+                    component={ChallengeStatus}
+                  />
+                </ChallengeProvider>
+              </Route>
               <Redirect to="/profile" />
               <Route exact path="/profile" component={UserPage} />
               <Route exact path="/friends" component={FriendsListHelper} />
