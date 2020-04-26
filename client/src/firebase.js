@@ -53,68 +53,66 @@ export const resetPasswordWithEmail = (email) =>
 export const signOut = () => auth.signOut();
 
 /**
+ * Generalized Functionality
+ */
+
+const getRef = (collection, UID) => firestore.collection(collection).doc(UID);
+
+/**
  * User Related Functionality
  */
 
 export const createUserProfileDocument = async (user, additionalData) => {
-  // If this function is called somehow without a user, just leave immediately
   if (!user) return;
 
-  // Get a reference to where this user's data is stored
-  const userRef = firestore.collection('users').doc(user.uid);
+  const uRef = getRef('users', user.uid);
 
-  // From the location reference, retrieve the user's information
-  const snapshot = await userRef.get();
+  try {
+    const uDoc = await uRef.get();
 
-  if (!snapshot.exists) {
-    const { email, displayName, photoURL } = user;
-    const createdAt = new Date();
+    if (!uDoc.exists) {
+      const { email, displayName, photoURL } = user;
+      const createdAt = new Date();
 
-    try {
-      await userRef.set({
+      await uRef.set({
         displayName,
         email,
         photoURL,
         createdAt,
         ...additionalData
       });
-    } catch (error) {
-      console.error('createUserProfileDocument Error:', error);
-      return error;
     }
-  }
 
-  return getUserDocument(user.uid);
+    return getUserDocument(user.uid);
+  } catch (error) {
+    console.error('createUserProfileDocument Error:', error);
+    return 'createUserProfileDocument Error';
+  }
 };
 
-export const getUserDocument = async (uid) => {
-  if (!uid) return null;
+export const getUserDocument = async (UID) => {
+  if (!UID) return null;
+
+  const uRef = getRef('users', UID);
 
   try {
-    const userRef = firestore.collection('users').doc(uid);
-    const userDoc = await userRef.get();
+    const uDoc = await uRef.get();
 
-    /**
-     * Set friends to an empty array here
-     * Because if we were to do it in createUserProfile
-     * Then Google OAuth accounts wouldn't receive them
-     */
-    if (userDoc.data().friends === undefined) {
-      await userRef.set({
+    if (uDoc.data().friends === undefined) {
+      await uRef.update({
         friends: {
-          [uid]: 2
+          [UID]: 2
         },
         challenges: [],
         completed: 0,
-        wins: 0,
-        ...userDoc.data()
+        wins: 0
       });
     }
 
-    return userRef;
+    return uRef;
   } catch (error) {
     console.error('getUserDocument Error:', error);
-    return error;
+    return 'getUserDocument Error';
   }
 };
 
@@ -122,13 +120,13 @@ export const getFriend = async (friendUID) => {
   if (!friendUID) return null;
 
   try {
-    const friendRef = firestore.collection('users').doc(friendUID);
-    const friendDoc = await friendRef.get();
+    const fRef = getRef('users', friendUID);
+    const fDoc = await fRef.get();
 
-    return friendDoc.data();
+    return fDoc.data();
   } catch (error) {
     console.error('getUserDocument Error:', error);
-    return error;
+    return 'getUserDocument Error';
   }
 };
 
@@ -136,38 +134,42 @@ export const getChallenge = async (challengeUID) => {
   if (!challengeUID) return null;
 
   try {
-    const challengeRef = firestore.collection('challenges').doc(challengeUID);
-    const challengeDoc = await challengeRef.get();
+    const cRef = getRef('challenges', challengeUID);
+    const cDoc = await cRef.get();
 
-    return challengeDoc.data();
+    return cDoc.data();
   } catch (error) {
     console.error('getChallenge Error:', error);
     return error;
   }
 };
 
-export const addFriend = async (uid, friendUID) => {
-  if (!uid || !friendUID) return null;
+export const addFriend = async (UID, friendUID) => {
+  if (!UID || !friendUID) return null;
 
-  const friend = { [friendUID]: 1 };
+  const uRef = getRef('users', UID);
+  const fRef = getRef('users', friendUID);
 
-  const userRef = firestore.collection('users').doc(uid);
+  const fDoc = await fRef.get();
 
-  const friendRef = firestore.collection('users').doc(friendUID);
-  const friendSnapshop = await friendRef.get();
+  if (fDoc.exists) {
+    const uDoc = await uRef.get();
 
-  if (friendSnapshop.exists) {
-    const userDoc = await userRef.get();
-
-    await userRef.set({
-      ...userDoc.data(),
+    await uRef.update({
       friends: {
-        ...friend,
-        ...userDoc.data().friends
+        ...{ [friendUID]: 1 },
+        ...uDoc.data().friends
       }
     });
 
-    return friendSnapshop.data().displayName;
+    await fRef.update({
+      friends: {
+        ...{ [UID]: 1 },
+        ...fDoc.data().friends
+      }
+    });
+
+    return fDoc.data().displayName;
   }
 
   return false;

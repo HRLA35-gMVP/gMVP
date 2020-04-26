@@ -10,8 +10,6 @@ const FriendsListHelper = () => {
   const user = useContext(UserContext);
   const challenge = useContext(ChallengeContext);
 
-  console.log(challenge);
-
   return (
     <FriendsList
       user={user.uid}
