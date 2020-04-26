@@ -21,8 +21,6 @@ const Register = () => {
       onSubmit={async (data, { setSubmitting, resetForm }) => {
         setSubmitting(true);
 
-        console.log('Formik:', data);
-
         try {
           const { user } = await auth.createUserWithEmailAndPassword(
             data.email,

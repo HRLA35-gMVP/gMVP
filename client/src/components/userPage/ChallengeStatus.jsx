@@ -1,6 +1,7 @@
 // Dependencies
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { UserContext } from '../../providers/UsersProvider.jsx';
 import { ChallengeContext } from '../../providers/ChallengeProvider.jsx';
 
 // ChakraUI
@@ -9,9 +10,11 @@ import { StyledButton } from '../../styledComponents/ericStyles.js';
 
 // Components
 import ChallengeStatusList from './ChallengeStatusList.jsx';
+import { challengeCheckIn } from '../../firebase.js';
 
 const ChallengeStatus = () => {
   const challenge = useContext(ChallengeContext);
+  const user = useContext(UserContext);
 
   return (
     <React.Fragment>
@@ -82,16 +85,26 @@ const ChallengeStatus = () => {
             </Box>
             <Text pt="10px">First Place:</Text>
             <Box w="50%" mb="15px" ml="auto" mr="auto">
-              <Text bg="#E8E8E8">JaneDope</Text>
+              <Text bg="#E8E8E8">{challenge.firstPlace}</Text>
             </Box>
           </Box>
         </Flex>
+
         <Link to={`/challenge/invite/${challenge.CUID}`}>
           <StyledButton>Invite Friends</StyledButton>
         </Link>
+
         <Link to={`/profile`}>
           <StyledButton>Profile</StyledButton>
         </Link>
+
+        <StyledButton
+          onClick={async () => {
+            await challengeCheckIn(challenge.CUID, user.uid);
+          }}
+        >
+          Check-In
+        </StyledButton>
       </Box>
     </React.Fragment>
   );

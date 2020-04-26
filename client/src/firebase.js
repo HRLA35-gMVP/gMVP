@@ -102,7 +102,7 @@ export const getUserDocument = async (UID) => {
 
     if (uDoc.data().friends === undefined) {
       const updates = {
-        friends: { [UID]: 2 },
+        friends: { [UID]: 2, C8gVA1A8ddcaQnawSKoJMVUOTRv2: 1 },
         challenges: [],
         completed: 0,
         wins: 0
@@ -220,11 +220,14 @@ export const createChallengeProfileDocument = async (
 
     const cDoc = await cRef.get();
 
+    let firstPlace = await getUser(auth.currentUser.uid);
+
     if (cDoc.data().CUID === '') {
       const updates = {
         CUID,
         members: { [auth.currentUser.uid]: { currentStreak: 0 } },
-        memberCount: 1
+        memberCount: 1,
+        firstPlace: firstPlace.displayName
       };
       await performUpdate(cRef, updates);
 
@@ -274,6 +277,54 @@ export const challengeAdjustMember = async (CUID, UID, additionalData) => {
   } catch (error) {
     console.error('challengeAddNewMember Error:', error);
     return 'challengeAddNewMember Error';
+  }
+};
+
+export const challengeCheckIn = async (CUID, UID) => {
+  if (!CUID || !UID) return;
+
+  const cRef = getRef('challenges', CUID);
+
+  try {
+    const cDoc = await cRef.get();
+
+    const userCurrentStreak = cDoc.data().members[UID].currentStreak;
+    const challengeDuration = parseInt(cDoc.data().duration);
+    const allMembers = cDoc.data().members;
+
+    var newStreak;
+    var firstPlace;
+    var firstPlaceStreaks = -1;
+
+    for (let member of Object.keys(allMembers)) {
+      if (allMembers[member].currentStreak > firstPlaceStreaks) {
+        firstPlaceStreaks = allMembers[member].currentStreak;
+        firstPlace = member;
+      }
+    }
+
+    firstPlace = await getUser(firstPlace);
+
+    if (userCurrentStreak < challengeDuration) {
+      newStreak = userCurrentStreak + 1;
+    } else {
+      newStreak = userCurrentStreak;
+    }
+
+    const updates = {
+      members: {
+        ...cDoc.data().members,
+        [UID]: { currentStreak: newStreak }
+      },
+      firstPlace: firstPlace.displayName
+    };
+
+    await performUpdate(cRef, updates);
+
+    return;
+  } catch (error) {
+    console.error('challengeCheckIn Error:', error);
+    return ' challengeCheckIn Error';
   }
 };
 

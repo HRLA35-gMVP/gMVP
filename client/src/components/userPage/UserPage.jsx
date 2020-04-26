@@ -4,7 +4,7 @@ import { UserContext } from '../../providers/UsersProvider.jsx';
 import { Link } from 'react-router-dom';
 
 // Chakra + Forms
-import { signOut, getUser } from '../../firebase.js';
+import { signOut } from '../../firebase.js';
 import {
   Button,
   SimpleGrid,

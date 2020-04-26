@@ -64,16 +64,16 @@ const App = () => {
               />
               <Route path="/challenge/(invite|view)">
                 <ChallengeProvider>
-                  <Route
-                    exact
-                    path="/challenge/invite/*"
-                    component={FriendsListHelper}
-                  />
-                  <Route
-                    exact
-                    path="/challenge/view/*"
-                    component={ChallengeStatus}
-                  />
+                    <Route
+                      exact
+                      path="/challenge/invite/*"
+                      component={FriendsListHelper}
+                    />
+                    <Route
+                      exact
+                      path="/challenge/view/*"
+                      component={ChallengeStatus}
+                    />
                 </ChallengeProvider>
               </Route>
               <Redirect to="/profile" />

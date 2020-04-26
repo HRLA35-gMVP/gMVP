@@ -1,7 +1,6 @@
 // Dependencies
 import { getChallenge, getUser } from '../../firebase';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 // Chakra
 import { Box, Text, Grid, Skeleton } from '@chakra-ui/core';
@@ -26,17 +25,17 @@ class ChallengeStatusList extends Component {
   componentDidMount = async () => {
     const challengeData = await getChallenge(this.props.challenge.CUID);
 
-    console.log('challengeData:', challengeData);
-
     let promises = Object.keys(challengeData.members).map((member) =>
       promiseGen(member, challengeData.members[member])
     );
 
     let memers = await Promise.all(promises);
 
-    this.setState({ memers, duration: challengeData.duration }, () =>
-      console.log('setState:', this.state)
-    );
+    this.setState({ memers, duration: challengeData.duration });
+  };
+
+  UNSAFE_componentWillReceiveProps = async () => {
+    await this.componentDidMount();
   };
 
   render() {
