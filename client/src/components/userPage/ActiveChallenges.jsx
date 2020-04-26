@@ -1,10 +1,16 @@
 // Dependencies
 import React, { Component } from 'react';
+import { getChallenge } from '../../firebase.js';
 
 // Chakra
 import { Text, SimpleGrid, Skeleton } from '@chakra-ui/core';
-import { getChallenge } from '../../firebase.js';
 import Challenge from './Challenge.jsx';
+
+const promiseGen = async (CUID) => {
+  let data = await getChallenge(CUID);
+  data.challengeUID = CUID;
+  return data;
+};
 
 class ActiveChallenges extends Component {
   state = {
@@ -12,16 +18,13 @@ class ActiveChallenges extends Component {
   };
 
   componentDidMount = async () => {
-    for (let challengeUID of this.props.user.challenges) {
-      let challengeData = await getChallenge(challengeUID);
+    let promises = this.props.user.challenges.map((challenge) =>
+      promiseGen(challenge)
+    );
 
-      challengeData = {
-        challengeUID,
-        ...challengeData
-      };
+    let challenges = await Promise.all(promises);
 
-      this.setState({ challenges: [...this.state.challenges, challengeData] });
-    }
+    this.setState({ challenges });
   };
 
   render() {
