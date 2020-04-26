@@ -57,6 +57,8 @@ export const signOut = () => auth.signOut();
  */
 
 const getRef = (collection, UID) => firestore.collection(collection).doc(UID);
+const performUpdate = async (docRef, updates) =>
+  await docRef.update({ ...updates });
 
 /**
  * User Related Functionality
@@ -99,12 +101,14 @@ export const getUserDocument = async (UID) => {
     const uDoc = await uRef.get();
 
     if (uDoc.data().friends === undefined) {
-      await uRef.update({
+      const updates = {
         friends: { [UID]: 2 },
         challenges: [],
         completed: 0,
         wins: 0
-      });
+      };
+
+      await performUpdate(uRef, updates);
     }
 
     return uRef;
@@ -153,14 +157,17 @@ export const addFriend = async (UID, friendUID) => {
 
     if (fDoc.exists) {
       const uDoc = await uRef.get();
-
-      await uRef.update({
+      const userUpdates = {
         friends: { ...{ [friendUID]: 1 }, ...uDoc.data().friends }
-      });
-
-      await fRef.update({
+      };
+      const friendUpdates = {
         friends: { ...{ [UID]: 1 }, ...fDoc.data().friends }
-      });
+      };
+
+      await Promise.all([
+        performUpdate(uRef, userUpdates),
+        performUpdate(fRef, friendUpdates)
+      ]);
 
       return fDoc.data().displayName;
     }
@@ -178,10 +185,10 @@ export const editProfile = async (UID, field) => {
   const uRef = getRef('users', UID);
 
   try {
-    const check = Object.keys(field)[0];
+    if (Object.keys(field)[0] === 'displayName') {
+      const updates = { displayName: field.displayName };
+      await performUpdate(uRef, updates);
 
-    if (check === 'displayName') {
-      await uRef.update({ displayName: field.displayName });
       return field.displayName;
     }
 
@@ -214,11 +221,13 @@ export const createChallengeProfileDocument = async (
     const cDoc = await cRef.get();
 
     if (cDoc.data().CUID === '') {
-      await cRef.update({
+      const updates = {
         CUID,
         members: { [auth.currentUser.uid]: { currentStreak: 0 } },
         memberCount: 1
-      });
+      };
+      await performUpdate(cRef, updates);
+
       return CUID;
     } else {
       return cRef;
@@ -236,8 +245,8 @@ export const setUserChallenges = async (CUID, UID) => {
 
   try {
     const uDoc = await uRef.get();
-
-    await uRef.update({ challenges: [CUID, ...uDoc.data().challenges] });
+    const updates = { challenges: [CUID, ...uDoc.data().challenges] };
+    await performUpdate(uRef, updates);
 
     return;
   } catch (error) {
@@ -254,10 +263,11 @@ export const challengeAdjustMember = async (CUID, UID, additionalData) => {
     const cDoc = await cRef.get();
 
     if (cDoc.data().members[UID] === undefined) {
-      await cRef.update({
+      const updates = {
         members: { ...{ [UID]: { currentStreak: 0 } }, ...cDoc.data().members },
         memberCount: cDoc.data().memberCount + 1
-      });
+      };
+      await performUpdate(cRef, updates);
     }
 
     return;

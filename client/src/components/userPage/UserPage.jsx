@@ -27,8 +27,7 @@ import {
 import ActiveChallenges from './ActiveChallenges.jsx';
 
 const UserPage = () => {
-  var user = useContext(UserContext);
-
+  const user = useContext(UserContext);
 
   return (
     <StyledStack spacing="1rem">
