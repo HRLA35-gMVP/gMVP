@@ -1,7 +1,8 @@
 // Dependencies
 import React, { Component } from 'react';
 import { auth, firestore, storage } from '../../firebase.js';
-import { Box, Button } from '@chakra-ui/core';
+import { Box, Button, Flex, Icon, Text } from '@chakra-ui/core';
+import ToastFileHelper from './ToastFileHelper.jsx';
 
 class FileHelper extends Component {
   imageInput = null;
@@ -33,13 +34,52 @@ class FileHelper extends Component {
     }
   };
 
+  getfile = () => {
+    return (
+      <Flex direction="column" justify="center">
+        <form
+          onSubmit={this.handleSubmit}
+          style={{ position: 'relative', border: 'black' }}
+        >
+          <Text mb="5%">
+            1.{' '}
+            <input
+              type="file"
+              id="file-import"
+              style={{
+                position: 'relative',
+                textAlign: 'center',
+                fontSize: '14px',
+                background: 'white',
+                width: '80%'
+              }}
+              ref={(ref) => (this.imageInput = ref)}
+            />
+          </Text>
+
+          <Text>
+            2.{' '}
+            <Button
+              type="submit"
+              rounded="4px"
+              w="50%"
+              h="30px"
+              textAlign="center"
+              bg="#F7EEC7"
+              _hover={{ bg: '#FFFF29' }}
+            >
+              <Icon name="download" /> Update Avatar
+            </Button>
+          </Text>
+        </form>{' '}
+      </Flex>
+    );
+  };
+
   render() {
     return (
-      <Box>
-        <form onSubmit={this.handleSubmit}>
-          <input type="file" ref={(ref) => (this.imageInput = ref)} />
-          <Button type="submit">Upload</Button>
-        </form>
+      <Box align="center">
+        <ToastFileHelper clear={this.clearFileUpload} getform={this.getfile} />
       </Box>
     );
   }

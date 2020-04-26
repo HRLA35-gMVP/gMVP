@@ -23,7 +23,7 @@ const CheckEmail = () => {
           Check your email
         </Text>
         <Icon pt="15%" name="check-circle" size="150px" color="#F7EEC7" />
-        <Text pt="15%" pb="18%" align="center" pl="5%" pr="5%" color="#5D5D5D">
+        <Text pt="15%" pb="18%" textAlign="center" pl="5%" pr="5%" color="#5D5D5D">
           We have sent you a reset password link.
         </Text>
       </Flex>

@@ -25,52 +25,6 @@ const EditProfile = () => {
 
   return (
     <React.Fragment>
-      <Stack
-        isInline
-        bg="#FFB6BA"
-        pl="4%"
-        pr="4%"
-        width={[
-          '100%', // base
-          '50%', // 480px upwards
-          '25%', // 768px upwards
-          '15%' // 992px upwards
-        ]}
-        justifyContent="space-between"
-      >
-        <Button
-          as={Link}
-          to="/profile"
-          align="center"
-          variant="link"
-          color="#E8E8E8"
-          pb="4%"
-          pt="4%"
-        >
-          Cancel
-        </Button>
-        <Text
-          variant="link"
-          color="#fff"
-          fontSize="18px"
-          fontWeight="bold"
-          pb="4%"
-          pt="4%"
-        >
-          Edit Profile
-        </Text>
-        <Button
-          as={Link}
-          to="/profile"
-          align="center"
-          variant="link"
-          color="#E8E8E8"
-          pb="4%"
-          pt="4%"
-        >
-          Save
-        </Button>
-      </Stack>
       <Box
         bg="#BEEBE9"
         p={[2, 4, 6, 8]}
@@ -81,82 +35,126 @@ const EditProfile = () => {
           '25%', // 768px upwards
           '15%' // 992px upwards
         ]}
+        pl="10%"
+        pr="10%"
+        pt="10%"
       >
         <Flex direction="column" align="center" justify="center">
-          <Box pt="10%">
-            <Avatar src={user.photoURL} size="xl" />
-          </Box>
-
-          <Text
-            pt="2%"
-            fontSize={['sm', 'md', 'lg', 'xl']}
-            color="##373737"
+          <Box
+            bg="#F7EEC7"
+            pl="8%"
+            pr="8%"
+            boxShadow="1px 2px 3px #A2A2A2"
             align="center"
-            justify="center"
+            mb="10%"
           >
-            {user.displayName}
+            <Text textAlign="center" fontSize="lg" color="#464646">
+              EDIT PROFILE
+            </Text>
+          </Box>
+          <Box align="center">
+            <Avatar
+              ml="auto"
+              mr="auto"
+              src={user.photoURL}
+              size="2xl"
+              position="relative"
+              mb="-8%"
+            />
+          </Box>
+          <FileHelper />
+          <Text
+            mt="3%"
+            fontSize="sm"
+            color="#2E2E2E"
+            position="relative"
+            mt="10%"
+            fontWeight="semibold"
+          >
+            {user.email}
           </Text>
         </Flex>
 
-        <Stack spacing={0.25} pt="15%" pb="5%" align="left" pl="5%" pr="5%">
-          <Formik
-            initialValues={{ displayName: '' }}
-            validationSchema={displayNameValid}
-            onSubmit={async (data, { resetForm }) => {
-              try {
-                await editProfile(user.uid, data);
-                toast({
-                  title: 'Display name changed!',
-                  description: `${data.displayName} is now your display name.`,
-                  status: 'success',
-                  duration: 9001,
-                  isClosable: true
-                });
-                resetForm();
-              } catch (error) {
-                toast({
-                  title: 'An error occurred.',
-                  description: error,
-                  status: 'error',
-                  duration: 9001,
-                  isClosable: true
-                });
-              } finally {
-                return null;
-              }
-            }}
-          >
-            {({ values, isSubmitting }) => (
-              <Flex as={Form}>
+        <Formik
+          initialValues={{ displayName: '' }}
+          validationSchema={displayNameValid}
+          onSubmit={async (data, { resetForm }) => {
+            try {
+              await editProfile(user.uid, data);
+              toast({
+                title: 'Display name changed!',
+                description: `${data.displayName} is now your display name.`,
+                status: 'success',
+                duration: 2000,
+                isClosable: true
+              });
+              resetForm();
+            } catch (error) {
+              toast({
+                title: 'An error occurred.',
+                description: error,
+                status: 'error',
+                duration: 5000,
+                isClosable: true
+              });
+            } finally {
+              return null;
+            }
+          }}
+        >
+          {({ values, isSubmitting }) => (
+            <Flex as={Form} direction="column">
+              <Text fontSize="xs" textAlign="left" mt="18%" mb="2%">
+                Display Name
+              </Text>
+              <Box>
                 <ValidatorField
-                  placeholder="Display Name"
+                  placeholder={user.displayName}
                   name="displayName"
                   value={values.displayName}
                   type="input"
                 />
+
                 <Button
-                  variant="solid"
+                  bg="#FFB6BA"
+                  rounded="20px"
+                  fontWeight="semibold"
+                  w="100%"
+                  h="40px"
+                  mt="12%"
                   isDisabled={isSubmitting}
                   isLoading={isSubmitting}
                   type="submit"
                 >
-                  Edit
+                  Save
                 </Button>
-              </Flex>
-            )}
-          </Formik>
-        </Stack>
+              </Box>
+            </Flex>
+          )}
+        </Formik>
 
-        <Stack spacing={0.25} pt="8%" pb="20%" align="left" pl="5%" pr="5%">
-          <FileHelper />
-        </Stack>
+        <Button
+          as={Link}
+          to="/profile"
+          align="center"
+          bg="#F7EEC7"
+          mt="10%"
+          w="100%"
+          h="40px"
+          bg="#F7EEC7"
+          rounded="20px"
+        >
+          Cancel
+        </Button>
 
         <Flex direction="column" align="center" justify="center" pb="30%">
           <Button
-            variantColor="red"
+            bg="#FF5454"
             rounded="20px"
             variant="solid"
-            w="80%"
+            mt="10%"
+            w="100%"
+            color="white"
             onClick={() => {
               toast({
                 title: 'No leaving.',
