@@ -277,6 +277,4 @@ export const challengeAdjustMember = async (CUID, UID, additionalData) => {
   }
 };
 
-export const getChallengeData = async (CUID) => {};
-
 export default firebase;
