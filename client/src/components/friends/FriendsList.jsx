@@ -22,7 +22,7 @@ class FriendsList extends Component {
   };
 
   componentDidMount = async () => {
-    let promises = this.props.friends.map((friend, index) => {
+    let promises = this.props.friends.map((friend) => {
       if (friend !== this.props.user) {
         return promiseGen(friend);
       }

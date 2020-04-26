@@ -2,7 +2,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ChallengeContext } from '../../providers/ChallengeProvider.jsx';
-import { FriendsContext } from '../../providers/FriendsProvider.jsx';
 
 // ChakraUI
 import { Box, Flex, Text, Grid } from '@chakra-ui/core';
@@ -13,7 +12,6 @@ import ChallengeStatusList from './ChallengeStatusList.jsx';
 
 const ChallengeStatus = () => {
   const challenge = useContext(ChallengeContext);
-  const friends = useContext(FriendsContext);
 
   return (
     <React.Fragment>
@@ -66,7 +64,7 @@ const ChallengeStatus = () => {
             <Box bg="#F7EEC7" w="100%" textAlign="center" pt="8px" />
           </Box>
         </Grid>
-        <ChallengeStatusList />
+        <ChallengeStatusList challenge={challenge} />
         <Flex direction="column" align="center" justify="center" mb="10%">
           <Box
             rounded="lg"
