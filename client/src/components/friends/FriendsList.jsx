@@ -1,5 +1,5 @@
 // Dependencies
-import { getFriend } from '../../firebase.js';
+import { getUser } from '../../firebase.js';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ import { StyledButton } from '../../styledComponents/ericStyles.js';
 import Friend from './Friend.jsx';
 
 const promiseGen = async (friend) => {
-  let data = await getFriend(friend);
+  let data = await getUser(friend);
   data.friend = friend;
   return data;
 };

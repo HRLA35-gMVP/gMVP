@@ -118,7 +118,7 @@ export const getUserDocument = async (UID) => {
   }
 };
 
-export const getFriend = async (friendUID) => {
+export const getUser = async (friendUID) => {
   if (!friendUID) return null;
 
   try {
@@ -277,8 +277,6 @@ export const challengeAdjustMember = async (CUID, UID, additionalData) => {
   }
 };
 
-export const getChallengeData = async (CUID) => {
-  
-};
+export const getChallengeData = async (CUID) => {};
 
 export default firebase;
