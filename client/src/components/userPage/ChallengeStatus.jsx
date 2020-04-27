@@ -12,8 +12,10 @@ import {
   Heading,
   Flex,
   SimpleGrid,
-  Stack
+  Stack,
+  Textarea
 } from '@chakra-ui/core';
+import styled from '@emotion/styled';
 import { StyledText } from '../../styledComponents/ericStyles.js';
 import { FiPlus, FiUser, FiEdit3 } from 'react-icons/fi';
 
@@ -32,6 +34,7 @@ const ChallengeStatus = () => {
       width="100%"
       bg="#BEEBE9"
       justifyContent="center"
+      overflowY="hidden"
     >
       <Box width="100%">
         <Flex
@@ -50,22 +53,34 @@ const ChallengeStatus = () => {
             <Heading as="h2" textAlign="center">
               Challenge Status
             </Heading>
+
             <Box
               bg="#F7EEC7"
-              width="75%"
+              width="85%"
               textAlign="center"
               paddingTop="0.35rem"
             />
-            <Box bg="#F7EEC7" width="50%" textAlign="center">
-              <Heading as="h3" size="lg">
-                {challenge.challengeName}
-              </Heading>
-            </Box>
-            <Box bg="#F7EEC7" width="50%" textAlign="center">
-              <Heading as="h4" size="sm">
-                {challenge.task}
-              </Heading>
-            </Box>
+
+            <Wrapper>
+              <Textarea
+                className="areaOfText"
+                bg="#F7EEC7"
+                size="lg"
+                value={challenge.challengeName}
+                isDisabled
+              />
+            </Wrapper>
+
+            <Wrapper2>
+              <Textarea
+                className="areaOfText"
+                bg="#F7EEC7"
+                size="sm"
+                value={challenge.task}
+                isDisabled
+              />
+            </Wrapper2>
+
             <Heading
               as="h4"
               size="md"
@@ -176,3 +191,33 @@ const ChallengeStatus = () => {
 };
 
 export default ChallengeStatus;
+
+const Wrapper = styled(Box)`
+  background: #f7eec7;
+  width: 70%;
+  text-align: center;
+
+  .areaOfText {
+    text-align: center;
+  }
+
+  .areaOfText:disabled {
+    opacity: 1;
+    cursor: default;
+  }
+`;
+
+const Wrapper2 = styled(Box)`
+  background: #f7eec7;
+  width: 50%;
+  text-align: center;
+
+  .areaOfText {
+    text-align: center;
+  }
+
+  .areaOfText:disabled {
+    opacity: 1;
+    cursor: default;
+  }
+`;

@@ -1,13 +1,14 @@
 import React from 'react';
-import { Formik, Form } from 'formik';
-import { Input, Button, Select, IconButton } from '@chakra-ui/core';
 import styled from 'styled-components';
-import ChangeButton from './ChangeButton.jsx';
+import { IconButton, Box, Flex, Textarea } from '@chakra-ui/core';
 
 const ConfirmDetailsWrapper = styled.div`
   /* ////////////////////////////////// */
   /* ////////// GENERAL CSS /////////// */
   /* ////////////////////////////////// */
+  position: absolute;
+  top: 0;
+  height: 100%;
   background-color: #beebe9;
   box-sizing: border-box;
 
@@ -53,6 +54,10 @@ const ConfirmDetailsWrapper = styled.div`
     line-height: 2rem;
   }
 
+  .name-box:disabled {
+    opacity: 1;
+    cursor: default;
+  }
   /* /////////////////////////// */
   /* ////////// TASK /////////// */
   /* /////////////////////////// */
@@ -76,6 +81,11 @@ const ConfirmDetailsWrapper = styled.div`
     font-size: 5vw;
     text-align: center;
     line-height: 2rem;
+  }
+
+  .task-box:disabled {
+    opacity: 1;
+    cursor: default;
   }
   /* //////////////////////////////////////// */
   /* ////////// CHECKIN & DRPDOWN /////////// */
@@ -137,7 +147,6 @@ const ConfirmDetailsWrapper = styled.div`
   /* /////////////////////////////// */
   .duration-container {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    margin: 3rem auto;
     padding: 0% 5%;
     display: grid;
   }
@@ -171,44 +180,6 @@ const ConfirmDetailsWrapper = styled.div`
     display: inline-block;
     margin: 0px 5px;
   }
-
-  /* ///////////////////////////// */
-  /* ////////// BUTTON /////////// */
-  /* ///////////////////////////// */
-
-  .button {
-    text-align: center;
-    margin-bottom: 10rem;
-  }
-
-  /* ///////////////////////////// */
-  /* /////////// EDIT //////////// */
-  /* ///////////////////////////// */
-  .edit {
-    position: fixed;
-    left: 5%;
-    margin-bottom: 10rem;
-    display: block;
-    bottom: 3%;
-  }
-
-  .edit-button {
-    background-color: #f4dada;
-    color: black;
-    padding: 10px;
-    box-shadow: 2px 2px 5px #888888;
-  }
-
-  /* /////////////////////////// */
-  /* ////////// MENU /////////// */
-  /* /////////////////////////// */
-  .menu {
-    width: 100%;
-    height: 65px;
-    background-color: #ffb6b9;
-    position: fixed;
-    bottom: 0px;
-  }
 `;
 
 export default class confirmDetailsPage extends React.Component {
@@ -231,21 +202,28 @@ export default class confirmDetailsPage extends React.Component {
       <ConfirmDetailsWrapper>
         <div className="title">Confirm Details</div>
         <div className="underbar"></div>
-
         <div className="name-container">
           <label htmlFor="challengeName" className="name-label">
             Challenge Name:
           </label>
-          <div className="name-box">{this.props.challengeName}</div>
+          <Textarea
+            className="name-box"
+            isDisabled
+            opacity="1"
+            defaultValue={this.props.challengeName}
+          />
         </div>
-
         <div className="task-container">
           <label htmlFor="task" className="task-label">
             Task:
           </label>
-          <div className="task-box">{this.props.task}</div>
+          <Textarea
+            className="task-box"
+            isDisabled
+            opacity="1"
+            defaultValue={this.props.task}
+          />
         </div>
-
         <div className="frequency-container">
           <div className="checkin-container">
             <label htmlFor="numberOfChecks" className="checkin-label">
@@ -265,7 +243,6 @@ export default class confirmDetailsPage extends React.Component {
             </div>
           </div>
         </div>
-
         <div className="duration-container">
           <label htmlFor="duration" className="duration-label">
             Duration:
@@ -279,22 +256,30 @@ export default class confirmDetailsPage extends React.Component {
             {`Day(s)`}
           </label>
         </div>
+        <Box
+          position="absolute"
+          bottom="0"
+          width="100%"
+          paddingLeft="1rem"
+          paddingRight="1rem"
+          bg="#F7EEC7"
+        >
+          <Flex align="center" justify="center" justifyContent="space-between">
+            <IconButton
+              icon="arrow-left"
+              variant="solid"
+              bg="#F7EEC7"
+              onClick={(e) => this.props.handleEditButton(e)}
+            />
 
-        <div className="button">
-          <ChangeButton text="Submit" submit={this.props.handleButton} />
-        </div>
-
-        <div className="edit">
-          <Button
-            className="edit-button"
-            variantColor="red"
-            onClick={(e) => this.props.handleEditButton(e)}
-          >
-            Edit
-          </Button>
-        </div>
-
-        <div className="menu"></div>
+            <IconButton
+              icon="arrow-right"
+              variant="solid"
+              bg="#F7EEC7"
+              onClick={(e) => this.props.handleButton(e)}
+            />
+          </Flex>
+        </Box>
       </ConfirmDetailsWrapper>
     );
   }

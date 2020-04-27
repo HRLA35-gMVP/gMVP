@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { getChallenge } from '../../firebase.js';
 
 // Chakra
-import { Text, SimpleGrid, Skeleton } from '@chakra-ui/core';
+import { Box, Text, SimpleGrid, Skeleton } from '@chakra-ui/core';
 import Challenge from './Challenge.jsx';
 
 const promiseGen = async (CUID) => {
@@ -30,17 +30,13 @@ class ActiveChallenges extends Component {
   render() {
     if (this.props.user.challenges.length === this.state.challenges.length) {
       return (
-        <SimpleGrid
-          columns={1}
-          spacing="0.4rem"
-          maxH="35%"
-          height="100%"
-          overflowY
-        >
-          {this.state.challenges.map((challenge) => (
-            <Challenge key={challenge.challengeUID} {...challenge} />
-          ))}
-        </SimpleGrid>
+        <Box maxH="10rem" height="100%" overflowY="scroll">
+          <SimpleGrid columns={1} spacing="0.4rem">
+            {this.state.challenges.map((challenge) => (
+              <Challenge key={challenge.challengeUID} {...challenge} />
+            ))}
+          </SimpleGrid>
+        </Box>
       );
     } else {
       return (
