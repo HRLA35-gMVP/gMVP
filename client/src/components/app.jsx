@@ -1,21 +1,21 @@
 // Dependencies
 import React, { useContext } from 'react';
-import { UserContext } from '../providers/UsersProvider.jsx';
-import { Switch, Route, Link, Redirect } from 'react-router-dom';
+import UserContext from '../providers/UsersProvider.jsx';
+import ChallengeProvider from '../providers/ChallengeProvider.jsx';
+import { Link, Redirect, Route, Switch } from 'react-router-dom';
 
 // Chakra + Forms
 import {
   Box,
-  Flex,
-  Popover,
-  PopoverTrigger,
-  PopoverHeader,
-  PopoverBody,
-  PopoverArrow,
-  Image,
-  PseudoBox,
   Button,
-  Text
+  Flex,
+  Image,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverHeader,
+  PopoverTrigger,
+  PseudoBox
 } from '@chakra-ui/core';
 
 // Componenets + Styles
@@ -34,10 +34,9 @@ import BuildChallenge from './BuildChallenge/BuildAChallenge.jsx';
 
 // Styles
 import {
-  StyledPopoverContent,
-  StyledButton
+  StyledButton,
+  StyledPopoverContent
 } from '../styledComponents/ericStyles.js';
-import ChallengeProvider from '../providers/ChallengeProvider.jsx';
 
 const App = () => {
   const user = useContext(UserContext);

@@ -349,36 +349,36 @@ export default class challengeViewer extends React.Component {
                 Days
               </label>
             </div>
-            <Box
-              position="absolute"
-              bottom="0"
-              width="100%"
-              paddingLeft="1rem"
-              paddingRight="1rem"
-              bg="#F7EEC7"
-            >
-              <Flex
-                align="center"
-                justify="center"
-                justifyContent="space-between"
-              >
-                <IconButton
-                  icon="arrow-left"
-                  as={Link}
-                  to="/profile"
-                  variant="solid"
-                  bg="#F7EEC7"
-                />
-
-                <IconButton
-                  icon="arrow-right"
-                  variant="solid"
-                  bg="#F7EEC7"
-                  onClick={(e) => this.handleButton(e)}
-                />
-              </Flex>
-            </Box>
           </form>
+          <Box
+            position="absolute"
+            bottom="0"
+            width="100%"
+            paddingLeft="1rem"
+            paddingRight="1rem"
+            bg="#F7EEC7"
+          >
+            <Flex
+              align="center"
+              justify="center"
+              justifyContent="space-between"
+            >
+              <IconButton
+                icon="arrow-left"
+                as={Link}
+                to="/profile"
+                variant="solid"
+                bg="#F7EEC7"
+              />
+
+              <IconButton
+                icon="arrow-right"
+                variant="solid"
+                bg="#F7EEC7"
+                onClick={(e) => this.handleButton(e)}
+              />
+            </Flex>
+          </Box>
         </BuildChallengeWrapper>
       );
     } else if (this.state.page === 2) {
