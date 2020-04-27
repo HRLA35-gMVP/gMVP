@@ -67,7 +67,17 @@ const App = () => {
             <Route exact path="/challenge" component={ChallengeStatus} />
           </React.Fragment>
         ) : (
-          <React.Fragment>
+          <Box
+            bg="#BEEBE9"
+            p={[2, 4, 6, 8]}
+            height="100%"
+            width={[
+              '100%', // base
+              '50%', // 480px upwards
+              '25%', // 768px upwards
+              '15%' // 992px upwards
+            ]}
+          >
             <Redirect to="/" />
             <Route exact path="/">
               <Flex direction="column" alignItems="center">
@@ -181,12 +191,11 @@ const App = () => {
             <Route exact path="/register" component={Register} />
             <Route exact path="/reset" component={ForgotPassword} />
             <Route exact path="/reset/confirmation" component={CheckEmail} />
-          </React.Fragment>
+          </Box>
         )}
       </Switch>
     </Flex>
   );
-  
-}
+};
 
 export default App;
