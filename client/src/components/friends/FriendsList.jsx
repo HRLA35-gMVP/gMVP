@@ -1,5 +1,5 @@
 // Dependencies
-import { getFriend } from '../../firebase.js';
+import { getUser } from '../../firebase.js';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -10,19 +10,28 @@ import { StyledButton } from '../../styledComponents/ericStyles.js';
 // Components
 import Friend from './Friend.jsx';
 
+const promiseGen = async (friend) => {
+  let data = await getUser(friend);
+  data.friend = friend;
+  return data;
+};
+
 class FriendsList extends Component {
   state = {
     friends: []
   };
 
   componentDidMount = async () => {
-    const friends = [];
-    for (let friend of this.props.friends) {
+    let promises = this.props.friends.map((friend) => {
       if (friend !== this.props.user) {
-        let { photoURL, displayName } = await getFriend(friend);
-        friends.push({ photoURL, displayName, friend });
+        return promiseGen(friend);
       }
-    }
+    });
+
+    promises = promises.filter((promise) => promise !== undefined);
+
+    let friends = await Promise.all(promises);
+
     this.setState({ friends });
   };
 
@@ -43,9 +52,16 @@ class FriendsList extends Component {
               displayName={friend.displayName}
             />
           ))}
-          <Link to="/profile">
-            <StyledButton>Profile</StyledButton>
-          </Link>
+          {window.location.href.slice(window.location.href.length - 7) ===
+          'friends' ? (
+            <Link to="/profile">
+              <StyledButton>Return</StyledButton>
+            </Link>
+          ) : (
+            <Link to={`/challenge/view/${this.props.CUID}`}>
+              <StyledButton>Return</StyledButton>
+            </Link>
+          )}
         </SimpleGrid>
       );
     } else {
@@ -61,9 +77,16 @@ class FriendsList extends Component {
               return <Skeleton key={index} height="48px" />;
             }
           })}
-          <Link to="/profile">
-            <StyledButton>Profile</StyledButton>
-          </Link>
+          {window.location.href.slice(window.location.href.length - 7) ===
+          'friends' ? (
+            <Link to="/profile">
+              <StyledButton>Return</StyledButton>
+            </Link>
+          ) : (
+            <Link to={`/challenge/view/${this.props.CUID}`}>
+              <StyledButton>Return</StyledButton>
+            </Link>
+          )}
         </SimpleGrid>
       );
     }

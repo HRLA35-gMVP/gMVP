@@ -1,10 +1,16 @@
 // Dependencies
 import React, { Component } from 'react';
+import { getChallenge } from '../../firebase.js';
 
 // Chakra
 import { Text, SimpleGrid, Skeleton } from '@chakra-ui/core';
-import { getChallenge } from '../../firebase.js';
 import Challenge from './Challenge.jsx';
+
+const promiseGen = async (CUID) => {
+  let data = await getChallenge(CUID);
+  data.challengeUID = CUID;
+  return data;
+};
 
 class ActiveChallenges extends Component {
   state = {
@@ -12,26 +18,26 @@ class ActiveChallenges extends Component {
   };
 
   componentDidMount = async () => {
-    for (let challengeUID of Object.keys(this.props.user.challenges)) {
-      let challengeData = await getChallenge(challengeUID);
+    let promises = this.props.user.challenges.map((challenge) =>
+      promiseGen(challenge)
+    );
 
-      challengeData = {
-        challengeUID,
-        ...challengeData
-      };
+    let challenges = await Promise.all(promises);
 
-      this.setState({ challenges: [...this.state.challenges, challengeData] });
-    }
+    this.setState({ challenges });
   };
 
   render() {
-    if (
-      Object.keys(this.props.user.challenges).length ===
-      this.state.challenges.length
-    ) {
+    if (this.props.user.challenges.length === this.state.challenges.length) {
       return (
-        <SimpleGrid columns={1} spacing="0.4rem">
-          {this.state.challenges.slice(0, 3).map((challenge) => (
+        <SimpleGrid
+          columns={1}
+          spacing="0.4rem"
+          maxH="35%"
+          height="100%"
+          overflowY
+        >
+          {this.state.challenges.map((challenge) => (
             <Challenge key={challenge.challengeUID} {...challenge} />
           ))}
         </SimpleGrid>
@@ -39,13 +45,11 @@ class ActiveChallenges extends Component {
     } else {
       return (
         <SimpleGrid columns={1} spacing="0.4rem">
-          {Object.keys(this.props.user.challenges)
-            .slice(0, 3)
-            .map((doNotUse, index) => (
-              <Text key={index} as={Skeleton}>
-                Placeholder
-              </Text>
-            ))}
+          {this.props.user.challenges.slice(0, 3).map((doNotUse, index) => (
+            <Text key={index} as={Skeleton}>
+              Placeholder
+            </Text>
+          ))}
         </SimpleGrid>
       );
     }

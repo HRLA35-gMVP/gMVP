@@ -1,94 +1,177 @@
-import React from 'react';
+// Dependencies
+import { challengeCheckIn } from '../../firebase.js';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../../providers/UsersProvider.jsx';
+import { ChallengeContext } from '../../providers/ChallengeProvider.jsx';
 
-import { Box, Flex, Text, Grid} from "@chakra-ui/core";
-import customTheme from '../../theme.js';
+// ChakraUI
+import {
+  Box,
+  IconButton,
+  Heading,
+  Flex,
+  SimpleGrid,
+  Stack
+} from '@chakra-ui/core';
+import { StyledText } from '../../styledComponents/ericStyles.js';
+import { FiPlus, FiUser, FiEdit3 } from 'react-icons/fi';
+
+// Components
 import ChallengeStatusList from './ChallengeStatusList.jsx';
 
 const ChallengeStatus = () => {
+  const challenge = useContext(ChallengeContext);
+  const user = useContext(UserContext);
+
   return (
-    <>
-        <Box
-          bg="#BEEBE9"
-          p={[2, 4, 6, 8]}
-          height="full"
-          width={[
-            '100%', // base
-            '50%', // 480px upwards
-            '25%', // 768px upwards
-            '15%' // 992px upwards
-          ]}
+    <Flex
+      position="absolute"
+      top="0"
+      height="100%"
+      width="100%"
+      bg="#BEEBE9"
+      justifyContent="center"
+    >
+      <Box width="100%">
+        <Flex
+          direction="column"
+          align="center"
+          justify="center"
+          paddingTop="4%"
         >
-          <Flex direction="column" align="center" justify="center" pt="4%">
-            <Text fontSize="3xl"> Challenge Status</Text>
-            <Box bg="#F7EEC7" w="75%" textAlign="center" pt="8px" mb="4px">
-              {' '}
-            </Box>
-            <Box bg="#F7EEC7" w="50%" textAlign="center" mt="5px" pt="5px">
-              The3Musketeers
-            </Box>
-            <Box bg="#F7EEC7" w="50%" textAlign="center" mt="5px" pt="3px">
-              PieBakeOff
-            </Box>
-            <Text
-              bg="#BEEBE9"
-              fontSize="xl"
-              w="90%"
+          <Stack
+            width="100%"
+            align="center"
+            justify="center"
+            justifyContent="center"
+            spacing="0.5rem"
+          >
+            <Heading as="h2" textAlign="center">
+              Challenge Status
+            </Heading>
+            <Box
+              bg="#F7EEC7"
+              width="75%"
               textAlign="center"
-              mt="10px"
-              pt="3px"
+              paddingTop="0.35rem"
+            />
+            <Box bg="#F7EEC7" width="50%" textAlign="center">
+              <Heading as="h3" size="lg">
+                {challenge.challengeName}
+              </Heading>
+            </Box>
+            <Box bg="#F7EEC7" width="50%" textAlign="center">
+              <Heading as="h4" size="sm">
+                {challenge.task}
+              </Heading>
+            </Box>
+            <Heading
+              as="h4"
+              size="md"
+              textAlign="center"
+              paddingBottom="0.25rem"
             >
               Longest Streaks!
-            </Text>
-          </Flex>
-          <Grid
-            templateColumns="1fr 2fr 1fr"
-            gap={6}
-            pt="20px"
-            pl="5%"
-            pr="5%"
-            gridTemplateRows="auto"
-          >
-            <Box w="100%" h="1" textAlign="center">
-              {' '}
-              Members{' '}
-              <Box bg="#F7EEC7" w="100%" textAlign="center" pt="8px">
-                {' '}
-              </Box>
-            </Box>
-            <Box w="100%" h="10" bg="#BEEBE9" />
-            <Box w="100%" h="1" textAlign="center">
-              {' '}
-              Streaks{' '}
-              <Box bg="#F7EEC7" w="100%" textAlign="center" pt="8px">
-                {' '}
-              </Box>
-            </Box>
-          </Grid>
-          <ChallengeStatusList />
-          <Flex direction="column" align="center" justify="center" mb="10%">
+            </Heading>
+          </Stack>
+        </Flex>
+        <SimpleGrid
+          columns={3}
+          width="100%"
+          paddingLeft="1rem"
+          paddingRight="1rem"
+        >
+          <Box width="100%" h="1" textAlign="center">
+            <Heading as="h6" size="sm">
+              Members
+            </Heading>
             <Box
-              rounded="lg"
-              mt="8%"
-              bg="#B0DDDB"
-              w="50%"
+              bg="#F7EEC7"
+              width="100%"
               textAlign="center"
-              justify="center"
-              alignItems="center"
-              boxShadow="1px 2px 2px #8B8B8B"
-            >
-              <Text pt="5px">Time Remaining:</Text>
-              <Box bg="#E8E8E8" w="35%" mb="15px" ml="auto" mr="auto">
-                3 Days
+              paddingTop="0.35rem"
+            />
+          </Box>
+          <Box width="100%" h="10" bg="#BEEBE9" />
+          <Box width="100%" h="1" textAlign="center">
+            <Heading as="h6" size="sm">
+              Streaks
+            </Heading>
+            <Box
+              bg="#F7EEC7"
+              width="100%"
+              textAlign="center"
+              paddingTop="0.35rem"
+            />
+          </Box>
+        </SimpleGrid>
+        <ChallengeStatusList challenge={challenge} />
+        <Flex direction="column" align="center" justify="center" mb="10%">
+          <Box
+            rounded="lg"
+            mt="8%"
+            bg="#B0DDDB"
+            width="50%"
+            textAlign="center"
+            boxShadowidth="1px 2px 2px #8B8B8B"
+            padding="0.7rem"
+          >
+            <Stack spacing="0.45rem">
+              <Box>
+                <Heading as="h6" size="sm">
+                  Time Remaining
+                </Heading>
+                <StyledText>{challenge.duration} Day(s)</StyledText>
               </Box>
-              <Text pt="10px">First Place:</Text>
-              <Box w="50%" mb="15px" ml="auto" mr="auto">
-                <Text bg="#E8E8E8">JaneDope</Text>
+              <Box>
+                <Heading as="h6" size="sm">
+                  First Place
+                </Heading>
+                <StyledText>{challenge.firstPlace}</StyledText>
               </Box>
-            </Box>
-          </Flex>
-        </Box>
-    
-    </>
+            </Stack>
+          </Box>
+        </Flex>
+      </Box>
+      <Box
+        position="absolute"
+        bottom="0"
+        width="100%"
+        paddingLeft="1rem"
+        paddingRight="1rem"
+        bg="#F7EEC7"
+      >
+        <Flex align="center" justify="center" justifyContent="space-between">
+          <IconButton
+            as={Link}
+            to={`/challenge/invite/${challenge.CUID}`}
+            icon={FiPlus}
+            variant="solid"
+            bg="#F7EEC7"
+          />
+
+          <IconButton
+            as={Link}
+            icon={FiUser}
+            to="/profile"
+            variant="solid"
+            bg="#F7EEC7"
+          />
+
+          <IconButton
+            icon={FiEdit3}
+            variant="solid"
+            bg="#F7EEC7"
+            onClick={async () => {
+              await challengeCheckIn(challenge.CUID, user.uid);
+            }}
+          >
+            Check-In
+          </IconButton>
+        </Flex>
+      </Box>
+    </Flex>
   );
 };
 
