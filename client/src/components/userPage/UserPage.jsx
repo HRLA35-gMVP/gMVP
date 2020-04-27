@@ -6,14 +6,20 @@ import { Link } from 'react-router-dom';
 // Chakra + Forms
 import { signOut } from '../../firebase.js';
 import {
-  Button,
-  SimpleGrid,
-  Box,
-  Avatar,
+  ThemeProvider,
+  CSSReset,
   AccordionPanel,
+  Avatar,
+  Box,
+  Button,
+  Flex,
   Heading,
+  IconButton,
+  SimpleGrid,
   Stack
 } from '@chakra-ui/core';
+import { FiLogOut, FiUsers, FiEdit } from 'react-icons/fi';
+import { MdPlaylistAdd } from 'react-icons/md';
 
 // Components + Styles
 import AddFriend from './AddFriend.jsx';
@@ -30,97 +36,134 @@ const UserPage = () => {
   const user = useContext(UserContext);
 
   return (
-    <StyledStack spacing="1rem">
-      <Box>
-        <Avatar name={user.displayName} src={user.photoURL} size="xl"></Avatar>
+    <Flex position="absolute" top="0" height="100%" width="100%">
+      <StyledStack
+        position="absolute"
+        height="100%"
+        width="100%"
+        spacing="1rem"
+      >
+        <Box>
+          <Avatar
+            name={user.displayName}
+            src={user.photoURL}
+            size="xl"
+          ></Avatar>
 
-        <StyledAccItem>
-          <StyleAccHeader>
-            <Box flex="1">{user.displayName}</Box>
-          </StyleAccHeader>
-          <AccordionPanel>{user.uid}</AccordionPanel>
-        </StyledAccItem>
-      </Box>
+          <StyledAccItem>
+            <StyleAccHeader>
+              <Box flex="1">{user.displayName}</Box>
+            </StyleAccHeader>
+            <AccordionPanel>{user.uid}</AccordionPanel>
+          </StyledAccItem>
+        </Box>
 
-      <SimpleGrid columns={2} spacing="3rem">
+        <Flex justifyContent="space-between" overflowX="scroll">
+          <StyledBox>
+            <Box minWidth="80px">
+              <Heading as="h6" size="sm" paddingBottom="0.35rem">
+                Completed
+              </Heading>
+              <StyledText>{user.completed}</StyledText>
+            </Box>
+          </StyledBox>
+          <StyledBox>
+            <Box minWidth="80px">
+              <Heading as="h6" size="sm" paddingBottom="0.35rem">
+                Wins
+              </Heading>
+              <StyledText>{user.wins}</StyledText>
+            </Box>
+          </StyledBox>
+          <StyledBox>
+            <Box minWidth="80px">
+              <Heading as="h6" size="sm" paddingBottom="0.35rem">
+                Friends
+              </Heading>
+              <StyledText>{Object.keys(user.friends).length - 1}</StyledText>
+            </Box>
+          </StyledBox>
+        </Flex>
+
         <StyledBox>
-          <Box>
-            <Heading as="h6" size="sm" paddingBottom="0.35rem">
-              Completed Challenges
-            </Heading>
-            <StyledText>{user.completed}</StyledText>
-          </Box>
-          <Box>
-            <Heading
-              as="h6"
-              size="sm"
-              paddingBottom="0.35rem"
-              paddingTop="0.25rem"
-            >
-              Wins
-            </Heading>
-            <StyledText>{user.wins}</StyledText>
-          </Box>
-        </StyledBox>
-        <StyledBox>
-          <Link to="/friends">
-            <Heading as="h6" size="sm" paddingBottom="0.35rem">
-              Friends
-            </Heading>
-            <StyledText>{Object.keys(user.friends).length - 1}</StyledText>
-          </Link>
-        </StyledBox>
-      </SimpleGrid>
-
-      <StyledBox>
-        {Object.keys(user.challenges).length === 0 ? (
-          <Link to="/challenge/create">
+          {Object.keys(user.challenges).length === 0 ? (
             <Heading as="h6" size="sm">
               No Active Challenges
             </Heading>
-          </Link>
-        ) : (
-          <Stack spacing="0.25rem">
-            <Link to="/challenge/create">
+          ) : (
+            <Stack spacing="0.25rem">
               <Heading as="h6" size="sm">
                 Active Challenges
               </Heading>
-            </Link>
-            <SimpleGrid columns={3}>
-              <Heading as="h6" size="xs">
-                Challenge
-              </Heading>
-              <Heading as="h6" size="xs">
-                Members
-              </Heading>
-              <Heading as="h6" size="xs">
-                Duration
-              </Heading>
-            </SimpleGrid>
-            <ActiveChallenges user={user} />
-          </Stack>
-        )}
-      </StyledBox>
+              <SimpleGrid columns={3}>
+                <Heading as="h6" size="xs">
+                  Challenge
+                </Heading>
+                <Heading as="h6" size="xs">
+                  Members
+                </Heading>
+                <Heading as="h6" size="xs">
+                  Duration
+                </Heading>
+              </SimpleGrid>
+              <ActiveChallenges user={user} />
+            </Stack>
+          )}
+        </StyledBox>
 
-      <Box>
-        <AddFriend />
+        <Box>
+          <AddFriend />
+        </Box>
+      </StyledStack>
+      <Box
+        position="absolute"
+        bottom="0"
+        width="100%"
+        paddingLeft="1rem"
+        paddingRight="1rem"
+        bg="#F7EEC7"
+      >
+        <Flex align="center" justify="center" justifyContent="space-between">
+          {window.location.href.slice(window.location.href.length - 7) ===
+          'profile' ? (
+            <IconButton
+              icon={FiLogOut}
+              variant="solid"
+              onClick={signOut}
+              bg="#F7EEC7"
+            />
+          ) : (
+            <Button as={Link} to="/profile" variant="solid" bg="#F7EEC7">
+              Back To Your Profile
+            </Button>
+          )}
+
+          <IconButton
+            icon={FiEdit}
+            as={Link}
+            to="/edit"
+            variant="solid"
+            bg="#F7EEC7"
+          />
+
+          <IconButton
+            icon={FiUsers}
+            as={Link}
+            to="/friends"
+            variant="solid"
+            bg="#F7EEC7"
+          />
+
+          <IconButton
+            icon={MdPlaylistAdd}
+            as={Link}
+            to="/challenge/create"
+            variant="solid"
+            bg="#F7EEC7"
+          />
+        </Flex>
       </Box>
-
-      <Button as={Link} to="/edit" variant="solid">
-        Edit
-      </Button>
-
-      {window.location.href.slice(window.location.href.length - 7) ===
-      'profile' ? (
-        <Button variant="solid" onClick={signOut}>
-          Sign Out
-        </Button>
-      ) : (
-        <Button as={Link} to="/profile" variant="solid">
-          Back To Your Profile
-        </Button>
-      )}
-    </StyledStack>
+    </Flex>
   );
 };
 
