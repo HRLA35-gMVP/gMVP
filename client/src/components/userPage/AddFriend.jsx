@@ -80,6 +80,7 @@ const AddFriend = () => {
             isDisabled={isSubmitting}
             isLoading={isSubmitting}
             type="submit"
+            bg="#F7EEC7"
           >
             Add
           </Button>
