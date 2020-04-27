@@ -166,7 +166,7 @@ const App = () => {
                     background="#FFB6BA"
                     color="#373737"
                     rounded="20px"
-                    weight="100%"
+                    width="100%"
                     height="40px"
                     fontWeight="semibold"
                     _hover={{ bg: '#FFB6BA' }}
