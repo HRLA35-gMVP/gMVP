@@ -18,13 +18,13 @@ class FriendsProvider extends Component {
     this.setState({ friends: newFriends });
   };
 
-  getFriends = () => Object.keys(this.state.friends);
+  getUsers = () => Object.keys(this.state.friends);
 
   render() {
     const { children } = this.props;
     const { friends } = this.state;
-    const { addFriend, removeFriend, getFriends } = this;
-    const value = { friends, addFriend, removeFriend, getFriends };
+    const { addFriend, removeFriend, getUsers } = this;
+    const value = { friends, addFriend, removeFriend, getUsers };
 
     return (
       <FriendsContext.Provider value={value}>

@@ -126,7 +126,7 @@ const EditProfile = () => {
                   isLoading={isSubmitting}
                   type="submit"
                 >
-                  Save
+                  Save Display Name
                 </Button>
               </Box>
             </Flex>

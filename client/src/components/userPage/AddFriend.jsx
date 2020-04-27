@@ -13,7 +13,7 @@ import ValidatorField from '../formHelpers/ValidatorField.jsx';
 
 // Check if the input is the same as the current user's ID
 const selfCheck = (input, user) => {
-  if (input === user.uid) return 'Why are you trying to adding yourself?';
+  if (input === user.uid) return 'Why are you trying to add yourself?';
   if (user.friends[input] !== undefined) return 'Friend already exists.';
   return '';
 };

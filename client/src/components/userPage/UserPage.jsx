@@ -74,14 +74,18 @@ const UserPage = () => {
 
       <StyledBox>
         {Object.keys(user.challenges).length === 0 ? (
-          <Heading as="h6" size="sm">
-            No Active Challenges
-          </Heading>
+          <Link to="/challenge/create">
+            <Heading as="h6" size="sm">
+              No Active Challenges
+            </Heading>
+          </Link>
         ) : (
           <Stack spacing="0.25rem">
-            <Heading as="h6" size="sm">
-              Active Challenges
-            </Heading>
+            <Link to="/challenge/create">
+              <Heading as="h6" size="sm">
+                Active Challenges
+              </Heading>
+            </Link>
             <SimpleGrid columns={3}>
               <Heading as="h6" size="xs">
                 Challenge
@@ -106,9 +110,16 @@ const UserPage = () => {
         Edit
       </Button>
 
-      <Button variant="solid" onClick={signOut}>
-        Sign Out
-      </Button>
+      {window.location.href.slice(window.location.href.length - 7) ===
+      'profile' ? (
+        <Button variant="solid" onClick={signOut}>
+          Sign Out
+        </Button>
+      ) : (
+        <Button as={Link} to="/profile" variant="solid">
+          Back To Your Profile
+        </Button>
+      )}
     </StyledStack>
   );
 };
