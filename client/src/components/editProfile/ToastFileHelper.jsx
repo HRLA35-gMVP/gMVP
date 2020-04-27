@@ -46,9 +46,6 @@ function ToastFileHelper(props) {
           <AlertDialogBody>{props.getform()}</AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
-              Cancel
-            </Button>
             <Button bg="#FFB6BA" onClick={onClose} ml={3}>
               Close
             </Button>

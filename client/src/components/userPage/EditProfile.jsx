@@ -6,7 +6,15 @@ import { UserContext } from '../../providers/UsersProvider';
 
 // Chakra + Forms
 import { Formik, Form } from 'formik';
-import { useToast, Box, Flex, Avatar, Text, Button } from '@chakra-ui/core';
+import {
+  useToast,
+  Box,
+  Flex,
+  Avatar,
+  Text,
+  Button,
+  Stack
+} from '@chakra-ui/core';
 import ValidatorField from '../formHelpers/ValidatorField.jsx';
 import { displayNameValid } from '../formHelpers/validators.js';
 import FileHelper from '../editProfile/FileHelper';
@@ -18,20 +26,14 @@ const EditProfile = () => {
   return (
     <Box
       bg="#BEEBE9"
-      p={[2, 4, 6, 8]}
-      height="full"
-      width={[
-        '100%', // base
-        '50%', // 480px upwards
-        '25%', // 768px upwards
-        '15%' // 992px upwards
-      ]}
+      height="100%"
+      width="100%"
       pl="10%"
       pr="10%"
       pt="10%"
       position="absolute"
       top="0"
-      overflowY="hidden"
+      overflowY="scroll"
     >
       <Flex direction="column" align="center" justify="center">
         <Box
@@ -68,7 +70,6 @@ const EditProfile = () => {
           {user.email}
         </Text>
       </Flex>
-
       <Formik
         initialValues={{ displayName: '' }}
         validationSchema={displayNameValid}
@@ -97,32 +98,35 @@ const EditProfile = () => {
         }}
       >
         {({ values, isSubmitting }) => (
-          <Flex as={Form} direction="column">
-            <Text fontSize="xs" textAlign="left" mt="18%" mb="2%">
+          <Flex
+            as={Form}
+            direction="column"
+            marginTop="1.5rem"
+            marginBottom="1.5rem"
+          >
+            <Text fontSize="xs" textAlign="left">
               Display Name
             </Text>
-            <Box>
-              <ValidatorField
-                placeholder={user.displayName}
-                name="displayName"
-                value={values.displayName}
-                type="input"
-              />
+            <ValidatorField
+              placeholder={user.displayName}
+              name="displayName"
+              value={values.displayName}
+              type="input"
+            />
 
-              <Button
-                bg="#FFB6BA"
-                rounded="20px"
-                fontWeight="semibold"
-                w="100%"
-                h="40px"
-                mt="12%"
-                isDisabled={isSubmitting}
-                isLoading={isSubmitting}
-                type="submit"
-              >
-                Save
-              </Button>
-            </Box>
+            <Button
+              bg="#FFB6BA"
+              rounded="20px"
+              fontWeight="semibold"
+              w="100%"
+              h="40px"
+              marginTop="1.5rem"
+              isDisabled={isSubmitting}
+              isLoading={isSubmitting}
+              type="submit"
+            >
+              Save
+            </Button>
           </Flex>
         )}
       </Formik>
@@ -132,36 +136,33 @@ const EditProfile = () => {
         to="/profile"
         align="center"
         bg="#F7EEC7"
-        mt="10%"
         w="100%"
         h="40px"
         bg="#F7EEC7"
         rounded="20px"
+        marginBottom="1.5rem"
       >
         Cancel
       </Button>
 
-      <Flex direction="column" align="center" justify="center">
-        <Button
-          bg="#FF5454"
-          rounded="20px"
-          variant="solid"
-          mt="10%"
-          w="100%"
-          color="white"
-          onClick={() => {
-            toast({
-              title: 'No leaving.',
-              description: '​👹​👺​👻​',
-              status: 'error',
-              duration: 9001,
-              isClosable: true
-            });
-          }}
-        >
-          Delete Account
-        </Button>
-      </Flex>
+      <Button
+        bg="#FF5454"
+        rounded="20px"
+        variant="solid"
+        w="100%"
+        color="white"
+        onClick={() => {
+          toast({
+            title: 'No leaving.',
+            description: '​👹​👺​👻​',
+            status: 'error',
+            duration: 9001,
+            isClosable: true
+          });
+        }}
+      >
+        Delete Account
+      </Button>
     </Box>
   );
 };
