@@ -1,8 +1,6 @@
 import React from 'react';
-import { Formik, Form } from 'formik';
-import { Input, Button, Select, IconButton } from '@chakra-ui/core';
 import styled from 'styled-components';
-import ChangeButton from './ChangeButton.jsx';
+import { Input, Select, IconButton, Box, Flex } from '@chakra-ui/core';
 
 const ConfirmDetailsWrapper = styled.div`
   /* ////////////////////////////////// */
@@ -137,7 +135,7 @@ const ConfirmDetailsWrapper = styled.div`
   /* /////////////////////////////// */
   .duration-container {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    margin: 3rem auto;
+    margin: 3rem auto 15rem auto;
     padding: 0% 5%;
     display: grid;
   }
@@ -170,44 +168,6 @@ const ConfirmDetailsWrapper = styled.div`
     color: black;
     display: inline-block;
     margin: 0px 5px;
-  }
-
-  /* ///////////////////////////// */
-  /* ////////// BUTTON /////////// */
-  /* ///////////////////////////// */
-
-  .button {
-    text-align: center;
-    margin-bottom: 10rem;
-  }
-
-  /* ///////////////////////////// */
-  /* /////////// EDIT //////////// */
-  /* ///////////////////////////// */
-  .edit {
-    position: fixed;
-    left: 5%;
-    margin-bottom: 10rem;
-    display: block;
-    bottom: 3%;
-  }
-
-  .edit-button {
-    background-color: #f4dada;
-    color: black;
-    padding: 10px;
-    box-shadow: 2px 2px 5px #888888;
-  }
-
-  /* /////////////////////////// */
-  /* ////////// MENU /////////// */
-  /* /////////////////////////// */
-  .menu {
-    width: 100%;
-    height: 65px;
-    background-color: #ffb6b9;
-    position: fixed;
-    bottom: 0px;
   }
 `;
 
@@ -280,21 +240,30 @@ export default class confirmDetailsPage extends React.Component {
           </label>
         </div>
 
-        <div className="button">
-          <ChangeButton text="Submit" submit={this.props.handleButton} />
-        </div>
+        <Box
+          position="absolute"
+          bottom="0"
+          width="100%"
+          paddingLeft="1rem"
+          paddingRight="1rem"
+          bg="#F7EEC7"
+        >
+          <Flex align="center" justify="center" justifyContent="space-between">
+            <IconButton
+              icon="arrow-left"
+              variant="solid"
+              bg="#F7EEC7"
+              onClick={(e) => this.props.handleEditButton(e)}
+            />
 
-        <div className="edit">
-          <Button
-            className="edit-button"
-            variantColor="red"
-            onClick={(e) => this.props.handleEditButton(e)}
-          >
-            Edit
-          </Button>
-        </div>
-
-        <div className="menu"></div>
+            <IconButton
+              icon="arrow-right"
+              variant="solid"
+              bg="#F7EEC7"
+              onClick={(e) => this.props.handleButton(e)}
+            />
+          </Flex>
+        </Box>
       </ConfirmDetailsWrapper>
     );
   }

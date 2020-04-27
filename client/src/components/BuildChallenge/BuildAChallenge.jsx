@@ -9,10 +9,9 @@ import {
 
 // Chakra
 import styled from 'styled-components';
-import { Input, Select, IconButton } from '@chakra-ui/core';
+import { Input, Select, IconButton, Box, Flex } from '@chakra-ui/core';
 
 // Components
-import ChangeButton from './ChangeButton.jsx';
 import ConfirmDetailsPage from './ConfirmDeet.jsx';
 
 const BuildChallengeWrapper = styled.div`
@@ -152,7 +151,7 @@ const BuildChallengeWrapper = styled.div`
   /* /////////////////////////////// */
   .duration-container {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    margin: 3rem auto;
+    margin: 3rem auto 15rem auto;
     padding: 0% 5%;
     display: grid;
   }
@@ -185,26 +184,6 @@ const BuildChallengeWrapper = styled.div`
     display: inline-block;
     box-shadow: 2px 2px 5px #888888;
     margin: 0px 5px;
-  }
-
-  /* ///////////////////////////// */
-  /* ////////// BUTTON /////////// */
-  /* ///////////////////////////// */
-  .button {
-    text-align: center;
-    margin-bottom: 10rem;
-  }
-
-  /* /////////////////////////// */
-  /* ////////// MENU /////////// */
-  /* /////////////////////////// */
-  .menu {
-    width: 100%;
-    height: 65px;
-    background-color: #ffb6b9;
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
   }
 `;
 
@@ -363,14 +342,35 @@ export default class challengeViewer extends React.Component {
             </div>
           </form>
 
-          <div className="button">
-            <ChangeButton text="Next" submit={this.handleButton} />
-            <Link to="/profile">
-              <ChangeButton text="Return" submit={this.handleButton} />
-            </Link>
-          </div>
+          <Box
+            position="absolute"
+            bottom="0"
+            width="100%"
+            paddingLeft="1rem"
+            paddingRight="1rem"
+            bg="#F7EEC7"
+          >
+            <Flex
+              align="center"
+              justify="center"
+              justifyContent="space-between"
+            >
+              <IconButton
+                icon="arrow-left"
+                as={Link}
+                to="/profile"
+                variant="solid"
+                bg="#F7EEC7"
+              />
 
-          <div className="menu"></div>
+              <IconButton
+                icon="arrow-right"
+                variant="solid"
+                bg="#F7EEC7"
+                onClick={(e) => this.handleButton(e)}
+              />
+            </Flex>
+          </Box>
         </BuildChallengeWrapper>
       );
     } else if (this.state.page === 2) {
