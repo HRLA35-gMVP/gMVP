@@ -2,21 +2,23 @@
 import { getUser } from '../../firebase.js';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import MoreFriends from './MoreFriends.jsx';
 
 // Chakra
 import {
-  SimpleGrid,
-  Skeleton,
-  Text,
   Box,
   Divider,
-  Flex
+  Flex,
+  IconButton,
+  SimpleGrid,
+  Skeleton,
+  Text
 } from '@chakra-ui/core';
+import { FiChevronsLeft } from 'react-icons/fi';
 import { StyledButton } from '../../styledComponents/ericStyles.js';
 
 // Components
 import Friend from './Friend.jsx';
+import MoreFriends from './MoreFriends.jsx';
 
 const promiseGen = async (friend) => {
   let data = await getUser(friend);
@@ -46,26 +48,32 @@ class FriendsList extends Component {
   render() {
     if (this.state.friends.length + 1 === this.props.friends.length) {
       return (
-        <div>
-          <Box pl="8%" pr="8%" pt="5%" align="center" pb="30%" bg="#BEEBE9" position="relative">
-            <Box
+        <Flex position="absolute" top="0" height="100%" width="100%">
+          <Box
+            bg="#BEEBE9"
+            pt="5%"
+            pb="30%"
+            pr="8%"
+            pl="8%"
+            width="100%"
+            align="center"
+          >
+            <Flex
               bg="#F7EEC7"
-              w="90%"
-              pt="10px"
-              pb="10px"
-              pr="3px"
-              pl="3px"
-              mr="auto"
-              ml="auto"
-              mb="10%"
+              pt="0.5rem"
+              pb="0.5rem"
+              pr="0.25rem"
+              pl="0.25rem"
+              marginBottom="3rem"
               boxShadow="1px 2px 3px #A2A2A2"
               justify="center"
             >
               <Text textAlign="center" fontSize="md" color="#464646">
                 Add Friends to Your Challenge!
               </Text>
-            </Box>
-            <SimpleGrid columns="1" spacing="1rem" spacingY="10%" mb="20%" >
+            </Flex>
+
+            <SimpleGrid columns="1" spacing="1rem" spacingY="10%" mb="20%">
               {this.state.friends.map((friend) => (
                 <Friend
                   key={friend.friend}
@@ -74,111 +82,144 @@ class FriendsList extends Component {
                   displayName={friend.displayName}
                 />
               ))}
+            </SimpleGrid>
+          </Box>
+
+          <Box position="absolute" bottom="0" width="100%">
+            <Flex position="relative" justify="center">
+              <MoreFriends />
+            </Flex>
+
+            <Box paddingBottom="1rem"></Box>
+
+            <Flex
+              align="center"
+              justify="center"
+              justifyContent="space-between"
+              bg="#F7EEC7"
+              paddingLeft="1rem"
+              paddingRight="1rem"
+            >
               {window.location.href.slice(window.location.href.length - 7) ===
               'friends' ? (
-                <Link to="/profile">
-                     <Divider borderColor="gray.400" mt="3px" />
-                  <StyledButton>Return</StyledButton>
-                </Link>
+                <IconButton
+                  as={Link}
+                  to="/profile"
+                  icon={FiChevronsLeft}
+                  variant="solid"
+                  bg="#F7EEC7"
+                />
               ) : (
-                <Link to={`/challenge/view/${this.props.CUID}`}>
-                     <Divider borderColor="gray.400" mt="3px" />
-                  <StyledButton>Return</StyledButton>
-                </Link>
+                <IconButton
+                  as={Link}
+                  to={`/challenge/view/${this.props.CUID}`}
+                  icon={FiChevronsLeft}
+                  variant="solid"
+                  bg="#F7EEC7"
+                />
               )}
-            </SimpleGrid>
-         
+
+              <IconButton variant="solid" bg="#F7EEC7" isDisabled />
+
+              <IconButton variant="solid" bg="#F7EEC7" isDisabled />
+
+              <IconButton variant="solid" bg="#F7EEC7" isDisabled />
+            </Flex>
           </Box>
-          <Flex
-            position="relative"
-            
-            direction="column"
-            align="center"
-         
-            mt="20%"
-            zIndex="2"
-          >
-            <MoreFriends />
-          </Flex>
-          <Box
-            bg="#F7EEC7"
-            w="100%"
-            h="40px"
-            bottom="0"
-            left="0"
-            right="0"
-            zIndex="1"
-            position="fixed"
-          ></Box>
-        </div>
+        </Flex>
       );
     } else {
       return (
-        <div>
-          <Box pl="8%" pr="8%" pt="5%" align="center" pb="80%" bg="#BEEBE9">
-            <Box
+        <Flex position="absolute" top="0" height="100%" width="100%">
+          <Box
+            bg="#BEEBE9"
+            pt="5%"
+            pb="30%"
+            pr="8%"
+            pl="8%"
+            width="100%"
+            align="center"
+          >
+            <Flex
               bg="#F7EEC7"
-              w="90%"
-              pt="10px"
-              pb="10px"
-              pr="3px"
-              pl="3px"
-              mr="auto"
-              ml="auto"
+              pt="0.5rem"
+              pb="0.5rem"
+              pr="0.25rem"
+              pl="0.25rem"
+              marginBottom="3rem"
               boxShadow="1px 2px 3px #A2A2A2"
               justify="center"
             >
               <Text textAlign="center" fontSize="md" color="#464646">
                 Add Friends to Your Challenge!
               </Text>
-            </Box>
-            <SimpleGrid
-              columns="1"
-              spacing="1rem"
-              paddingLeft="1rem"
-              paddingRight="1rem"
-            >
+            </Flex>
+
+            <SimpleGrid columns="1" spacing="1rem" spacingY="10%" mb="20%">
               {this.props.friends.map((friend, index) => {
                 if (index !== this.props.friends.length - 1) {
                   return <Skeleton key={index} height="48px" />;
                 }
               })}
+            </SimpleGrid>
+          </Box>
+
+          <Box position="absolute" bottom="0" width="100%">
+            <Flex position="relative" justify="center">
+              <MoreFriends />
+            </Flex>
+
+            <Box paddingBottom="1rem"></Box>
+
+            <Flex
+              align="center"
+              justify="center"
+              justifyContent="space-between"
+              bg="#F7EEC7"
+              paddingLeft="1rem"
+              paddingRight="1rem"
+            >
               {window.location.href.slice(window.location.href.length - 7) ===
               'friends' ? (
-                <Link to="/profile">
-                  <StyledButton>Return</StyledButton>
-                </Link>
+                <IconButton
+                  as={Link}
+                  to="/profile"
+                  icon={FiChevronsLeft}
+                  variant="solid"
+                  bg="#F7EEC7"
+                  isDisabled
+                />
               ) : (
-                <Link to={`/challenge/view/${this.props.CUID}`}>
-                  <StyledButton>Return</StyledButton>
-                </Link>
+                <IconButton
+                  as={Link}
+                  to={`/challenge/view/${this.props.CUID}`}
+                  icon={FiChevronsLeft}
+                  variant="solid"
+                  bg="#F7EEC7"
+                  isDisabled
+                />
               )}
-            </SimpleGrid>
-            <Divider borderColor="gray.400" mt="3px" />
+
+              <IconButton variant="solid" bg="#F7EEC7" isDisabled />
+
+              <IconButton variant="solid" bg="#F7EEC7" isDisabled />
+
+              <IconButton variant="solid" bg="#F7EEC7" isDisabled />
+            </Flex>
           </Box>
-          <Flex
-            position="relative"
-            direction="column"
-            align="center"
-            mb="10%"
-            pb="20%"
-            pt="20%"
-          >
-            <MoreFriends />
-          </Flex>
-          <Box
-            bg="#F7EEC7"
-            w="100%"
-            h="40px"
-            bottom="0"
-            left="0"
-            right="0"
-            position="fixed"
-          ></Box>
-        </div>
+        </Flex>
       );
     }
   }
 }
 
 export default FriendsList;
+
+{
+  /* <SimpleGrid
+columns="1"
+spacing="1rem"
+paddingLeft="1rem"
+paddingRight="1rem"
+> */
+}

@@ -9,7 +9,7 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   Button
-} from "@chakra-ui/core";
+} from '@chakra-ui/core';
 
 const MoreFriends = () => {
   const [isOpen, setIsOpen] = React.useState();
@@ -17,8 +17,14 @@ const MoreFriends = () => {
   const cancelRef = React.useRef();
 
   return (
-    <>
-      <Button position="fixed" bg="#FFB6BA" rounded="20px" fontSize="sm" w="80%"onClick={() => setIsOpen(true)}>
+    <React.Fragment>
+      <Button
+        bg="#FFB6BA"
+        rounded="20px"
+        fontSize="sm"
+        w="80%"
+        onClick={() => setIsOpen(true)}
+      >
         Add more friends to your Profile
       </Button>
 
@@ -47,8 +53,8 @@ const MoreFriends = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </>
+    </React.Fragment>
   );
-}
+};
 
 export default MoreFriends;
