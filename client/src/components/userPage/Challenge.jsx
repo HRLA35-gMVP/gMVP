@@ -12,8 +12,8 @@ const Challenge = ({ CUID, challengeName, memberCount, duration }) => {
       <StyledBoxC>
         <SimpleGrid columns="3">
           <Text>{challengeName}</Text>
-          <Text>{memberCount}</Text>
-          <Text>{`${duration} day(s)`}</Text>
+          <Text alignSelf="center">{memberCount}</Text>
+          <Text alignSelf="center">{`${duration} day(s)`}</Text>
         </SimpleGrid>
       </StyledBoxC>
     </Link>
