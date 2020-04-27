@@ -30,8 +30,14 @@ class ActiveChallenges extends Component {
   render() {
     if (this.props.user.challenges.length === this.state.challenges.length) {
       return (
-        <SimpleGrid columns={1} spacing="0.4rem">
-          {this.state.challenges.slice(0, 3).map((challenge) => (
+        <SimpleGrid
+          columns={1}
+          spacing="0.4rem"
+          maxH="35%"
+          height="100%"
+          overflowY
+        >
+          {this.state.challenges.map((challenge) => (
             <Challenge key={challenge.challengeUID} {...challenge} />
           ))}
         </SimpleGrid>
