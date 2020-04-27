@@ -13,11 +13,7 @@ const promiseGen = async (user, currentStreak) => {
 
 class ChallengeStatusList extends Component {
   state = {
-    members: [
-      { alias: 'JaneDope', streaks: 13, duration: 14 },
-      { alias: 'EverEric', streaks: 5, duration: 14 },
-      { alias: 'EvelynCats', streaks: 10, duration: 14 }
-    ],
+    members: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     memers: []
   };
 
@@ -40,7 +36,7 @@ class ChallengeStatusList extends Component {
   render() {
     if (this.state.memers.length === 0) {
       return (
-        <React.Fragment>
+        <Box maxHeight="10rem" height="100%" overflowY="scroll">
           {this.state.members.map((doNotUse, i) => (
             <Grid
               templateColumns="1fr 2fr 1fr"
@@ -63,12 +59,12 @@ class ChallengeStatusList extends Component {
               </Box>
             </Grid>
           ))}
-        </React.Fragment>
+        </Box>
       );
     } else {
       return (
-        <React.Fragment>
-          {this.state.memers.slice(0, 4).map((memer, i) => (
+        <Box maxHeight="10rem" height="100%" overflowY="scroll">
+          {this.state.memers.map((memer, i) => (
             <SimpleGrid columns={3} gap={6} key={i} pl="5%" pr="5%" pb="2%">
               <Box textAlign="center">
                 <Text>{memer.displayName}</Text>
@@ -85,7 +81,7 @@ class ChallengeStatusList extends Component {
               </Box>
             </SimpleGrid>
           ))}
-        </React.Fragment>
+        </Box>
       );
     }
   }

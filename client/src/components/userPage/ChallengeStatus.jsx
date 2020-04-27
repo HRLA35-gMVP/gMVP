@@ -36,7 +36,7 @@ const ChallengeStatus = () => {
       justifyContent="center"
       overflowY="hidden"
     >
-      <Box width="100%">
+      <Box width="100%" position="relative">
         <Flex
           direction="column"
           align="center"
@@ -122,10 +122,11 @@ const ChallengeStatus = () => {
           </Box>
         </SimpleGrid>
         <ChallengeStatusList challenge={challenge} />
-        <Flex direction="column" align="center" justify="center" mb="10%">
+      </Box>
+      <Box position="absolute" bottom="0" width="100%">
+        <Flex direction="column" align="center" justify="center">
           <Box
             rounded="lg"
-            mt="8%"
             bg="#B0DDDB"
             width="50%"
             textAlign="center"
@@ -148,16 +149,17 @@ const ChallengeStatus = () => {
             </Stack>
           </Box>
         </Flex>
-      </Box>
-      <Box
-        position="absolute"
-        bottom="0"
-        width="100%"
-        paddingLeft="1rem"
-        paddingRight="1rem"
-        bg="#F7EEC7"
-      >
-        <Flex align="center" justify="center" justifyContent="space-between">
+
+        <Box paddingBottom="1rem"></Box>
+
+        <Flex
+          align="center"
+          justify="center"
+          justifyContent="space-between"
+          bg="#F7EEC7"
+          paddingLeft="1rem"
+          paddingRight="1rem"
+        >
           <IconButton
             as={Link}
             to={`/challenge/invite/${challenge.CUID}`}
