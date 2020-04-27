@@ -6,6 +6,9 @@ const ConfirmDetailsWrapper = styled.div`
   /* ////////////////////////////////// */
   /* ////////// GENERAL CSS /////////// */
   /* ////////////////////////////////// */
+  position: absolute;
+  top: 0;
+  height: 100%;
   background-color: #beebe9;
   box-sizing: border-box;
 
@@ -144,7 +147,6 @@ const ConfirmDetailsWrapper = styled.div`
   /* /////////////////////////////// */
   .duration-container {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    margin: 3rem auto 15rem auto;
     padding: 0% 5%;
     display: grid;
   }

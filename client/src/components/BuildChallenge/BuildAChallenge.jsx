@@ -196,8 +196,6 @@ const BuildChallengeWrapper = styled.div`
   }
 `;
 
-//margin: 3rem auto 15rem auto;
-
 export default class challengeViewer extends React.Component {
   constructor(props) {
     super(props);
