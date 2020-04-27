@@ -216,7 +216,7 @@ export default class challengeViewer extends React.Component {
     event.preventDefault();
 
     if (this.state.page === 1) {
-      this.setState({ page: 2 }, () => console.log(this.state));
+      this.setState({ page: 2 });
     } else if (this.state.page === 2) {
       const CUID = await createChallengeProfileDocument(this.state);
 
