@@ -26,18 +26,16 @@ const Register = () => {
           '25%', // 768px upwards
           '15%' // 992px upwards
         ]}
-        pl="10%"
-        pr="10%"
-        pt="18%"
+        paddingLeft="10%"
+        paddingRight="10%"
+        paddingTop="15%"
       >
         <Image
           rounded="full"
-          w="220px"
+          width="220px"
+          marginLeft="15%"
+          marginBottom="10%"
           src="https://mvp2020.s3-us-west-1.amazonaws.com/blueemail2.png"
-          ml="auto"
-          mr="auto"
-          pl="10%"
-          mb="15%"
         />
 
         <Formik
@@ -80,48 +78,53 @@ const Register = () => {
                 value={values.email}
                 type="input"
               />
-              <Box pt="10%"></Box>
-              <ValidatorField
-                placeholder="Password"
-                name="password"
-                value={values.password}
-                type="password"
-              />
-              <Box pt="10%"></Box>
-              <ValidatorField
-                placeholder="Display Name"
-                name="displayName"
-                value={values.displayName}
-                type="input"
-              />
+
+              <Box paddingTop="10%">
+                <ValidatorField
+                  placeholder="Password"
+                  name="password"
+                  value={values.password}
+                  type="password"
+                />
+              </Box>
+
+              <Box paddingTop="10%">
+                <ValidatorField
+                  placeholder="Display Name"
+                  name="displayName"
+                  value={values.displayName}
+                  type="input"
+                />
+              </Box>
 
               <Button
-                bg="#FFB6BA"
-                w="100%"
-                h="40px"
-                mt="18%"
+                background="#FFB6BA"
+                variant="solid"
                 rounded="20px"
+                width="100%"
+                height="40px"
+                marginTop="18%"
                 isDisabled={isSubmitting}
                 isLoading={isSubmitting}
                 type="submit"
               >
                 Register
               </Button>
-              <Link to="/" style={{ textDecoration: 'none' }}>
-                <Button
-                  variant="solid"
-                  w="100%"
-                  h="40px"
-                  bg="#F7EEC7"
-                  rounded="20px"
-                  mt="10%"
-                  mb="28%"
-                  isDisabled={isSubmitting}
-                  isLoading={isSubmitting}
-                >
-                  Cancel
-                </Button>
-              </Link>
+
+              <Button
+                as={Link}
+                to="/"
+                background="#F7EEC7"
+                variant="solid"
+                rounded="20px"
+                width="100%"
+                height="40px"
+                marginTop="10%"
+                isDisabled={isSubmitting}
+                isLoading={isSubmitting}
+              >
+                Cancel
+              </Button>
             </Form>
           )}
         </Formik>
