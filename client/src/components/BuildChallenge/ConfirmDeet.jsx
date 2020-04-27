@@ -206,17 +206,23 @@ export default class confirmDetailsPage extends React.Component {
           <label htmlFor="challengeName" className="name-label">
             Challenge Name:
           </label>
-          <Textarea className="name-box" isDisabled opacity="1">
-            {this.props.challengeName}
-          </Textarea>
+          <Textarea
+            className="name-box"
+            isDisabled
+            opacity="1"
+            defaultValue={this.props.challengeName}
+          />
         </div>
         <div className="task-container">
           <label htmlFor="task" className="task-label">
             Task:
           </label>
-          <Textarea className="task-box" isDisabled opacity="1">
-            {this.props.task}
-          </Textarea>
+          <Textarea
+            className="task-box"
+            isDisabled
+            opacity="1"
+            defaultValue={this.props.task}
+          />
         </div>
         <div className="frequency-container">
           <div className="checkin-container">

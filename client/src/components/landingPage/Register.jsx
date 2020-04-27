@@ -41,11 +41,7 @@ const Register = () => {
         <Formik
           initialValues={{ email: '', password: '', displayName: '' }}
           validationSchema={registerValid}
-          onSubmit={async (data, { setSubmitting, resetForm }) => {
-            setSubmitting(true);
-
-            console.log('Formik:', data);
-
+          onSubmit={async (data, { resetForm }) => {
             try {
               const { user } = await auth.createUserWithEmailAndPassword(
                 data.email,
@@ -65,8 +61,6 @@ const Register = () => {
                 duration: 9001,
                 isClosable: true
               });
-            } finally {
-              setSubmitting(false);
             }
           }}
         >
