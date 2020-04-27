@@ -86,7 +86,6 @@ const Login = () => {
                 isDisabled={isSubmitting}
                 isLoading={isSubmitting}
                 onClick={signInWithGoogle}
-                type="submit"
                 color="white"
                 w="100%"
                 h="40px"
@@ -106,7 +105,6 @@ const Login = () => {
                     pb="10px"
                     rounded="20px"
                     fontWeight="semibold"
-                    type="submit"
                     color="white"
                     w="100%"
                     h="40px"
@@ -127,7 +125,6 @@ const Login = () => {
                     pb="10px"
                     rounded="20px"
                     fontWeight="semibold"
-                    type="submit"
                     color="white"
                     w="100%"
                     h="40px"
