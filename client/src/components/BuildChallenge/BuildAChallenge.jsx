@@ -9,7 +9,14 @@ import {
 
 // Chakra
 import styled from 'styled-components';
-import { Input, Select, IconButton, Box, Flex } from '@chakra-ui/core';
+import {
+  Input,
+  Select,
+  IconButton,
+  Box,
+  Flex,
+  Textarea
+} from '@chakra-ui/core';
 
 // Components
 import ConfirmDetailsPage from './ConfirmDeet.jsx';
@@ -18,6 +25,9 @@ const BuildChallengeWrapper = styled.div`
   /* ////////////////////////////////// */
   /* ////////// GENERAL CSS /////////// */
   /* ////////////////////////////////// */
+  position: absolute;
+  top: 0;
+  height: 100%;
   background-color: #beebe9;
   box-sizing: border-box;
 
@@ -85,7 +95,7 @@ const BuildChallengeWrapper = styled.div`
     width: 90%;
     margin-left: 10px;
     box-shadow: 5px 5px 5px #888888;
-    height: 10vw;
+    height: 10rem;
     font-size: 5vw;
     border-radius: 0px;
   }
@@ -151,7 +161,6 @@ const BuildChallengeWrapper = styled.div`
   /* /////////////////////////////// */
   .duration-container {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    margin: 3rem auto 15rem auto;
     padding: 0% 5%;
     display: grid;
   }
@@ -187,6 +196,8 @@ const BuildChallengeWrapper = styled.div`
   }
 `;
 
+//margin: 3rem auto 15rem auto;
+
 export default class challengeViewer extends React.Component {
   constructor(props) {
     super(props);
@@ -207,7 +218,7 @@ export default class challengeViewer extends React.Component {
     event.preventDefault();
 
     if (this.state.page === 1) {
-      this.setState({ page: 2 });
+      this.setState({ page: 2 }, () => console.log(this.state));
     } else if (this.state.page === 2) {
       const CUID = await createChallengeProfileDocument(this.state);
 
@@ -264,7 +275,7 @@ export default class challengeViewer extends React.Component {
               <label htmlFor="task" className="task-label">
                 Task:
               </label>
-              <Input
+              <Textarea
                 className="task-box"
                 name="task"
                 value={this.state.task}
@@ -340,37 +351,36 @@ export default class challengeViewer extends React.Component {
                 Days
               </label>
             </div>
-          </form>
-
-          <Box
-            position="absolute"
-            bottom="0"
-            width="100%"
-            paddingLeft="1rem"
-            paddingRight="1rem"
-            bg="#F7EEC7"
-          >
-            <Flex
-              align="center"
-              justify="center"
-              justifyContent="space-between"
+            <Box
+              position="absolute"
+              bottom="0"
+              width="100%"
+              paddingLeft="1rem"
+              paddingRight="1rem"
+              bg="#F7EEC7"
             >
-              <IconButton
-                icon="arrow-left"
-                as={Link}
-                to="/profile"
-                variant="solid"
-                bg="#F7EEC7"
-              />
+              <Flex
+                align="center"
+                justify="center"
+                justifyContent="space-between"
+              >
+                <IconButton
+                  icon="arrow-left"
+                  as={Link}
+                  to="/profile"
+                  variant="solid"
+                  bg="#F7EEC7"
+                />
 
-              <IconButton
-                icon="arrow-right"
-                variant="solid"
-                bg="#F7EEC7"
-                onClick={(e) => this.handleButton(e)}
-              />
-            </Flex>
-          </Box>
+                <IconButton
+                  icon="arrow-right"
+                  variant="solid"
+                  bg="#F7EEC7"
+                  onClick={(e) => this.handleButton(e)}
+                />
+              </Flex>
+            </Box>
+          </form>
         </BuildChallengeWrapper>
       );
     } else if (this.state.page === 2) {

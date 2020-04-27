@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Input, Select, IconButton, Box, Flex } from '@chakra-ui/core';
+import { IconButton, Box, Flex, Textarea } from '@chakra-ui/core';
 
 const ConfirmDetailsWrapper = styled.div`
   /* ////////////////////////////////// */
@@ -51,6 +51,10 @@ const ConfirmDetailsWrapper = styled.div`
     line-height: 2rem;
   }
 
+  .name-box:disabled {
+    opacity: 1;
+    cursor: default;
+  }
   /* /////////////////////////// */
   /* ////////// TASK /////////// */
   /* /////////////////////////// */
@@ -74,6 +78,11 @@ const ConfirmDetailsWrapper = styled.div`
     font-size: 5vw;
     text-align: center;
     line-height: 2rem;
+  }
+
+  .task-box:disabled {
+    opacity: 1;
+    cursor: default;
   }
   /* //////////////////////////////////////// */
   /* ////////// CHECKIN & DRPDOWN /////////// */
@@ -191,21 +200,22 @@ export default class confirmDetailsPage extends React.Component {
       <ConfirmDetailsWrapper>
         <div className="title">Confirm Details</div>
         <div className="underbar"></div>
-
         <div className="name-container">
           <label htmlFor="challengeName" className="name-label">
             Challenge Name:
           </label>
-          <div className="name-box">{this.props.challengeName}</div>
+          <Textarea className="name-box" isDisabled opacity="1">
+            {this.props.challengeName}
+          </Textarea>
         </div>
-
         <div className="task-container">
           <label htmlFor="task" className="task-label">
             Task:
           </label>
-          <div className="task-box">{this.props.task}</div>
+          <Textarea className="task-box" isDisabled opacity="1">
+            {this.props.task}
+          </Textarea>
         </div>
-
         <div className="frequency-container">
           <div className="checkin-container">
             <label htmlFor="numberOfChecks" className="checkin-label">
@@ -225,7 +235,6 @@ export default class confirmDetailsPage extends React.Component {
             </div>
           </div>
         </div>
-
         <div className="duration-container">
           <label htmlFor="duration" className="duration-label">
             Duration:
@@ -239,7 +248,6 @@ export default class confirmDetailsPage extends React.Component {
             {`Day(s)`}
           </label>
         </div>
-
         <Box
           position="absolute"
           bottom="0"
