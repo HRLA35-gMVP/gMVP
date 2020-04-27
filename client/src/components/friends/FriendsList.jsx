@@ -14,7 +14,6 @@ import {
   Text
 } from '@chakra-ui/core';
 import { FiChevronsLeft } from 'react-icons/fi';
-import { StyledButton } from '../../styledComponents/ericStyles.js';
 
 // Components
 import Friend from './Friend.jsx';
@@ -68,9 +67,16 @@ class FriendsList extends Component {
               boxShadow="1px 2px 3px #A2A2A2"
               justify="center"
             >
-              <Text textAlign="center" fontSize="md" color="#464646">
-                Add Friends to Your Challenge!
-              </Text>
+              {window.location.href.slice(window.location.href.length - 7) ===
+              'friends' ? (
+                <Text textAlign="center" fontSize="md" color="#464646">
+                  Friends List
+                </Text>
+              ) : (
+                <Text textAlign="center" fontSize="md" color="#464646">
+                  Add Friends To Your Challenge!
+                </Text>
+              )}
             </Flex>
 
             <SimpleGrid columns="1" spacing="1rem" spacingY="10%" mb="20%">
@@ -86,11 +92,15 @@ class FriendsList extends Component {
           </Box>
 
           <Box position="absolute" bottom="0" width="100%">
-            <Flex position="relative" justify="center">
-              <MoreFriends />
-            </Flex>
-
-            <Box paddingBottom="1rem"></Box>
+            {window.location.href.slice(window.location.href.length - 7) ===
+            'friends' ? null : (
+              <React.Fragment>
+                <Flex position="relative" justify="center">
+                  <MoreFriends />
+                </Flex>
+                <Box paddingBottom="1rem"></Box>
+              </React.Fragment>
+            )}
 
             <Flex
               align="center"
@@ -150,9 +160,16 @@ class FriendsList extends Component {
               boxShadow="1px 2px 3px #A2A2A2"
               justify="center"
             >
-              <Text textAlign="center" fontSize="md" color="#464646">
-                Add Friends to Your Challenge!
-              </Text>
+              {window.location.href.slice(window.location.href.length - 7) ===
+              'friends' ? (
+                <Text textAlign="center" fontSize="md" color="#464646">
+                  Friends List
+                </Text>
+              ) : (
+                <Text textAlign="center" fontSize="md" color="#464646">
+                  Add Friends To Your Challenge!
+                </Text>
+              )}
             </Flex>
 
             <SimpleGrid columns="1" spacing="1rem" spacingY="10%" mb="20%">
@@ -165,11 +182,15 @@ class FriendsList extends Component {
           </Box>
 
           <Box position="absolute" bottom="0" width="100%">
-            <Flex position="relative" justify="center">
-              <MoreFriends />
-            </Flex>
-
-            <Box paddingBottom="1rem"></Box>
+            {window.location.href.slice(window.location.href.length - 7) ===
+            'friends' ? null : (
+              <React.Fragment>
+                <Flex position="relative" justify="center">
+                  <MoreFriends />
+                </Flex>
+                <Box paddingBottom="1rem"></Box>
+              </React.Fragment>
+            )}
 
             <Flex
               align="center"

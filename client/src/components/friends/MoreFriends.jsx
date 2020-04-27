@@ -25,7 +25,7 @@ const MoreFriends = () => {
         w="80%"
         onClick={() => setIsOpen(true)}
       >
-        Add more friends to your Profile
+        Add More Friends
       </Button>
 
       <AlertDialog
@@ -36,7 +36,7 @@ const MoreFriends = () => {
         <AlertDialogOverlay />
         <AlertDialogContent>
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Enter your Friend Code
+            Enter Friend Code
           </AlertDialogHeader>
 
           <AlertDialogBody>
@@ -44,9 +44,6 @@ const MoreFriends = () => {
           </AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
-              Cancel
-            </Button>
             <Button bg="#BEEBE9" onClick={onClose} ml={3}>
               Close
             </Button>
@@ -58,3 +55,9 @@ const MoreFriends = () => {
 };
 
 export default MoreFriends;
+
+{
+  /* <Button ref={cancelRef} onClick={onClose}>
+Cancel
+</Button> */
+}

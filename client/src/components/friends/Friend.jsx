@@ -7,7 +7,7 @@ import { ChallengeContext } from '../../providers/ChallengeProvider.jsx';
 import { useToast, Flex, Box, Avatar } from '@chakra-ui/core';
 import {
   BsFillPersonPlusFill,
-  BsPersonDash,
+  BsFillPersonFill,
   BsPersonCheck
 } from 'react-icons/bs';
 import { StyledIconButton } from '../../styledComponents/ericStyles.js';
@@ -18,12 +18,11 @@ const Friend = ({ UID, photoURL, displayName }) => {
 
   return (
     <Flex justifyContent="space-between" alignItems="center">
-      <Flex >
+      <Flex>
         <Avatar name={displayName} src={photoURL} />
         <Box alignSelf="center" paddingLeft="1rem">
           {displayName}
         </Box>
-       
       </Flex>
       {window.location.href.slice(window.location.href.length - 7) ===
       'friends' ? (
@@ -45,7 +44,7 @@ const Friend = ({ UID, photoURL, displayName }) => {
         <StyledIconButton
           icon={
             challenge.members[UID] !== undefined
-              ? BsPersonDash
+              ? BsFillPersonFill
               : BsFillPersonPlusFill
           }
           verticalAlign="middle"
