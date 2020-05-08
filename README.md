@@ -10,3 +10,8 @@
 
 # Usage
 https://hrla35-mvp.web.app/
+
+
+
+# Requirements
+A modern browser (Firefox/Chrome)
