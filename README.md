@@ -1,4 +1,4 @@
-# Group MVP
+# [Streaks](https://hrla35-mvp.web.app/)
 
 > A browser web app that aims to motivate users into maintaining or improving their physical fitness by connecting them with friends and family.
 
