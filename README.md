@@ -8,8 +8,10 @@
 2. [Requirements](#requirements)
 
 # Usage
-https://hrla35-mvp.web.app/
+
+[Streaks](https://hrla35-mvp.web.app/)
 
 # Requirements
+
  - Firefox
  - Chrome
