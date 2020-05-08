@@ -7,11 +7,11 @@
 1. [Usage](#Usage)
 2. [Requirements](#requirements)
 
-# Usage
+## Usage
 
 ### [Streaks](https://hrla35-mvp.web.app/)
 
-# Requirements
+## Requirements
 
  - Firefox
  - Chrome
