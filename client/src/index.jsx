@@ -1,7 +1,7 @@
 // Dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import {  BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, CSSReset } from '@chakra-ui/core';
 
 // Components
@@ -14,13 +14,11 @@ import FriendsProvider from './providers/FriendsProvider.jsx';
 ReactDOM.render(
   <ThemeProvider>
     <CSSReset />
-    <Router>
        <UsersProvider>
          <FriendsProvider>
-          <App />
+           <App />
          </FriendsProvider>
        </UsersProvider>
-     </Router>
   </ThemeProvider>,
   document.getElementById('root')
 );

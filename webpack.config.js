@@ -1,4 +1,3 @@
-// Dependencies
 const path = require('path');
 const dotenv = require('dotenv-webpack')
 
@@ -13,6 +12,7 @@ module.exports = {
     filename: 'bundle.js',
     path: DIST_DIR
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -41,5 +41,10 @@ module.exports = {
     new dotenv({
       path: path.join(__dirname, '/client/.env')
     })
-  ]
+  ],
+  devServer: {
+    static: DIST_DIR,
+    hot: true,
+    historyApiFallback: true,
+  },
 };
