@@ -5,19 +5,11 @@ import { auth, createUserProfileDocument } from '../firebase.js';
 // Context
 export const UserContext = createContext({});
 
-/**
- * Authenticate user before routing to protected routes
- */
 class UsersProvider extends Component {
-  state = { 
-    user: null 
-  };
+  state = { user: null };
 
   unsubscribeFromAuth = null;
 
-  /**
-   * 
-   */
   componentDidMount = async () => {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       /**

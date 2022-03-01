@@ -1,13 +1,24 @@
 // Dependencies
 import React, { useContext } from 'react';
 import { UserContext } from '../providers/UsersProvider.jsx';
-import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import { Switch, Route, Link, Redirect } from 'react-router-dom';
 
 // Chakra + Forms
 import {
-  Box,Flex,Popover,PopoverTrigger,PopoverHeader,PopoverBody,PopoverArrow,Image,PseudoBox,Button, Text
+  Box,
+  Flex,
+  Popover,
+  PopoverTrigger,
+  PopoverHeader,
+  PopoverBody,
+  PopoverArrow,
+  Image,
+  PseudoBox,
+  Button,
+  Text
 } from '@chakra-ui/core';
 
+// Componenets + Styles
 // Landing Page
 import Login from './landingPage/Login.jsx';
 import Register from './landingPage/Register.jsx';
@@ -33,28 +44,30 @@ const App = () => {
 
   return (
     <Flex direction="column" align="center" justify="center" h="100%">
-      <Routes>
+      <Switch>
         {!!user ? (
-          <>
-            <Route path="/edit" element={<EditProfile/>} />
-            <Route path="/challenge/create" element={<BuildChallenge/>} />
+          <React.Fragment>
+            <Route exact path="/edit" component={EditProfile} />
+            <Route exact path="/challenge/create" component={BuildChallenge} />
             <Route path="/challenge/(invite|view)">
               <ChallengeProvider>
                 <Route
+                  exact
                   path="/challenge/invite/*"
-                  element={<FriendsListHelper/>}
+                  component={FriendsListHelper}
                 />
                 <Route
+                  exact
                   path="/challenge/view/*"
-                  element={<ChallengeStatus/>}
+                  component={ChallengeStatus}
                 />
               </ChallengeProvider>
             </Route>
-            <Navigate to="/profile" />
-            <Route path="/profile" element={<UserPage/>} />
-            <Route path="/friends" element={<FriendsListHelper/>} />
-            <Route path="/challenge" element={<ChallengeStatus/>} />
-          </>
+            <Redirect to="/profile" />
+            <Route path="/profile" component={UserPage} />
+            <Route exact path="/friends" component={FriendsListHelper} />
+            <Route exact path="/challenge" component={ChallengeStatus} />
+          </React.Fragment>
         ) : (
           <Box
             position="absolute"
@@ -69,8 +82,8 @@ const App = () => {
               '15%' // 992px upwards
             ]}
           >
-            <Navigate to="/" />
-            <Route path="/">
+            <Redirect to="/" />
+            <Route exact path="/">
               <Flex direction="column" alignItems="center" height="100%">
                 <Image
                   rounded="full"
@@ -112,7 +125,8 @@ const App = () => {
                       Join. Connect. Achieve
                     </PopoverHeader>
                     <PopoverBody textAlign="center" fontSize="sm">
-                      Connect with family and friends to collaborate on 
+                      Streak is a platform where you can connect with your
+                      family, friends, and peers to collaborate individually for
                       any activity.
                     </PopoverBody>
                   </StyledPopoverContent>
@@ -163,13 +177,13 @@ const App = () => {
                 </Link>
               </Flex>
             </Route>
-            <Route path="/login" element={<Login/>} />
-            <Route path="/register" element={<Register/>} />
-            <Route path="/reset" element={<ForgotPassword/>} />
-            <Route path="/reset/confirmation" element={<CheckEmail/>} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/reset" component={ForgotPassword} />
+            <Route exact path="/reset/confirmation" component={CheckEmail} />
           </Box>
         )}
-      </Routes>
+      </Switch>
     </Flex>
   );
 };

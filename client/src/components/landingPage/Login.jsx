@@ -1,10 +1,14 @@
 // Dependencies
 import { signInWithGoogle, signInWithEmail } from '../../firebase.js';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+
+// Chakra + Forms
 import { Formik, Form } from 'formik';
 import { useToast, Box, Flex, Button, Image } from '@chakra-ui/core';
-import { validateEmailPasswordFormat } from '../formHelpers/validators.js';
+import { loginValid } from '../formHelpers/validators.js';
+
+// Components
 import ValidatorField from '../formHelpers/ValidatorField.jsx';
 
 const Login = () => {
@@ -24,12 +28,11 @@ const Login = () => {
       <Box pl="10%" pr="10%" pt="15%">
         <Formik
           initialValues={{ email: '', password: '' }}
-          validationSchema={ validateEmailPasswordFormat }
-          onSubmit={ async ( data, { resetForm }) => {
+          validationSchema={loginValid}
+          onSubmit={async (data, { resetForm }) => {
             try {
-              let userCredential = await signInWithEmail(data.email, data.password);
-              console.log("userCred", userCredential)
-              //resetForm();
+              await signInWithEmail(data.email, data.password);
+              resetForm();
             } catch (error) {
               toast({
                 title: 'An error occurred.',
@@ -41,7 +44,7 @@ const Login = () => {
             }
           }}
         >
-          {({ values, isSubmitting } ) => (
+          {({ values, isSubmitting }) => (
             <Form>
               <ValidatorField
                 placeholder="Email Address"
