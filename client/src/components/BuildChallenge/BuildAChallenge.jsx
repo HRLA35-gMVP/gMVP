@@ -1,6 +1,6 @@
 // Dependencies + Functionality
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import {
   auth,
   createChallengeProfileDocument,
@@ -396,7 +396,7 @@ export default class challengeViewer extends React.Component {
       );
     } else {
       // return this if they have clicked "submit"
-      return <Redirect to={`/challenge/view/${this.state.CUID}`} />;
+      return <Navigate to={`/challenge/view/${this.state.CUID}`} />;
     }
   }
 }

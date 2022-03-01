@@ -4,7 +4,7 @@ import { UserContext } from '../../providers/UsersProvider.jsx';
 import { Link } from 'react-router-dom';
 
 // Chakra + Forms
-import { signOut } from '../../firebase.js';
+import { signOutOfApp } from '../../firebase.js';
 import {
   AccordionPanel,
   Avatar,
@@ -127,7 +127,7 @@ const UserPage = () => {
             <IconButton
               icon={FiLogOut}
               variant="solid"
-              onClick={signOut}
+              onClick={signOutOfApp}
               bg="#F7EEC7"
             />
           ) : (

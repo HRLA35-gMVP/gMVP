@@ -1,88 +1,139 @@
-// Dependencies
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-import 'firebase/storage';
+//import firebase from 'firebase/compat/app';
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+//import 'firebase/storage';
+import { getStorage } from "firebase/storage";
+import 'firebase/analytics'
 
 /**
- * Fine to not gitignore
+ * 
  * Lets the app know which Google Firebase server the app should talk to
  */
 
 const config = {
-  apiKey: 'AIzaSyCHIn-4BWduDME5PSI07pykoOedhtoDmq8',
-  authDomain: 'hrla35-mvp.firebaseapp.com',
-  databaseURL: 'https://hrla35-mvp.firebaseio.com',
-  projectId: 'hrla35-mvp',
-  storageBucket: 'hrla35-mvp.appspot.com',
-  messagingSenderId: '344292705723',
-  appId: '1:344292705723:web:500ebbcdbaa52b86d4309e',
-  measurementId: 'G-SGQYM7M1QP'
+  apiKey: process.env.APIKEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  // databaseURL: 'https://hrla35-mvp.firebaseio.com',
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID
 };
 
-firebase.initializeApp(config);
+/**
+ * Initialize Firebase
+ */
+ const streakApp = initializeApp(config);
+//firebase.analytics();
+
+//const db = getFirestore();
 
 /**
  * Remove this later
  * For debugging purposes
  */
 
-window.firebase = firebase;
+//window.firebase = firebase;
 
 /**
  * Firebase Solutions
  */
 
-export const firestore = firebase.firestore();
-export const storage = firebase.storage();
-export const auth = firebase.auth();
+//export const firestore = firebase.firestore();
+export const firestore = getFirestore();
+export const storage = getStorage(streakApp);
+
+export const auth = getAuth();
+// apply default browser preference
+  //auth().useDeviceLanguage();
 
 /**
- * Firebase Packaged Functionality
+ * ************ Firebase Packaged Functionality *************
  */
 
-export const provider = new firebase.auth.GoogleAuthProvider();
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const provider = new GoogleAuthProvider();
+export const signInWithGoogle = () => 
+  signInWithPopup(auth, provider);
 
+/**
+ * Sign in for returning users
+ * @param {*} email 
+ * @param {*} password 
+ * @returns userCredential
+ */
 export const signInWithEmail = (email, password) =>
-  auth.signInWithEmailAndPassword(email, password);
+  signInWithEmailAndPassword(email, password)
+
+export const registerWithEmailAndPassword = ( email, password ) => {
+  console.log("registering")
+  return createUserWithEmailAndPassword(auth, email, password)
+}
+
 
 export const resetPasswordWithEmail = (email) =>
   auth.sendPasswordResetEmail(email);
 
-export const signOut = () => auth.signOut();
+  /**
+   * Sign out
+   * @returns 
+   */
+export const signOutOfApp = () => signOut(auth)
 
 /**
  * Generalized Functionality
  */
 
-const getRef = (collection, UID) => firestore.collection(collection).doc(UID);
+/**
+ * 
+ * @param {*} collection name of collection in the database
+ * @param {*} UID unique identifier in db
+ */
+const getRef = (collection, UID) => 
+  //firestore.collection(collection).doc(UID);
+  //collection( db, collection )
+  doc( firestore, collection, UID )
+
 const performUpdate = async (docRef, updates) =>
   await docRef.update({ ...updates });
 
 /**
- * User Related Functionality
+ * *********** User Related Functionality ******************
  */
 
+/**
+ * Create a new user
+ * @param {*} user 
+ * @param {*} additionalData 
+ * @returns 
+ */
 export const createUserProfileDocument = async (user, additionalData) => {
   if (!user) return;
-
-  const uRef = getRef('users', user.uid);
-
+  console.log('creating profile')
   try {
-    const uDoc = await uRef.get();
+    const uRef = getRef('users', user.uid);
+    //const uDoc = await uRef.get();
+    const uDoc = await getDoc( uRef );
 
     if (!uDoc.exists) {
       const { email, displayName, photoURL } = user;
       const createdAt = new Date();
 
-      await uRef.set({
+      // await uRef.set({
+      //   displayName,
+      //   email,
+      //   photoURL,
+      //   createdAt,
+      //   ...additionalData
+      // });
+      await setDoc( uRef, {
         displayName,
         email,
         photoURL,
         createdAt,
         ...additionalData
-      });
+      } )
     }
 
     return getUserDocument(user.uid);
@@ -92,6 +143,11 @@ export const createUserProfileDocument = async (user, additionalData) => {
   }
 };
 
+/**
+ * 
+ * @param {*} UID 
+ * @returns 
+ */
 export const getUserDocument = async (UID) => {
   if (!UID) return null;
 
@@ -328,4 +384,4 @@ export const challengeCheckIn = async (CUID, UID) => {
   }
 };
 
-export default firebase;
+//export default firebase;

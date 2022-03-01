@@ -10,7 +10,7 @@ const errorRequired = 'This is a required field.';
 const errorMin = (num) => `Minimum character length of ${num}.`;
 const errorMax = (num) => `Maximum character length of ${num}.`;
 
-const loginValid = yup.object().shape({
+const validateEmailPasswordFormat = yup.object().shape({
   email: yup
     .string()
     .required(errorRequired)
@@ -68,7 +68,7 @@ const displayNameValid = yup.object().shape({
 });
 
 export {
-  loginValid,
+  validateEmailPasswordFormat,
   registerValid,
   friendCodeValid,
   emailValid,

@@ -1,5 +1,5 @@
 // Dependencies
-import { auth, createUserProfileDocument } from '../../firebase.js';
+import { registerWithEmailAndPassword, createUserProfileDocument } from '../../firebase.js';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -43,7 +43,7 @@ const Register = () => {
           validationSchema={registerValid}
           onSubmit={async (data, { resetForm }) => {
             try {
-              const { user } = await auth.createUserWithEmailAndPassword(
+              const { user } = await registerWithEmailAndPassword(
                 data.email,
                 data.password
               );

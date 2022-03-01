@@ -1,6 +1,6 @@
 // Dependencies
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { resetPasswordWithEmail } from '../../firebase.js';
 
 // Chakra + Forms
@@ -19,7 +19,7 @@ import ValidatorField from '../formHelpers/ValidatorField.jsx';
 import { emailValid } from '../formHelpers/validators.js';
 
 const ForgotPassword = () => {
-  const history = useHistory();
+  const history = useNavigate();
   const toast = useToast();
 
   return (
